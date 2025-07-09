@@ -1,0 +1,1 @@
+"C:\xampp\php\php.exe" -f "C:\Systems\warehouse_management_cenpri\backup\backup.php"
