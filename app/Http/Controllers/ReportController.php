@@ -166,6 +166,7 @@ class ReportController extends Controller
             $report_wh = PIVBalance::where('item_id','=',$item)->where('variant_id','=','0')->get();
         }
         
+        $formItems = array();
         foreach($report AS $re){
           
             if($re->variants->item_status_id == '0'){
@@ -183,6 +184,7 @@ class ReportController extends Controller
            ];
         }
 
+        $formItems = array();
         foreach($report_wh AS $rh){
             
             $formItems[]=[

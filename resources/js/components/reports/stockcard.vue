@@ -18,7 +18,7 @@
 	const router = useRouter() 
 	let form = ref({
         item_name:'',
-		supplier_name:'',
+		suppliername:'',
 		department:'',
 		catalog:'',
 		brand:''
@@ -26,8 +26,8 @@
 	let items = ref([])
 	let department = ref([])
 	let supplier = ref([])
-	let brand = ref([])
-	let catalog = ref([])
+	let brand_list = ref([])
+	let catalog_list = ref([])
 	let stockcard=ref([]);
 	let balance=ref([]);
 	let quantity=ref([]);
@@ -223,12 +223,12 @@
 
 	const getBrand = async () => {
         const response = await  axios.get("/api/brand_list");
-        brand.value = response.data.brand;
+        brand_list.value = response.data.brand;
     }
 
 	const getCatalog = async () => {
         const response = await  axios.get("/api/catalog_list");
-        catalog.value = response.data.catalog;
+        catalog_list.value = response.data.catalog;
     }
 
 	const getItemname = async () => {
@@ -270,7 +270,7 @@
 	const filter = () => {
 		const formDetails = new FormData()
 		formDetails.append('item', form.value.item_name)
-		formDetails.append('supplier', form.value.supplier_name)
+		formDetails.append('supplier', form.value.suppliername)
 		formDetails.append('department', form.value.department)
 		formDetails.append('catalog', form.value.catalog)
 		formDetails.append('brand', form.value.brand)
@@ -331,36 +331,56 @@
 						<div class="table-responsive-md">
 							<div class="flex justify-between pb-2 my-2 space-x-2">
 								<div class="w-full">
-									<select class="form-control border" v-model="form.item_name">
-                                        <option value="">Select Item</option>
-										<option v-for="i in items" :value="i.id" v-bind:key="i.id">{{ i.item_description }}</option>
-                                    </select>
+									<v-select v-model="form.item_name" :options="items" :reduce="items => items.id" class="form-control border" :get-option-label="option => `${option.item_description}`" placeholder="Select Item">
+										<template #selected-option="{ item_description }">
+											{{ item_description }}
+										</template>
+										<template #option="{ item_description }">
+											{{ item_description }}
+										</template>
+									</v-select>
 								</div>
 								<div class="w-full">
-									<select class="form-control border" v-model="form.supplier_name">
-										<option value="">Select Supplier</option>
-										<option v-for="s in supplier" v-bind:key="s.id" v-bind:value="s.id">{{ s.supplier_name}}</option>
-									</select>
+									<v-select v-model="form.suppliername" :options="supplier" :reduce="supplier => supplier.id" class="form-control border" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
+										<template #selected-option="{ supplier_name }">
+											{{ supplier_name }}
+										</template>
+										<template #option="{ supplier_name }">
+											{{ supplier_name }}
+										</template>
+									</v-select>
 								</div>
 							</div>
 							<div class="flex justify-between pb-2 space-x-2">
 								<div class="w-full">
-									<select class="form-control border my-1" v-model="form.department">
-										<option value="">Select Department</option>
-										<option v-for="d in department" v-bind:key="d.id" v-bind:value="d.id">{{ d.department_name }}</option>
-									</select>
+									<v-select v-model="form.department" :options="department" :reduce="department => department.id" class="form-control border" :get-option-label="option => `${option.department_name}`" placeholder="Select Department">
+										<template #selected-option="{ department_name }">
+											{{ department_name }}
+										</template>
+										<template #option="{ department_name }">
+											{{ department_name }}
+										</template>
+									</v-select>
 								</div>
 								<div class="w-full">
-									<select class="form-control border my-1" v-model="form.catalog">
-										<option value="">Select Catalog No</option>
-										<option v-for="c in catalog" v-bind:key="c.catalog_no" v-bind:value="c.catalog_no">{{ c.catalog_no }}</option>
-									</select>
+									<v-select v-model="form.catalog" :options="catalog_list" :reduce="catalog_list => catalog_list.catalog_no" class="form-control border" :get-option-label="option => `${option.catalog_no}`" placeholder="Select Catalog No">
+										<template #selected-option="{ catalog_no }">
+											{{ catalog_no }}
+										</template>
+										<template #option="{ catalog_no }">
+											{{ catalog_no }}
+										</template>
+									</v-select>
 								</div>
 								<div class="w-full">
-									<select class="form-control border my-1" v-model="form.brand">
-										<option value="">Select Brand</option>
-										<option v-for="b in brand" v-bind:key="b.brand" v-bind:value="b.brand">{{ b.brand }}</option>
-									</select>
+									<v-select v-model="form.brand" :options="brand_list" :reduce="brand_list => brand_list.brand" class="form-control border" :get-option-label="option => `${option.brand}`" placeholder="Select Brand">
+										<template #selected-option="{ brand }">
+											{{ brand }}
+										</template>
+										<template #option="{ brand }">
+											{{ brand }}
+										</template>
+									</v-select>
 								</div>
 								<button class="btn btn-sm btn-success" @click="filter()">
 									<div class="flex justify-between space-x-2" >
