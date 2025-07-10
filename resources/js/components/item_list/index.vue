@@ -3,67 +3,17 @@
 	import { EyeIcon ,PencilSquareIcon, TrashIcon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, Bars3Icon, ArrowUturnLeftIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/solid'
 	import {onMounted, ref} from "vue";
 	import { useRouter } from "vue-router";
-	import DataTable from 'datatables.net-vue3';
-	import DataTablesCore from 'datatables.net-bs5';
-	import 'datatables.net-responsive';
-	import 'datatables.net-select';
-	import 'datatables.net-buttons';
-	import 'datatables.net-buttons/js/buttons.html5';
-	import 'datatables.net-buttons/js/buttons.print.js';
 	import jszip from 'jszip';
-	import $ from 'jquery'
-	DataTablesCore.Buttons.jszip(jszip);
-	DataTable.use(DataTablesCore);
+	import 'datatables.net-dt/css/dataTables.dataTables.css';
+    import 'datatables.net';
+    onMounted(() => {
+        $('#main_table').DataTable();
+    });
+    import $ from 'jquery'
 	const router = useRouter();
 	let items=ref([]);
 	let quantity=ref([]);
 	let searchItems=ref([]);
-	const options = {
-		// dom: 'Bftip',
-		dom: "<'row'<'col-sm-8 col-lg-8 mb-2 pr-0 flex justify-end'B ><'col-sm-4 col-lg-4 mb-2 pl-1'f>>"+"<'row'<'col-sm-12 mb-2'tr>>"+"<'row'<'col-sm-6 mb-2'i><'col-sm-6 mb-2'p>>",
-		select: true,	
-		lengthMenu: [
-			[10, 25, 50, -1],
-			['10 rows', '25 rows', '50 rows', 'Show all']
-		],
-		buttons: [
-			{
-				title:'Items',
-				extend: 'copy',
-				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5],
-					orthogonal: null
-				}
-			},
-			{
-				title:'Items',
-				extend: 'excel',
-				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5], 
-					orthogonal: null
-				},
-				createEmptyCells: true,
-                customize: function(xlsx) {
-                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    var clRow = $('row', sheet);
-                    clRow[0].children[0].remove(); // clear header cell
-                    $( 'row c', sheet ).attr( 's', '25' );
-                }
-			},
-			{
-				title:'Items',
-				extend: 'print',
-				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5],
-					orthogonal: null
-				}
-			},
-			{
-				extend: 'pageLength'
-			}
-		]
-		// buttons: ['copy','excel','csv','pageLength']
-	};
 	onMounted(async () => {
 		getItems()
 	})
@@ -106,7 +56,7 @@
 					<div class="col-md-12 col-lg-12 ">
 						<div class="card">
 							<div class="table-responsive-md pt-3">
-								<div class="flex justify-between pb-2 mt-0 mb-2 absolute z-50 ">
+								<div class="flex justify-between pb-2 mt-0 mb-2 s z-50 ">
 									<a href="/item_list/new" class="btn btn-sm btn-primary btn-rounded pull-left">
 										<div class="flex justify-between space-x-2" >
 											<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"></PlusIcon>
@@ -114,7 +64,7 @@
 										</div>
 									</a>
 								</div>
-								<DataTable :data="items" :options="options" class="display" width="100%">  
+								<table id="main_table" class="display" width="100%">  
 									<thead>
 										<tr>
 											<th scope="col" width="15%" class="text-sm !text-gray-600">Orignal PN</th>
@@ -130,7 +80,18 @@
 											</th>
 										</tr>
 									</thead>
-									<template #column-1="props">
+									<tbody>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+									<!-- <template #column-1="props">
 										{{ props.rowData.item_description }}
 										<button v-if="props.rowData.qty==0 && props.rowData.id==props.rowData.item_id" class="btn btn- !text-yellow-400 btn-rounded p-0 btn-sm ml-1">
 											<ExclamationTriangleIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"></ExclamationTriangleIcon>
@@ -143,8 +104,8 @@
 										<a v-else href="#" @click="onEdit(props.rowData.id)" class="text-white btn btn-xs bg-yellow-500 btn-rounded" title="Draft">
 											<EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></EyeIcon>
 										</a>
-									</template>
-								</DataTable>
+									</template> -->
+								</table>
 							</div>
 						</div>
 					</div>
@@ -152,8 +113,3 @@
 			</div>
     </navigation>
 </template>
-<style>
-@import 'datatables.net-dt';
-@import 'datatables.net-buttons-dt';
-@import 'datatables.net-select-dt';
-</style>

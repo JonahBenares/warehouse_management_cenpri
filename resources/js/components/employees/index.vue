@@ -3,6 +3,12 @@ import navigation from '@/layouts/navigation.vue';
 import { PencilSquareIcon, Bars3Icon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon, ArrowUturnLeftIcon } from '@heroicons/vue/24/solid'
 import {onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
+import 'datatables.net-dt/css/dataTables.dataTables.css';
+import 'datatables.net';
+onMounted(() => {
+	$('#main_table').DataTable();
+});
+import $ from 'jquery'
 const router = useRouter();
 let employees=ref([]);
 let searchEmployees=ref([]);
@@ -73,7 +79,7 @@ const search = async () => {
 									</div>
 								</a>
 							</div>
-							<table class="table table-borsdered table-hover mb-0">
+							<table id="main_table" class="table table-borsdered table-hover mb-0">
 								<thead>
 									<tr>
 										<th scope="col" width="20%">Employees Name</th>

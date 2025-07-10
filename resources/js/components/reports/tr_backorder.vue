@@ -3,18 +3,15 @@
 	import { useRouter } from "vue-router" 
 	import navigation from '@/layouts/navigation.vue';
 	import { PencilSquareIcon, Bars3Icon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon, ArrowUturnLeftIcon } from '@heroicons/vue/24/solid'
-    import DataTable from 'datatables.net-vue3';
-	import DataTablesCore from 'datatables.net-bs5';
-	import 'datatables.net-responsive';
-	import 'datatables.net-select';
-	import 'datatables.net-buttons';
-	import 'datatables.net-buttons/js/buttons.html5';
-	import 'datatables.net-buttons/js/buttons.print.js';
-	import jszip from 'jszip';
-    import $ from 'jquery'
+
+    import $ from 'jquery';
+    import 'datatables.net-dt/css/dataTables.dataTables.css';
+    import 'datatables.net';
+    
+    onMounted(() => {
+        $('#main_table').DataTable();
+    });
     import moment from 'moment'
-	DataTablesCore.Buttons.jszip(jszip);
-	DataTable.use(DataTablesCore);
     let rows = ref([])
     let form = ref({
         from_date:'',
@@ -35,51 +32,6 @@
     let department = ref([])
     let enduse = ref([])
     let purpose = ref([])
-    const options = {
-		dom: "<'row'<'col-sm-6 col-lg-6 mb-2'B><'col-sm-4 col-gl-4 offset-lg-2 offset-sm-2 mb-2'f>>"+"<'row'<'col-sm-12 mb-2'tr>>"+"<'row'<'col-sm-6 mb-2'i><'col-sm-6 mb-2'p>>",
-		select: true,	
-		lengthMenu: [
-			[10, 25, 50, -1],
-			['10 rows', '25 rows', '50 rows', 'Show all']
-		],
-		buttons: [
-			{
-				extend: 'copy',
-                title: 'Backorder Report',
-			},
-			{
-				extend: 'excel',
-                title: 'Backorder Report',
-                exportOptions: {
-					orthogonal: null,
-                    format: {
-                        body: function (data, row, column, node) {
-                            if (column === 0)
-                            {
-                               return moment.utc(data).format('MMMM DD, YYYY');
-                            }else{
-                                return data;
-                            }
-                        }
-                    }
-				},
-                createEmptyCells: true,
-                customize: function(xlsx) {
-                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    var clRow = $('row', sheet);
-                    clRow[0].children[0].remove(); // clear header cell
-                    $( 'row c', sheet ).attr( 's', '25' );
-                }
-			},
-			{
-				extend: 'print',
-                title: 'Backorder Report',
-			},
-			{
-				extend: 'pageLength'
-			}
-		]
-	};
     onMounted(async () =>{
         getItems()
         getPR()
@@ -320,7 +272,7 @@
                                 <div class="col-lg-12 px-1">
                                     <div class='w-full border hover:!overflow-x-scroll overflow-x-hidden h-96 bg-white mb-4  p-2'>
                                         <!-- <table class="text-xs table-bordered" width="280%"> -->
-                                        <DataTable :data="rows" :options="options" class="display text-xs table-bordered nowrap" width="280%">
+                                        <table id="main_table" class="display text-xs table-bordered nowrap" width="200%">
                                             <thead>
                                                 <tr class="bg-gray-200 font-bold sticky top-0 z-50">
                                                     <th class="px-2 py-1 text-center" width="3%">Receive Date</th>
@@ -340,29 +292,30 @@
                                                     <th class="px-2 py-1">Supplier</th>
                                                     <th class="px-2 py-1" width="8%">Department</th>
                                                     <th class="px-2 py-1">Enduse</th>
-                                                    <th class="px-2 py-1" width="20%">Purpose</th>
+                                                    <th class="px-2 py-1" width="10%">Purpose</th>
                                                 </tr>
                                             </thead>
-                                        </DataTable>
-                                            <!-- <tr class="hover:bg-yellow-100 bg-slate" v-for="row in rows">
-                                                <td class="px-2 py-1 text-center">{{ row.receive_date }}</td>
-                                                <td class="px-2 py-1">{{ row.po_no }}</td>
-                                                <td class="px-2 py-1">{{ row.dr_no }}</td>
-                                                <td class="px-2 py-1">{{ row.mrecf_no }}</td>
-                                                <td class="px-2 py-1">{{ row.pn_no }}</td>
-                                                <td class="px-2 py-1 sticky left-0 bg-white">{{ row.item_description }}</td>
-                                                <td class="px-2 py-1">{{ row.exp_quantity }}</td>
-                                                <td class="px-2 py-1">{{ row.rec_quantity }}</td>
-                                                <td class="px-2 py-1">{{ row.rec_quantity }}</td>
-                                                <td class="px-2 py-1">{{ row.uom }}</td>
-                                                <td class="px-2 py-1">{{ row.unit_cost }}</td>
-                                                <td class="px-2 py-1">{{ row.rec_quantity * row.unit_cost }}</td>
-                                                <td class="px-2 py-1">{{ row.supplier_name }}</td>
-                                                <td class="px-2 py-1">{{ row.department_name }}</td>
-                                                <td class="px-2 py-1">{{ row.enduse_name }}</td>
-                                                <td class="px-2 py-1">{{ row.purpose_name }}</td>
-                                            </tr>
-                                        </table> -->
+                                            <tbody>
+                                                <tr class="hover:bg-yellow-100 bg-slate" v-for="row in rows">
+                                                    <td class="px-2 py-1 text-center">{{ row.receive_date }}</td>
+                                                    <td class="px-2 py-1">{{ row.po_no }}</td>
+                                                    <td class="px-2 py-1">{{ row.dr_no }}</td>
+                                                    <td class="px-2 py-1">{{ row.mrecf_no }}</td>
+                                                    <td class="px-2 py-1">{{ row.pn_no }}</td>
+                                                    <td class="px-2 py-1 sticky left-0 bg-white">{{ row.item_description }}</td>
+                                                    <td class="px-2 py-1">{{ row.exp_quantity }}</td>
+                                                    <td class="px-2 py-1">{{ row.rec_quantity }}</td>
+                                                    <td class="px-2 py-1">{{ row.rec_quantity }}</td>
+                                                    <td class="px-2 py-1">{{ row.uom }}</td>
+                                                    <td class="px-2 py-1">{{ row.unit_cost }}</td>
+                                                    <td class="px-2 py-1">{{ row.rec_quantity * row.unit_cost }}</td>
+                                                    <td class="px-2 py-1">{{ row.supplier_name }}</td>
+                                                    <td class="px-2 py-1">{{ row.department_name }}</td>
+                                                    <td class="px-2 py-1">{{ row.enduse_name }}</td>
+                                                    <td class="px-2 py-1">{{ row.purpose_name }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

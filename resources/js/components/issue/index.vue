@@ -3,7 +3,12 @@ import navigation from '@/layouts/navigation.vue';
 import { EyeIcon, Bars3Icon, PlusIcon, MagnifyingGlassIcon, ArrowUturnLeftIcon } from '@heroicons/vue/24/solid'
 import {onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
-
+import 'datatables.net-dt/css/dataTables.dataTables.css';
+import 'datatables.net';
+onMounted(() => {
+	$('#main_table').DataTable();
+});
+import $ from 'jquery'
     const router = useRouter()
 	let issuelist=ref([]);
 	let searchIssue=ref([]);
@@ -88,7 +93,7 @@ import { useRouter } from "vue-router";
 										</div>
 									</a>
 								</div>
-								<table class="table table-actions table-bordersed table-hover mb-0">
+								<table id="main_table" class="table table-actions table-bordersed table-hover mb-0">
 									<thead>
 										<tr>
 											<th scope="col" width="10%">Date</th>

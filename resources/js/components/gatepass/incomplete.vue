@@ -3,6 +3,12 @@ import{ onMounted, ref } from "vue"
 	import navigation from '@/layouts/navigation.vue';
 	import { EyeIcon, TrashIcon, PlusIcon, MagnifyingGlassIcon, Bars3Icon, ArrowUturnLeftIcon, DocumentIcon, PencilSquareIcon } from '@heroicons/vue/24/solid'
 	import { useRouter } from "vue-router"
+	import 'datatables.net-dt/css/dataTables.dataTables.css';
+	import 'datatables.net';
+	onMounted(() => {
+		$('#main_table').DataTable();
+	});
+	import $ from 'jquery'
     const router = useRouter()
     let searchIncompleteGatepass=ref([]);
 	let incompletegatepass=ref([]);
@@ -159,7 +165,7 @@ import{ onMounted, ref } from "vue"
 									</a>
 								</div>
 							</div>
-							<table class="table table-actions table-bordesred table-hover mb-0">
+							<table id="main_table" class="table table-actions table-bordesred table-hover mb-0">
 								<thead>
 									<tr>
 										<th scope="col" width="10%">Date Issued</th>

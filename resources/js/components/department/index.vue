@@ -3,7 +3,12 @@
 	import { useRouter } from "vue-router" 
 	import navigation from '@/layouts/navigation.vue';
 	import { PencilSquareIcon, Bars3Icon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon, ArrowUturnLeftIcon } from '@heroicons/vue/24/solid'
-
+	import 'datatables.net-dt/css/dataTables.dataTables.css';
+	import 'datatables.net';
+	onMounted(() => {
+		$('#main_table').DataTable();
+	});
+	import $ from 'jquery'
 
 	const router = useRouter() 
 	let departments = ref([])
@@ -79,7 +84,7 @@
 									</div>
 								</a>
 							</div>
-							<table class="table table-actions table-hover mb-0">
+							<table id="main_table" class="table table-actions table-hover mb-0">
 								<thead>
 									<tr>
 										<th scope="col">Department</th>

@@ -2,6 +2,12 @@
 import navigation from '@/layouts/navigation.vue';
 import { EyeIcon, Bars3Icon, PlusIcon, MagnifyingGlassIcon, ArrowUturnLeftIcon } from '@heroicons/vue/24/solid'
 import axios from "axios";
+import 'datatables.net-dt/css/dataTables.dataTables.css';
+import 'datatables.net';
+onMounted(() => {
+	$('#main_table').DataTable();
+});
+import $ from 'jquery'
 import {onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter()
@@ -73,7 +79,7 @@ let borrowed=ref([]);
 										</div>
 									</a>
 								</div>
-								<table class="table table-actions table-hover mb-0">
+								<table id="main_table" class="table table-actions table-hover mb-0">
 									<thead>
 										<tr>
 											<th scope="col"  class="text-center">#</th>

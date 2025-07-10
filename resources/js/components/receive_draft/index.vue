@@ -4,6 +4,12 @@
 	import axios from "axios";
 	import{ onMounted, ref } from "vue"
     import { useRouter } from "vue-router"
+	import 'datatables.net-dt/css/dataTables.dataTables.css';
+import 'datatables.net';
+onMounted(() => {
+	$('#main_table').DataTable();
+});
+import $ from 'jquery'
     const router = useRouter()
 	let list=ref([])
 	let searchDraft=ref([]);
@@ -85,7 +91,7 @@
 								</div>
 							
 							</div>
-							<table class="table table-actions table-borderesd table-hover mb-0">
+							<table id="main_table" class="table table-actions table-borderesd table-hover mb-0">
 								<thead>
 									<tr>
 										<th scope="col" width="30%">MRecF #</th>

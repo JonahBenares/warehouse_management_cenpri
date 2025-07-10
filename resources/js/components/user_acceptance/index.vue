@@ -2,89 +2,19 @@
 	import{ onMounted, ref } from "vue"	
 	import navigation from '@/layouts/navigation.vue';
 	import { EyeIcon, XMarkIcon, CheckIcon, MagnifyingGlassIcon, Bars3Icon, ChevronRightIcon, ArrowUturnLeftIcon, BarsArrowUpIcon, ClipboardDocumentIcon } from '@heroicons/vue/24/solid'
-	import DataTable from 'datatables.net-vue3';
-	import DataTablesCore from 'datatables.net-bs5';
-	import 'datatables.net-responsive';
-	import 'datatables.net-select';
-	import 'datatables.net-buttons';
-	import 'datatables.net-buttons/js/buttons.html5';
-	import 'datatables.net-buttons/js/buttons.print.js';
+	import 'datatables.net-dt/css/dataTables.dataTables.css';
+    import 'datatables.net';
+    onMounted(() => {
+        $('#main_table').DataTable();
+    });
+    import $ from 'jquery'
 	import jszip from 'jszip';
-	import $ from 'jquery'
     import moment from 'moment'
-	DataTablesCore.Buttons.jszip(jszip);
-	DataTable.use(DataTablesCore);
 	import { useRouter } from "vue-router"
     const router = useRouter()
 	let head = ref([])
 	let pending_items = ref(0)
 	let searchRecieve=ref([]);
-	const options = {
-		dom: "<'row'<'col-sm-6 col-lg-6 mb-2'B><'col-sm-4 col-gl-4 offset-lg-2 offset-sm-2 mb-2'f>>"+"<'row'<'col-sm-12 mb-2'tr>>"+"<'row'<'col-sm-6 mb-2'i><'col-sm-6 mb-2'p>>",
-		select: true,
-		order:[2, 'desc'],	
-		lengthMenu: [
-			[10, 25, 50, -1],
-			['10 rows', '25 rows', '50 rows', 'Show all']
-		],
-		buttons: [
-			{
-				extend: 'copy',
-                title: 'User Acceptance (Pending)',
-				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5, 6],
-					orthogonal: 'export',
-				}
-			},
-			{
-				extend: 'excel',
-                title: 'User Acceptance (Pending)',
-                exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5, 6],
-					orthogonal: 'export',
-                    format: {
-                        body: function (data, row, column, node) {
-                            if (column === 0){
-                               return moment.utc(data).format('MMMM DD, YYYY');
-                            }else if(column === 6){
-								data = data.replace(/&gt;/g, '>')
-                                   .replace(/&lt;/g, '<')
-                                   .replace(/&amp;/g, '&')
-                                   .replace(/&quot;/g, '"')
-                                   .replace(/&#163;/g, '£')
-                                   .replace(/&#39;/g, '\'')
-                                   .replace(/&#10;/g, '\n');
-								//replace html tags with one space
-								data = data.replace(/<[^>]*>/g, ' ');
-								//replace multiple spaces and tabs etc with one space
-								return data.replace(/\s\s+/g, ' ');
-							}else{
-                                return data;
-                            }
-                        }
-                    }
-				},
-                createEmptyCells: true,
-                customize: function(xlsx) {
-                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    var clRow = $('row', sheet);
-                    clRow[0].children[0].remove(); // clear header cell
-                    $( 'row c', sheet ).attr( 's', '25' );
-                }
-			},
-			{
-				extend: 'print',
-                title: 'User Acceptance (Pending)',
-				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5, 6],
-					orthogonal: 'export',
-				}
-			},
-			{
-				extend: 'pageLength'
-			}
-		]
-	};
 	onMounted(async () =>{
         getAllReceive()
     })
@@ -171,7 +101,7 @@
 								</div>
 							</div> -->
 							<!-- <table class="table table-actions table-bordesred table-hover mb-0"> -->
-							<DataTable :data="head"  :options="options" class="table table-actions table-bordesred table-hover mb-0" width="100%">
+							<table id="main_table" class="table table-actions table-bordesred table-hover mb-0" width="100%">
 								<thead>
 									<tr>
 										<th scope="col" width="15%">From</th>
@@ -190,7 +120,21 @@
 										</th>
 									</tr>
 								</thead>
-								<template #column-7="props">
+								<tbody>
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+								<!-- <template #column-7="props">
 									<span class="badge badge-pill badge-danger" v-if="props.rowData.pending_items != 0"> {{ props.rowData.pending_items }}</span>
 								</template>
 								<template #column-8="props">
@@ -203,8 +147,8 @@
 									<a @click="showBackTransaction(props.rowData.id)" class="text-white btn btn-xs bg-yellow-500 btn-rounded" v-else-if="props.rowData.from=='Backorder'">
 										<EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></EyeIcon>
 									</a>
-								</template>
-							</DataTable>
+								</template> -->
+							</table>
 								<!-- <tbody>
 									<tr v-for="h in head.data">
 										<td>{{ h.mrecf_no }}</td>

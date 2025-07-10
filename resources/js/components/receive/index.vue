@@ -4,7 +4,12 @@ import{ onMounted, ref } from "vue"
 	import { EyeIcon, TrashIcon, PlusIcon, MagnifyingGlassIcon, Bars3Icon, ChevronRightIcon, ArrowUturnLeftIcon, BarsArrowUpIcon, ClipboardDocumentIcon } from '@heroicons/vue/24/solid'
 	import { useRouter } from "vue-router"
     const router = useRouter()
-
+	import 'datatables.net-dt/css/dataTables.dataTables.css';
+	import 'datatables.net';
+	onMounted(() => {
+		$('#main_table').DataTable();
+	});
+	import $ from 'jquery'
 	let head = ref([])
 	let searchRecieve=ref([]);
 	onMounted(async () =>{
@@ -90,7 +95,7 @@ import{ onMounted, ref } from "vue"
 									</a>
 								</div>
 							</div>
-							<table class="table table-actions table-bordesred table-hover mb-0">
+							<table id="main_table" class="table table-actions table-bordesred table-hover mb-0">
 								<thead>
 									<tr>
 										<th scope="col" width="20%">MrecF No.</th>
