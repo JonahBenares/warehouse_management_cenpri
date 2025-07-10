@@ -2219,7 +2219,7 @@ class ReceiveController extends Controller
                 ];
             }
         }
-        $backorder_list = BackorderHead::with('backorder_details','backorder_items')->where('saved','=','1')->where('draft','=','0')->orderBy('receive_date','DESC')->get();
+        $backorder_list = BackorderHead::with('backorder_details','backorder_items')->where('saved','=','1')->where('draft','=','0')->orderBy('backorder_date','DESC')->get();
         foreach($backorder_list AS $bl){
             $pendingback_items = BackorderItems::where('backorder_head_id',$bl->id)->where('eval_flag', '0')->count();
             $po_no = BackorderHead::where('id',$bl->id)->value('po_no');
