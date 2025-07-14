@@ -1040,9 +1040,9 @@ const stockcardRedirect= (variant_id,item_id,supplier_id,catalog_no,brand) => {
 								<div class="col-lg-3 px-1">
 									<div class="form-group">
 										<div class="flex justify-start ">
-											<span class="text-xs text-gray-500 leading-none uppercase">Minimum Order Qty</span>
+											<span class="text-xs text-gray-500 leading-none uppercase">Reorder Point</span>
 										</div>
-										<input type="text" class="form-control border my-1" v-model="form.moq" placeholder="Minimum Order Qty">
+										<input type="text" class="form-control border my-1" v-model="form.moq" placeholder="Reorder Point">
 									</div>										
 								</div>
 								<div class="col-lg-3 px-1">

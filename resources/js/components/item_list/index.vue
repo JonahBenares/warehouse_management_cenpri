@@ -122,7 +122,7 @@
 											<th scope="col" width="15%" class="text-sm !text-gray-600">Location</th>
 											<th scope="col" width="10%" class="text-sm !text-gray-600">Rack</th>
 											<th scope="col" width="10%" class="text-sm !text-gray-600 text-center">Qty</th>
-											<th scope="col" width="10%" class="text-sm !text-gray-600 text-center">MOQ</th>
+											<th scope="col" width="10%" class="text-sm !text-gray-600 text-center">Reorder Point</th>
 											<th scope="col" width="1%" align="center" class="pr-2">
 												<div class="flex justify-center">
 													<Bars3Icon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"></Bars3Icon>

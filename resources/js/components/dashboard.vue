@@ -399,7 +399,7 @@
 					<div class="card p-0">
 						<div class="card-header border-0 !bg-blue-500 rounded-t-lg ">
 							<div class="flex justify-between">
-								<span class="text-white text-lg">Minimum Order Quantity</span>
+								<span class="text-white text-lg">Reorder Point</span>
 								<a href="/item_list" class="btn btn-sm text-white p-0 mt-1">
 									<EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"></EyeIcon>
 								</a>
@@ -419,7 +419,7 @@
 									<table class="table table-bordereds">
 										<tr class="text-xs uppercase font-bold bg-gray-100">
 											<td>Item</td>
-											<td class="text-center" width="10%">MOQ</td>
+											<td class="text-center" width="10%">Reorder Point</td>
 											<td class="text-center" width="10%">Cur. Inv.</td>
 										</tr>										
 										<tr v-for="m in moqitems">
