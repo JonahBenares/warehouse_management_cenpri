@@ -4,6 +4,12 @@ import { PencilSquareIcon, Bars3Icon, PlusIcon, MagnifyingGlassIcon, ArrowUturnL
 import axios from "axios";
 import {onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
+import 'datatables.net-dt/css/dataTables.dataTables.css';
+import 'datatables.net';
+onMounted(() => {
+	$('#main_table').DataTable();
+});
+import $ from 'jquery'
 const router = useRouter()
 let searchBackorder=ref([]);
 let backorder=ref([]);
@@ -74,7 +80,7 @@ let backorder=ref([]);
 										</div>
 									</a>
 								</div>
-								<table class="table table-actions table-hover mb-0">
+								<table id="main_table" class="table table-actions table-hover mb-0">
 									<thead>
 										<tr>
 											<th scope="col" width="20%">MRIF No.</th>

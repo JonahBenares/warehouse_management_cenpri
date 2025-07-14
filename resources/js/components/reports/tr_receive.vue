@@ -3,18 +3,14 @@
 	import { useRouter } from "vue-router" 
 	import navigation from '@/layouts/navigation.vue';
 	import { PencilSquareIcon, Bars3Icon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon, ArrowUturnLeftIcon } from '@heroicons/vue/24/solid'
-    import DataTable from 'datatables.net-vue3';
-	import DataTablesCore from 'datatables.net-bs5';
-	import 'datatables.net-responsive';
-	import 'datatables.net-select';
-	import 'datatables.net-buttons';
-	import 'datatables.net-buttons/js/buttons.html5';
-	import 'datatables.net-buttons/js/buttons.print.js';
+    import 'datatables.net-dt/css/dataTables.dataTables.css';
+    import 'datatables.net';
+    onMounted(() => {
+        $('#main_table').DataTable();
+    });
     import $ from 'jquery'
 	import jszip from 'jszip';
     import moment from 'moment'
-	DataTablesCore.Buttons.jszip(jszip);
-	DataTable.use(DataTablesCore);
     const router = useRouter()
     let rows = ref([])
     let form = ref({
@@ -37,152 +33,7 @@
     let department = ref([])
     let enduse = ref([])
     let purpose = ref([])
-    const options = {
-		dom: "<'row'<'col-sm-6 col-lg-6 mb-2'B><'col-sm-4 col-gl-4 offset-lg-2 offset-sm-2 mb-2'f>>"+"<'row'<'col-sm-12 mb-2'tr>>"+"<'row'<'col-sm-6 mb-2'i><'col-sm-6 mb-2'p>>",
-		select: true,	
-		lengthMenu: [
-			[10, 25, 50, -1],
-			['10 rows', '25 rows', '50 rows', 'Show all']
-		],
-		buttons: [
-			{
-				extend: 'copy',
-                title: 'Receive Report',
-			},
-			{
-				extend: 'excel',
-                title: 'Receive Report',
-                exportOptions: {
-					orthogonal: null,
-                    format: {
-                        body: function (data, row, column, node) {
-                            if (column === 0)
-                            {
-                               return moment.utc(data).format('MMMM DD, YYYY');
-                            }else{
-                                return data;
-                            }
-                        }
-                    }
-				},
-                createEmptyCells: true,
-                customize: function(xlsx) {
-                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    var clRow = $('row', sheet);
-                    clRow[0].children[0].remove(); // clear header cell
-                    $( 'row c', sheet ).attr( 's', '25' );
-                }
-                // customize: function(xlsx) {
-
-                //     function _createNode(doc, nodeName, opts) { 
-                //         var tempNode = doc.createElement(nodeName);
-
-                //         if (opts) {
-                //             if (opts.attr) {
-                //                 $(tempNode).attr(opts.attr);
-                //             }
-
-                //             if (opts.children) {
-                //                 $.each(opts.children, function (key, value) {
-                //                     tempNode.appendChild(value);
-                //                 });
-                //             }
-
-                //             if (opts.text !== null && opts.text !== undefined) {
-                //                 tempNode.appendChild(doc.createTextNode(opts.text));
-                //             }
-                //         }
-
-                //         return tempNode;
-                //     }
-
-                //     var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                //     var downrows = 7;
-                //     var clRow = $('row', sheet);
-                //     var mergeCells = $('mergeCells', sheet);
-                //     mergeCells[0].children[0].remove(); // remove merge cell 1st row
-                //     clRow[0].children[0].remove(); // clear header cell
-                //     //update Row
-                //     clRow.each(function () {
-                //         var attr = $(this).attr('r');
-                //         var ind = parseInt(attr);
-                //         ind = ind + downrows;
-                //         $(this).attr("r",ind);
-                //     });
-            
-                //     // Update  row > c
-                //     $('row c ', sheet).each(function () {
-                //         var attr = $(this).attr('r');
-                //         var pre = attr.substring(0, 1);
-                //         var ind = parseInt(attr.substring(1, attr.length));
-                //         ind = ind + downrows;
-                //         $(this).attr("r", pre + ind);
-                //     });
-                //     var msg=''
-                //     function Addrow(index,data) {
-                //         msg='<row r="'+index+'">'
-                //         for(var i=0;i<data.length;i++){
-                //             var key=data[i].k;
-                //             var value=data[i].v;
-                //             msg += '<c t="inlineStr" r="' + key + index + '" s="2">';
-                //             msg += '<is>';
-                //             msg +=  '<t>'+value+'</t>';
-                //             msg+=  '</is>';
-                //             msg+='</c>';
-                //         }
-                //         msg += '</row>';
-                //         return msg;
-                //     }
-
-                //     mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
-                //         attr: {
-                //             ref: 'B1:E1', // merge address
-                //         }
-                //     }));
-
-                //     mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
-                //         attr: {
-                //             ref: 'B2:E2', // merge address
-                //         }
-                //     }));
-
-                //     mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
-                //         attr: {
-                //             ref: 'B3:E3', // merge address
-                //         }
-                //     }));
-
-                //     mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
-                //         attr: {
-                //             ref: 'I2:L2', // merge address
-                //         }
-                //     }));
-
-                //     mergeCells.attr('count', mergeCells.attr('count') + 1);
-            
-                //     //insert
-                //     $( 'row c', sheet ).attr( 's', '25' );
-                //     var r1 = Addrow(1, [{ k: 'A', v: '' }, { k: 'B', v: 'CENTRAL NEGROS POWER RELIABILITY, INC.' }, { k: 'C', v: '' },{ k: 'D', v:''},{ k: 'E', v:''},{ k: 'F', v:''},{ k: 'G', v:''},{ k: 'H', v:''},{ k: 'I', v:''}]);
-                //     var r2 = Addrow(2, [{ k: 'A', v: '' }, { k: 'B', v: 'Prk. San Jose, Brgy. Calumangan, Bago City' }, { k: 'C', v: '' },{ k: 'D', v:''},{ k: 'E', v:''},{ k: 'F', v:''},{ k: 'G', v:''},{ k: 'H', v:''},{ k: 'I', v:'SUMMARY OF RECIEVED MATERIALS'}]);
-                //     var r3 = Addrow(3, [{ k: 'A', v: '' }, { k: 'B', v: 'Tel. No. 476-7382' }, { k: 'C', v: '' },{ k: 'D', v:''},{ k: 'E', v:''},{ k: 'F', v:''},{ k: 'G', v:''},{ k: 'H', v:''},{ k: 'I', v:''}]);
-                //     var r4 = Addrow(5, [{ k: 'A', v: 'Period Covered:' }, { k: 'B', v: '' }, { k: 'C', v: 'FROM:' },{ k: 'D', v:form.value.from_date},{ k: 'E', v:'TO:'},{ k: 'F', v:form.value.to_date},{ k: 'G', v:''},{ k: 'H', v:''},{ k: 'I', v:''}]);
-                //     var r5 = Addrow(7, [{ k: 'A', v: 'Main Category:' }, { k: 'B', v: form.value.category }, { k: 'C', v: 'Subcategory:' },{ k: 'D', v:form.value.subcategory},{ k: 'E', v:''},{ k: 'F', v:'Item Name:'},{ k: 'G', v:form.value.item_name},{ k: 'H', v:''},{ k: 'I', v:''}]);
-                //     sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2+ r3 + r4 + r5  + sheet.childNodes[0].childNodes[1].innerHTML;
-                // }
-			},
-            // {
-			// 	extend: 'csv',
-            //     title: 'Receive Report',
-			// },
-			{
-				extend: 'print',
-                title: 'Receive Report',
-			},
-			{
-				extend: 'pageLength'
-			}
-		]
-	};
+ 
     onMounted(async () =>{
         getItems()
         getPR()
@@ -433,10 +284,10 @@
                                 <div class="col-lg-12 px-1">
                                     <div class='w-full border hover:!overflow-x-scroll overflow-x-hidden h-96 bg-white mb-4 p-2'>
                                         <!-- <table class="text-xs table-bordered" width="280%"> -->
-                                        <DataTable :data="rows" :options="options" class="display text-xs table-bordered nowrap" width="280%"> 
+                                        <table id="main_table" class="display text-xs table-bordered nowrap" width="200%"> 
                                             <thead>
                                                 <tr class="bg-gray-200 font-bold sticky top-0 z-50">
-                                                    <th class="px-2 py-1 text-center" width="10%">Receive Date</th>
+                                                    <th class="px-2 py-1 text-center" width="5%">Receive Date</th>
                                                     <th class="px-2 py-1" width="5%">PO No.</th>
                                                     <th class="px-2 py-1" width="5%">DR No.</th>
                                                     <th class="px-2 py-1" width="10%">MRIF No.</th>
@@ -452,11 +303,11 @@
                                                     <th class="px-2 py-1">Supplier</th>
                                                     <th class="px-2 py-1" width="8%">Department</th>
                                                     <th class="px-2 py-1">Enduse</th>
-                                                    <th class="px-2 py-1" width="20%">Purpose</th>
+                                                    <th class="px-2 py-1" width="10%">Purpose</th>
                                                 </tr>
                                             </thead>
-                                        </DataTable>
-                                            <!-- <tr class="hover:bg-yellow-100 bg-slate" v-for="row in rows">
+                                            <tbody>
+                                            <tr class="hover:bg-yellow-100 bg-slate" v-for="row in rows">
                                                 <td class="px-2 py-1 text-center">{{ row.receive_head.receive_date }}</td>
                                                 <td class="px-2 py-1">{{ row.receive_details.pr_no }}</td>
                                                 <td class="px-2 py-1">{{ row.receive_head.dr_no }}</td>
@@ -471,9 +322,9 @@
                                                 <td class="px-2 py-1">{{ row.receive_details.department_name }}</td>
                                                 <td class="px-2 py-1">{{ row.receive_details.enduse_name }}</td>
                                                 <td class="px-2 py-1">{{ row.receive_details.purpose_name }}</td>
-                                            </tr> -->
-                                          
-                                        <!-- </table> -->
+                                            </tr>
+                                          </tbody>
+                                        </table>
                                     </div>
                                     <div class='w-full border hover:!overflow-x-scroll overflow-x-hidden h-96 bg-white mb-4'>
                                     <table class="display text-xs table-bordered nowrap" width="200%">
@@ -927,8 +778,3 @@
 		</div>
     </navigation>
 </template>
-<style>
-    @import 'datatables.net-dt';
-    @import 'datatables.net-buttons-dt';
-    @import 'datatables.net-select-dt';
-</style>

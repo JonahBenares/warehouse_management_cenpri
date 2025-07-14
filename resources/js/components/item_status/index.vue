@@ -3,6 +3,12 @@ import navigation from '@/layouts/navigation.vue';
 import { PencilSquareIcon, Bars3Icon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon, ArrowUturnLeftIcon, BarsArrowUpIcon } from '@heroicons/vue/24/solid'
 import {onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
+import 'datatables.net-dt/css/dataTables.dataTables.css';
+import 'datatables.net';
+onMounted(() => {
+	$('#main_table').DataTable();
+});
+import $ from 'jquery'
 const router = useRouter();
 let status=ref([]);
 let searchStatus=ref([]);
@@ -75,7 +81,7 @@ const search = async () => {
 									</a>
 								</div>
 							</div>
-							<table class="table table-actions table-hover mb-0">
+							<table id="main_table" class="table table-actions table-hover mb-0">
 								<thead>
 									<tr>
 										<th scope="col">Item Status</th>

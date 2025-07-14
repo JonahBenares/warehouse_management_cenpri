@@ -44,7 +44,7 @@ class DropdownController extends Controller
     }
 
     public function all_supplier(){
-        $supplier=Supplier::where('supplier_name','!=','')->orderBy('supplier_name','ASC')->get()->unique('supplier_name');
+        $supplier=Supplier::where('supplier_name','!=','')->orderBy('supplier_name','ASC')->get()->unique('supplier_name')->values(); // Reindex after unique();
         return response()->json([
             'supplier'=>$supplier
         ],200);
@@ -93,7 +93,8 @@ class DropdownController extends Controller
             ->where('brand','!=','')
             ->orderBy('brand','ASC')
             ->get()
-            ->unique('brand');
+            ->unique('brand')
+            ->values(); // Reindex after unique()
        // return $brand;
         return response()->json([
             'brand'=>$brand
@@ -190,10 +191,16 @@ class DropdownController extends Controller
     }
 
     public function all_item(){
-        $items=Items::where('item_description','!=','')->where('draft','=','0')->orderBy('item_description','ASC')->get()->unique('item_description');
+        $items = Items::where('item_description', '!=', '')
+        ->where('draft', '=', 0)
+        ->orderBy('item_description', 'ASC')
+        ->get()
+        ->unique('item_description')
+        ->values(); // Reindex after unique()
+
         return response()->json([
-            'items'=>$items
-        ],200);
+            'items' => $items
+        ], 200);
     }
 
     public function item_variant_list(){

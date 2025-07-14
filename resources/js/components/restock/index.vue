@@ -4,6 +4,12 @@ import { PencilSquareIcon, EyeIcon, Bars3Icon, PlusIcon, MagnifyingGlassIcon, Ar
 import axios from "axios";
 import {onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
+import 'datatables.net-dt/css/dataTables.dataTables.css';
+import 'datatables.net';
+onMounted(() => {
+	$('#main_table').DataTable();
+});
+import $ from 'jquery'
 const router = useRouter()
 let restockitems=ref([]);
 let searchRestock=ref([]);
@@ -76,7 +82,7 @@ const editRestock = (id,source_pr,destination) => {
 										</div>
 									</a>
 								</div>
-								<table class="table table-actions table-borsdered table-hover mb-0">
+								<table id="main_table" class="table table-actions table-borsdered table-hover mb-0">
 									<thead>
 										<tr>
 											<th scope="col" width="8%">Date</th>

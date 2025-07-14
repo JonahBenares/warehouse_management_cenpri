@@ -3,18 +3,14 @@
 	import { useRouter } from "vue-router" 
 	import navigation from '@/layouts/navigation.vue';
 	import { PencilSquareIcon, Bars3Icon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon, ArrowUturnLeftIcon } from '@heroicons/vue/24/solid'
-    import DataTable from 'datatables.net-vue3';
-	import DataTablesCore from 'datatables.net-bs5';
-	import 'datatables.net-responsive';
-	import 'datatables.net-select';
-	import 'datatables.net-buttons';
-	import 'datatables.net-buttons/js/buttons.html5';
-	import 'datatables.net-buttons/js/buttons.print.js';
-	import jszip from 'jszip';
+    import 'datatables.net-dt/css/dataTables.dataTables.css';
+    import 'datatables.net';
+    onMounted(() => {
+        $('#main_table').DataTable();
+    });
     import $ from 'jquery'
+	import jszip from 'jszip';
     import moment from 'moment'
-	DataTablesCore.Buttons.jszip(jszip);
-	DataTable.use(DataTablesCore);
     let rows = ref([])
     let form = ref({
         from_date:'',
@@ -38,91 +34,6 @@
     let wh_cost = ref('0')
     let wh_wo_cost = ref('0')
     let pr_wo_cost = ref('0')
-    const options = {
-		dom: "<'row'<'col-sm-6 col-lg-6 mb-2'B><'col-sm-4 col-gl-4 offset-lg-2 offset-sm-2 mb-2'f>>"+"<'row'<'col-sm-12 mb-2'tr>>"+"<'row'<'col-sm-6 mb-2'i><'col-sm-6 mb-2'p>>",
-		select: true,	
-		lengthMenu: [
-			[10, 25, 50, -1],
-			['10 rows', '25 rows', '50 rows', 'Show all']
-		],
-		buttons: [
-			{
-				extend: 'copy',
-                title:'Issued Report',
-			},
-			{
-				extend: 'excel',
-                title:'Issued Report',
-                exportOptions: {
-					orthogonal: null,
-                    format: {
-                        body: function (data, row, column, node) {
-                            if (column === 0)
-                            {
-                               return moment.utc(data).format('MMMM DD, YYYY');
-                            }else{
-                                return data;
-                            }
-                        }
-                    }
-				},
-                createEmptyCells: true,
-                customize: function(xlsx) {
-                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    var downrows = 1;
-                    var clRow = $('row', sheet);
-                    var mergeCells = $('mergeCells', sheet);
-                    mergeCells[0].children[0].remove(); // remove merge cell 1st row
-                    clRow[0].children[0].remove(); // clear header cell
-                    clRow.each(function () {
-                        var attr = $(this).attr('r');
-                        var ind = parseInt(attr);
-                        ind = ind + downrows;
-                        $(this).attr("r",ind);
-                    });
-            
-                    // Update  row > c
-                    $('row c ', sheet).each(function () {
-                        var attr = $(this).attr('r');
-                        var pre = attr.substring(0, 1);
-                        var ind = parseInt(attr.substring(1, attr.length));
-                        ind = ind + downrows;
-                        $(this).attr("r", pre + ind);
-                    });
-                    var msg=''
-                    function Addrow(index,data) {
-                        msg='<row r="'+index+'">'
-                        for(var i=0;i<data.length;i++){
-                            var key=data[i].k;
-                            var value=data[i].v;
-                            msg += '<c t="inlineStr" r="' + key + index + '" s="25">';
-                            msg += '<is>';
-                            msg +=  '<t>'+value+'</t>';
-                            msg+=  '</is>';
-                            msg+='</c>';
-                        }
-                        msg += '</row>';
-                        return msg;
-                    }
-                    $( 'row c', sheet ).attr( 's', '25' );
-                    var r1 = Addrow(1, [{ k: 'A', v: 'Total Cost w/ PR: ' }, { k: 'B', v: pr_cost.value }, { k: 'C', v: 'Total Number of Items w/ PR w/o Cost:' },{ k: 'D', v:pr_wo_cost.value}]);
-                    var r2 = Addrow(2, [{ k: 'A', v: 'Total Cost of WH Stocks: ' }, { k: 'B', v: wh_cost.value }, { k: 'C', v: 'Total Number of Items from WH Stocks w/o Cost: ' },{ k: 'D', v:wh_wo_cost.value}]);
-                    sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + sheet.childNodes[0].childNodes[1].innerHTML;
-                }
-			},
-            // {
-			// 	extend: 'csv',
-            //     title:'Issued Report',
-			// },
-			{
-				extend: 'print',
-                title:'Issued Report',
-			},
-			{
-				extend: 'pageLength'
-			}
-		]
-	};
     onMounted(async () =>{
         getItems()
         getPR()
@@ -383,7 +294,7 @@
                                             </tr>
                                         </table>
                                         <br>
-                                        <DataTable :data="rows" :options="options" class="display text-xs table-bordered nowrap" width="280%">
+                                        <DataTable :data="rows" :options="options" class="display text-xs table-bordered nowrap" width="200%">
                                             <thead> 
                                                 <tr class="bg-gray-200 font-bold sticky top-0 z-50">
                                                     <th class="px-2 py-1 text-center" width="3%">Issue Date</th>
@@ -400,7 +311,7 @@
                                                     <th class="px-2 py-1">Supplier</th>
                                                     <th class="px-2 py-1" width="8%">Department</th>
                                                     <th class="px-2 py-1">Enduse</th>
-                                                    <th class="px-2 py-1" width="20%">Purpose </th>
+                                                    <th class="px-2 py-1" width="10%">Purpose </th>
                                                 </tr>
                                             </thead>
                                         </DataTable>
@@ -437,8 +348,3 @@
 		</div>
     </navigation>
 </template>
-<style>
-    @import 'datatables.net-dt';
-    @import 'datatables.net-buttons-dt';
-    @import 'datatables.net-select-dt';
-</style>

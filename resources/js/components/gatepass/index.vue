@@ -19,7 +19,12 @@ import{ onMounted, ref } from "vue"
     const viewHistoryModal = ref(false)
     const dateReturnModal = ref(false)
 	const hideModal = ref(true)
-
+	import 'datatables.net-dt/css/dataTables.dataTables.css';
+	import 'datatables.net';
+	onMounted(() => {
+		$('#main_table').DataTable();
+	});
+	import $ from 'jquery'
 	onMounted(async () => {
 			getAllGatepass()
 		})
@@ -167,7 +172,7 @@ import{ onMounted, ref } from "vue"
 									</a>
 								</div>
 							</div>
-							<table class="table table-actions table-bordesred table-hover mb-0">
+							<table id="main_table" class="table table-actions table-bordesred table-hover mb-0">
 								<thead>
 									<tr>
 										<th scope="col" width="20%">Date Issued</th>

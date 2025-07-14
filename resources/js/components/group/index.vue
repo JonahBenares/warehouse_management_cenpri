@@ -3,7 +3,12 @@
 	import { useRouter } from "vue-router" 
 	import navigation from '@/layouts/navigation.vue';
 	import { PencilSquareIcon, TrashIcon, PlusIcon, MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon, ArrowUturnLeftIcon, Bars3Icon } from '@heroicons/vue/24/solid'
-
+	import 'datatables.net-dt/css/dataTables.dataTables.css';
+	import 'datatables.net';
+	onMounted(() => {
+		$('#main_table').DataTable();
+	});
+	import $ from 'jquery'
 	const router = useRouter() 
 	let groups = ref([])
 	let searchGroup=ref([]);
@@ -83,7 +88,7 @@
 								</a>
 							</div>
 							<p class="text-danger" v-if="error">{{ error }}</p>
-							<table class="table table-bordsered table-hover mb-0">
+							<table id="main_table" class="table table-bordsered table-hover mb-0">
 								<thead>
 									<tr>
 										<th scope="col">Group</th>

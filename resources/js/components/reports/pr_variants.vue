@@ -76,16 +76,24 @@
 						<div class="table-responsive-md">
 							<div class="flex justify-start pb-2 my-2 space-x-2">
 								<div class="w-64">
-									<select type="text" class="form-control border" v-model="form.item_name" >
-                                        <option value="undefined">Select Item</option>
-										<option v-for="i in items" :value="i.id" :key="i.id">{{ i.item_description }}</option>
-                                    </select>
+									<v-select v-model="form.item_name" :options="items" :reduce="items => items.id" class="form-control border" :get-option-label="option => `${option.item_description}`" placeholder="Select Item">
+										<template #selected-option="{ item_description }">
+											{{ item_description }}
+										</template>
+										<template #option="{ item_description }">
+											{{ item_description }}
+										</template>
+									</v-select>
 								</div>
                                 <div class="w-64">
-									<select type="text" class="form-control border" v-model="form.pr_no" >
-                                        <option value="undefined">Select PR</option>
-										<option v-for="p in pr" :value="p.pr_no">{{ p.pr_no }}</option>
-                                    </select>
+									<v-select v-model="form.pr_no" :options="pr" :reduce="pr => pr.pr_no" class="form-control border" :get-option-label="option => `${option.pr_no}`" placeholder="Select PR">
+										<template #selected-option="{ pr_no }">
+											{{ pr_no }}
+										</template>
+										<template #option="{ pr_no }">
+											{{ pr_no }}
+										</template>
+									</v-select>
 								</div>
 								<button class="btn btn-sm btn-success" @click="filter()">
 									<div class="flex justify-between space-x-2" >
@@ -106,7 +114,7 @@
                                     </div>
                                 </div>
                             </div>
-							<div v-if="reports.length > 0">
+							<div>
 								<table class="table border mb-0">
 									<thead>
 										<tr>
@@ -116,7 +124,7 @@
 											<th class="border font-xxs align-top text-center !bg-yellow-100">Balance</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody v-if="reports.length > 0">
 										<tr v-for="r in reports" class="bg-purple-300 shadow">
 											<td class="text-xs border font-bold">{{ r.pr_no }}</td>
 											<td class="text-xs border font-bold">{{ r.item }}</td>
@@ -129,7 +137,9 @@
 												<span class="text-white btn btn-xs py-0 !text-xs bg-gray-400 rounded mr-1" v-if="r.variant.average_cost != '' && r.variant!='Beginning Balance'">{{ r.variant.average_cost+" "+r.variant.currency }}</span></td>
 											<td class="text-xs border font-bold text-center font-bold !bg-yellow-100">{{ r.balance }}</td>
 										</tr>
-										
+									</tbody>
+									<tbody v-else>
+										<tr><td colspan="14" class="text-xs border font-bold text-center">No data available.</td></tr>
 									</tbody>
 								</table>
 							</div>

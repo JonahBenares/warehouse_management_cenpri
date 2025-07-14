@@ -4,7 +4,12 @@ import { CheckCircleIcon, ExclamationCircleIcon, PencilSquareIcon, TrashIcon, Pl
 import axios from "axios";
 import {onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
-
+import 'datatables.net-dt/css/dataTables.dataTables.css';
+import 'datatables.net';
+onMounted(() => {
+	$('#main_table').DataTable();
+});
+import $ from 'jquery'
 const router = useRouter();
 let reminders=ref([]);
 let searchReminders=ref([]);
@@ -153,7 +158,7 @@ const props = defineProps({
 									</a>
 								</div>
 							</div>
-							<table class="table table-bordsered tabluiojhnbe-hover mb-0">
+							<table id="main_table" class="table table-bordsered tabluiojhnbe-hover mb-0">
 								<thead>
 									<tr>
 										<th width="10%">Date</th>
