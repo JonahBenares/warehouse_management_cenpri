@@ -226,7 +226,7 @@ class DropdownController extends Controller
     }
 
     public function all_suppliers(){
-        $suppliers=supplier::where('supplier_name','!=','')->orderBy('supplier_name','ASC')->get()->unique('supplier_name');
+        $suppliers=supplier::where('supplier_name','!=','')->orderBy('supplier_name','ASC')->get()->unique('supplier_name')->values(); // Reindex after unique();;
         return response()->json([
             'suppliers'=>$suppliers
         ],200);

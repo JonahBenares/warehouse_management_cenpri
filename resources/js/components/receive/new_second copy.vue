@@ -2,7 +2,7 @@
 	import{ onMounted, ref } from "vue"
 	
 	import navigation from '@/layouts/navigation.vue';
-	import { CheckCircleIcon, TrashIcon, PlusIcon, XMarkIcon, ExclamationCircleIcon, ArrowUturnLeftIcon, ChevronRightIcon, ChevronLeftIcon , EyeIcon } from '@heroicons/vue/24/solid'
+	import { CheckCircleIcon, TrashIcon, PlusIcon, XMarkIcon, ExclamationCircleIcon, ArrowUturnLeftIcon, ChevronRightIcon, ChevronLeftIcon  } from '@heroicons/vue/24/solid'
     import { useRouter } from "vue-router"
 import { it } from "vuetify/locale";
     const router = useRouter()
@@ -609,70 +609,82 @@ const autosuggestSize = async (index) => {
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="border-t-2 border-x-2 border-blue-400 rounded-t-lg">
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="p-1 rounded-t-md bg-gray-200"></div>
-											</div>
-										</div>
-										<table width="100%" class="table-bordered !text-[13px]">
+										<table width="100%" class="table-borde5red">
 											<tr class="">
-												<!-- <td rowspan="4" width="3%" class="bg-blue-400 rounded-tl-sm">
+												<td rowspan="4" width="3%" class="bg-blue-400 rounded-tl-sm">
 													<input type="text" disabled v-model="details.detail_no" class=" bg-blue-400 text-lg text-center font-bold text-white rounded w-full">
-													<input type="hidden"  v-model="details.receive_head_id">
-												</td> -->
-												<td class="px-0 py-0 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >PR/JO/WH Stocks</td>
-												<td class="px-2 py-1"  width="14%">
-													<div class="flex justify-start" v-if="details.pr_no == 'WH Stocks'">
-														<input type="checkbox" class="" id="wh_stocks" @change="checkWH()" checked>
-														<label class="form-label mb-0 ml-2">Warehouse Stock</label>
-													</div>
-													<div class="flex justify-start" v-else>
-														<input type="checkbox" class="" id="wh_stocks" @change="checkWH()">
-														<label class="form-label mb-0 ml-2">Warehouse Stock</label>
+												<input type="hidden"  v-model="details.receive_head_id">
+												</td>
+												<td width="12%"><label class="form-label mb-0 ml-2 mt-2">PR/JO/WH Stocks</label></td>
+												<td  width="14%">
+													<div class="!align-bottom">
+														<div v-if="details.pr_no == 'WH Stocks'">
+															<input type="checkbox" class="" id="wh_stocks" @change="checkWH()" checked>
+															<label class="form-label mb-0 ml-2 mt-2">Warehouse Stock</label>
+														</div>
+														<div v-else>
+															<input type="checkbox" class="" id="wh_stocks" @change="checkWH()">
+															<label class="form-label mb-0 ml-2 mt-2">Warehouse Stock</label>
+														</div>
 													</div>
 												</td>
+												
 												<td width="22%">
 													<div v-if="details.pr_no == 'WH Stocks'">
-														<input type="datalist" class="w-full text-sm px-2 py-1" id='prno' list="prlist" placeholder="PR/JO Number" disabled>	
+														<input type="datalist" class="border-b w-full text-sm pt-1 pl-1  mt-2" id='prno' list="prlist" placeholder="PR/JO Number" disabled>	
 														<datalist id="prlist">
 															<option :value="respr.pr_no"  v-for="respr in resultPR"></option>
 														</datalist>
 													</div>
 													<div v-else>
-														<input type="datalist" class="w-full text-sm px-2 py-1" id='prno' list="prlist" placeholder="PR/JO Number" v-model="details.pr_no" @blur="emptyItems($event)">	
+														<input type="datalist" class="border-b w-full text-sm pt-1 pl-1  mt-2" id='prno' list="prlist" placeholder="PR/JO Number" v-model="details.pr_no" @blur="emptyItems($event)">	
 														<datalist id="prlist">
 															<option :value="respr.pr_no"  v-for="respr in resultPR"></option>
 														</datalist>
 													</div>
 												</td>
-												<td class="px-0 py-0 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >Inspected by</td>
+												<td width="4%"></td>
+												<td width="9%"><label class="form-label mb-0 mt-2">Inspected by</label></td>
 												<td width="41%">
-													<select class="w-full text-sm px-2 py-1" v-model="details.inspected_id">
+													<select class="border-b w-full text-sm pt-1 mt-2" v-model="details.inspected_id">
 														<option v-for="user in inspected" v-bind:key="user.id" v-bind:value="user.id +'~'+ user.name">{{  user.name }}</option>
 													</select>
 												</td>
+												<td rowspan="3" width="5%" class="px-2"></td>
 											</tr>
 											<tr>
-												<td class="px-0 py-0 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >Department</td>
+												<td><label class="form-label mb-0 ml-2">Department</label></td>
 												<td colspan="2">
-													<input type="datalist"  class="w-full text-sm px-2 py-1 " list="deptlist" placeholder="Department" v-model="details.department_id" >	
+													<!-- <select class="border-b w-full text-sm pt-1" v-model="details.department_id" >
+														<option v-for="dept in departments" v-bind:key="dept.id"  v-bind:value="dept.id  +'~'+ dept.department_name ">{{  dept.department_name }}</option>
+													</select> -->
+													<input type="datalist"  class="border-b w-full text-sm pt-1 pl-1  mt-2" list="deptlist" placeholder="Department" v-model="details.department_id" >	
 													<datalist id="deptlist">
 														<option v-bind:value="dept.department_name + ' #'+dept.id "  v-for="dept in departments" >{{ dept.department_name }}</option>
 													</datalist>
+													
 												</td>
+												<td></td>
 											
-												<td class="px-0 py-0 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >End-Use</td>
+												<td><label class="form-label mb-0">End-Use</label></td>
 												<td>
-													<input type="datalist"  class="w-full text-sm px-2 py-1 " list="enduselist" placeholder="Enduse" v-model="details.enduse_id" >	
+													<!-- <select class="border-b w-full text-sm pt-1" v-model="details.enduse_id"  >
+														<option v-for="end in enduses" v-bind:key="end.id" v-bind:value="end.id +'~'+ end.enduse_name">{{  end.enduse_name }}</option>
+													</select> -->
+													<input type="datalist"  class="border-b w-full text-sm pt-1 pl-1  mt-2" list="enduselist" placeholder="Enduse" v-model="details.enduse_id" >	
 													<datalist id="enduselist">
 														<option v-bind:value="end.enduse_name + ' #'+end.id "  v-for="end in enduses" >{{ end.enduse_name }}</option>
 													</datalist>
 												</td>
 											</tr>
 											<tr>
-												<td class="px-0 py-0 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >Purpose</td>
-												<td class="" colspan="5">
-													<input type="datalist"  class="w-full text-sm px-2 py-1 " list="purposelist" placeholder="Purpose" v-model="details.purpose_id" >	
+												<td><label class="form-label mb-2 ml-2">Purpose</label></td>
+												<td colspan="5">
+													<!-- <select class="border-b w-full text-sm pt-1 mb-3" v-model="details.purpose_id">
+														<option v-for="purp in purposes" v-bind:key="purp.id" v-bind:value=" purp.id +'~'+ purp.purpose_name ">{{  purp.purpose_name }}</option>
+													</select> -->
+
+													<input type="datalist"  class="border-b w-full text-sm pt-1 pl-1  mt-2" list="purposelist" placeholder="Purpose" v-model="details.purpose_id" >	
 													<datalist id="purposelist">
 														<option v-bind:value="purp.purpose_name + ' #'+purp.id "  v-for="purp in purposes" >{{ purp.purpose_name }}</option>
 													</datalist>
@@ -686,6 +698,7 @@ const autosuggestSize = async (index) => {
 							
 							<div class="row" id="items">
 								<div class="col-lg-12 ">
+									<!-- <p class="text-danger" v-for="errit in error_items" v-if="error_items.length > 0"></p> -->
 									<div class=" border-x-2 border-blue-400">
 										<div class="" v-if="error_items.length > 0">
 											<div class="alert alert-warning mb-2" >
@@ -700,12 +713,16 @@ const autosuggestSize = async (index) => {
 														</div>
 													</div>
 												</div>
+												<!-- <hr class="mb-0"> -->
 											</div>
 										</div>
+										
+										
 										<table class="table table-actions table-bordered  table-s mb-0">
 											<tbody class="!border-t-2 !border-blue-400" v-for="(row,i) in rows">
 												<tr class="bg-gray-200">
 													<td class="p-0 text-center font-bold" rowspan="5" width="2%">{{ i + 1}}</td>
+													<!-- <td class="font-xxs" width="3%">#</td> -->
 													<td class="font-xxs uppercase font-bold" width="20%">Supplier</td>
 													<td class="font-xxs uppercase font-bold" width="30%" colspan="2">Description</td>
 													<td class="font-xxs uppercase font-bold">Item Status</td>
@@ -725,6 +742,10 @@ const autosuggestSize = async (index) => {
 															<a class="text-white btn btn-xs btn-danger btn-rounded" @click="removeRow(i, row.id)">
 																<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
 															</a>
+															
+															<!-- <button class="btn btn-md !text-xs py-1 bg-blue-500 hover:bg-blue-600 text-white px-3">
+															Add Item
+														</button> -->
 														</div>
 													</td>
 												</tr>
@@ -734,9 +755,7 @@ const autosuggestSize = async (index) => {
 															<option v-for="sup in supplier" v-bind:key="sup.id" v-bind:value="sup.id +'~'+ sup.supplier_name">{{  sup.supplier_name }}</option>
 														</select>
 													</td>
-													
 													<td class="p-0 font-xxss" colspan="2"> 
-														
 														<select class="p-1 m-0 w-full leading-none block text-xs whitespace-nowrap" :id="'description_' + i" v-model="row.description" @change="getPRReplenish($event, i)">
 															<option v-for="it in resultItems" v-bind:key="it.id" v-bind:value="it.id +'~'+ it.item_description+'~'+ it.pn_no">{{  it.item_description+' - '+ it.pn_no }}</option>
 														</select>																										
@@ -747,7 +766,6 @@ const autosuggestSize = async (index) => {
 															<option v-for="stat in itemStatus" v-bind:key="stat.id" v-bind:value="stat.id +'~'+ stat.status">{{  stat.status }}</option>
 														</select>
 													</td>
-													
 													<td class="p-0 font-xxss">
 														<input type="text" rows="1" class="p-1 m-0 w-full leading-none block text-center" v-model="row.shipping_cost">
 													</td>
@@ -833,164 +851,13 @@ const autosuggestSize = async (index) => {
 												</tr>
 											</tbody>
 										</table>
-										<div class="border-t-2" v-for="(row,i) in rows">
-											<table class="table-bordered text-[13px] mb-0 w-full" >
-												<tr>
-													<td class="px-0 py-0 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">
-														<span class="ml-1 px-2 py-1 bg-blue-500 mr-2 text-white font-bolder rounded-full">{{ i + 1}}</span>Supplier
-													</td>
-													<td class="" colspan="9">
-														<select class="px-2 py-1 w-full" name="" v-model="row.supplier" :id="'supplier' + i">
-															<option v-for="sup in supplier" v-bind:key="sup.id" v-bind:value="sup.id +'~'+ sup.supplier_name">{{  sup.supplier_name }}</option>
-														</select>
-														<!-- <v-select  v-model="variant.supplier_id" :options="listsupplier" :reduce="listsupplier => listsupplier.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
-															<template #selected-option="{ supplier_name }">
-																{{ supplier_name }}
-															</template>
-															<template #option="{ supplier_name }">
-																{{ supplier_name }}
-															</template>
-														</v-select> -->
-													</td>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">PN No</td>
-													<td class="" colspan="2" width="12%">
-														<input class="px-2 py-1 w-full" name="" id="">
-													</td>
-												</tr>
-												<tr>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Item Desc</td>
-													<td class="" colspan="9">
-														<select class="px-2 py-1 w-full" name="" :id="'description_' + i" v-model="row.description" @change="getPRReplenish($event, i)">
-															<option v-for="it in resultItems" v-bind:key="it.id" v-bind:value="it.id +'~'+ it.item_description+'~'+ it.pn_no">{{  it.item_description+' - '+ it.pn_no }}</option>
-														</select>
-													</td>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Cat No</td>
-													<td class="" colspan="2">
-														<input class="px-2 py-1 w-full" name="" id="" v-model="row.catalog_no">
-													</td>
-												</tr>
-												<tr>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Brand</td>
-													<td class="" colspan="9">
-														<input  class="px-2 py-1 w-full" name="" id="" list="brandlist" v-model="row.brand">
-														<datalist id="brandlist">
-															<option :value="br.brand"  v-for="br in brand"></option>
-														</datalist>
-													</td>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Serial No</td>
-													<td class=""  colspan="2" width="10%">
-														<input class="px-2 py-1 w-full" name="" id="" v-model="row.serial_no">
-													</td>
-												</tr>
-												<tr>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Other Desc</td>
-													<td class="" colspan="7">
-														<input class="px-2 py-1 w-full" name="" id="">
-													</td>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Color</td>
-													<td class="" width="10%">
-														<input class="px-2 py-1 w-full" name="" id="" @keyup="autosuggestColor(i)" v-model="row.color" list="colors_list">
-														<datalist id="colors_list">
-															<option :value="c.color" v-for="c in colors" :key="c.color"></option>
-														</datalist>
-													</td>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Size</td>
-													<td class=""  colspan="2" width="10%">
-														<input class="px-2 py-1 w-full" name="" id="" @keyup="autosuggestSize(i)" v-model="row.size" list="sizes_list">
-														<datalist id="sizes_list">
-															<option :value="s.size" v-for="s in sizes" :key="s.size"></option>
-														</datalist>
-													</td>
-												</tr>
-												<tr>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold" >Item Status</td>
-													<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">S/U + Others</td>
-													<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Unit Cost</td>
-													<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Exp Qty</td>
-													<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Recv Cost</td>
-													<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Cost</td>
-													<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="3%">Currency</td>
-													<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="4%" >UOM</td>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left">Barcode</td>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left">Expiration</td>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" width="5%"> Location</td>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left">Replenish</td>
-												</tr>
-												<tr>
-													<td class="bg-yellow-50">
-														<select class="px-2 py-1 w-full " name="" id="" v-model="row.item_status">
-															<option value="" disabled selected>Select Status</option>
-															<option v-for="stat in itemStatus" v-bind:key="stat.id" v-bind:value="stat.id +'~'+ stat.status">{{  stat.status }}</option>
-														</select>
-													</td>
-													<td class="bg-yellow-50"><input class="px-2 py-1 w-full text-center" name="" id="" placeholder="00.00" v-model="row.shipping_cost"></td>
-													<td class="bg-yellow-50"><input class="px-2 py-1 w-full text-center" name="" id="" placeholder="00.00" v-model="row.unit_cost"></td>
-													<td class="bg-yellow-50"><input class="px-2 py-1 w-full text-center" name="" id="" placeholder="00" v-model="row.exp_quantity"></td>
-													<td class="bg-yellow-50"><input class="px-2 py-1 w-full text-center" name="" id="" placeholder="00" v-model="row.rec_quantity"></td>
-													<td class="bg-yellow-50 text-center" v-if="row.rec_quantity">
-														<span class="px-2 py-1" >{{ (row.rec_quantity *  (parseFloat(row.unit_cost) + parseFloat(row.shipping_cost))).toFixed(2)}}</span>
-													</td>
-													<td class="text-center" v-else>
-														<span class="px-2 text-gray-400 py-1" >0</span>
-													</td>
-													<td class="text-center">
-														<select class="px-2 py-1 w-full text-center" name="" id="" v-model="row.currency">
-															<option value="" disabled selected>Select Currency</option>
-															<option v-for="cur in currency" v-bind:key="cur" v-bind:value="cur">{{  cur }}</option>
-														</select>
-													</td>
-													<td class="text-center">
-														<input class="px-2 py-1 w-full text-center" name="" id="" @keyup="autosuggestUom(i)"  v-model="row.uom" list="uom_list">
-														<datalist id="uom_list">
-															<option :value="u.uom" v-for="u in uom" :key="u.uom"></option>
-														</datalist>
-													</td>
-													<td class="text-left" >
-														<input class="px-2 py-1 w-full" name="" id="">
-													</td>
-													<td class="text-left" >
-														<input type="text" v-model="row.expiry_date" class="px-2 py-1 w-full" name="" id=""  onfocus="(this.type='date')" onblur="(this.type='text')">
-													</td>
-													
-													<td class="">
-														<select class="px-2 py-1 w-full " name="" id="">
-															<option value="">Select</option>
-														</select>
-													</td>
-													<td class="bg-orange-100" >
-														<div class="flex justify-center space-x-2 w-">
-															<input type="checkbox" v-model="row.pr_replenish" :true-value="1" :false-value="0">
-															<span>Replenish Item</span>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Remarks</td>
-													<td class="" colspan="10">
-														<textarea name="" id="" class="w-full px-2" rows="1" v-model="row.remarks"></textarea>
-													</td>
-													<td class="p-0"  colspan="2" width="10%">
-														<div class="flex justify-center space-x-1">
-															<button @click="addRow()" class="flex items-center gap-1 px-1 py-1 justify-center text-white w-full bg-blue-600 hover:bg-blue-700 rounded text-sm">
-																<PlusIcon class="w-4 h-4" />
-																<span>Add</span>
-															</button>
-															<button class="flex items-center gap-1 px-1 py-1 justify-center text-white w-full bg-red-600 hover:bg-red-700 rounded text-sm">
-																<TrashIcon class="w-4 h-4" />
-																<span>Remove</span>
-															</button>
-														</div>
-													</td>
-												</tr>
-											</table>
-										</div>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="border-b-2 border-x-2 border-blue-400 p-2 rounded-b-lg bg-gray-200">
-										<!-- <div class="flex justify-between">
+										<div class="flex justify-between">
 											<div class="flex justify-between space-x-1">
 												<button  @click="navigate(form.id, details.detail_no, 'back')" class="btn btn-md !text-xs py-1 bg-blue-400 hover:bg-blue-500 text-white px-3" title="Previous PR">
 													Prev PR
@@ -1006,7 +873,7 @@ const autosuggestSize = async (index) => {
 													<button @click="addNewPR(form.id, details.detail_no)" class="btn btn-md  !text-xs py-1 bg-indigo-400 hover:bg-indigo-600 text-white px-3">Save & Add PR</button>
 												</div>
 											</div>
-										</div> -->
+										</div>
 									</div>
 								</div>
 							</div>

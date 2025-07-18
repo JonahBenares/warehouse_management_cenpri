@@ -83,7 +83,7 @@
 									<tbody>
 										<tr>
 											<td></td>
-											<td></td>
+											<td>Item name, Color, Size, Other Desc (format)</td>
 											<td></td>
 											<td></td>
 											<td></td>

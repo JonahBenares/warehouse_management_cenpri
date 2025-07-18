@@ -11194,3 +11194,14 @@ div.menu-rem:hover > div > div > div#menu-rem {
         margin: 0px!important;
         
     }
+
+    .v-select,
+.vs__dropdown-toggle {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.vs__dropdown-toggle:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

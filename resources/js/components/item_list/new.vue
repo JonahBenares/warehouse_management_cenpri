@@ -1,6 +1,6 @@
 <script setup>
 import navigation from '@/layouts/navigation.vue';
-import {  TrashIcon, PlusIcon, XMarkIcon,CheckCircleIcon, ExclamationCircleIcon, ArrowUturnLeftIcon } from '@heroicons/vue/24/solid'
+import {  TrashIcon, PlusIcon, XMarkIcon,CheckCircleIcon, ExclamationCircleIcon, ArrowUturnLeftIcon, EyeIcon } from '@heroicons/vue/24/solid'
 import { PhotoIcon, } from '@heroicons/vue/24/outline'
 import axios from 'axios';
 import {onMounted, ref, watch} from "vue";
@@ -938,7 +938,7 @@ const checkMaxqty = async (index) => {
 										</select>
 									</div>										
 								</div>
-								<div class="col-lg-3 px-1">
+								<div class="col-lg-6 px-1">
 									<div class="form-group">
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Category</span>
@@ -947,14 +947,14 @@ const checkMaxqty = async (index) => {
 										<input type="hidden" id="category_id" v-model="form.item_category_id" class="form-control border" placeholder="Category">
 									</div>										
 								</div>
-								<div class="col-lg-3 px-1">
+								<!-- <div class="col-lg-3 px-1">
 									<div class="form-group">
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">PN No.</span>
 										</div>
 										<input type="text" id="pn_no" v-model="form.pn_no" class="form-control border my-1" placeholder="PN No.">
 									</div>										
-								</div>
+								</div> -->
 							</div>
 							<div class="row">
 								<div class="col-lg-6 px-1">
@@ -1132,36 +1132,50 @@ const checkMaxqty = async (index) => {
 
 							<div v-else-if="choice === 'variant'">
 								<p class="text-danger" v-for="erritm in error_items" v-if="error_items.length > 0">{{ erritm }}</p>
-								<div class="flex justify-start space-x-1 mt-2">
-									<button id="composite" class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-									<button id="variant" class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-									<!-- <button id="variant" class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">No Variant</button> -->
+								<div class="flex justify-between">
+									<div class="flex justify-start space-x-1 mt-2">
+										<button id="composite" class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
+										<button id="variant" class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
+										<!-- <button id="variant" class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">No Variant</button> -->
+									</div>
+									<div class="mt-2">
+										<button @click="addRowVariant" class="btn-primary btn-sm btn p-1">
+											<div class="flex">
+												<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mt-.5"></PlusIcon>
+												<span>Add Variant</span>
+											</div>
+										</button>
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-12 px-1">
-										<div class="border-gray-400 border-t-2">
-											<table class="table table-bordered mb-0">
+										<div class="overflow-x-auto border border-gray-300 rounded shadow-sm">
+											<table class="table-bordered text-sm mb-0"  width="190%">
 												<thead>
 													<tr>
-														<th class="font-xxs" width="20%">Supplier</th>
-														<th class="font-xxs">Catalog No</th>
-														<th class="font-xxs">Brand</th>
-														<th class="font-xxs">Serial No</th>
-														<th class="font-xxs" width="5%">Expiration</th>
-														<th class="font-xxs">Barcode</th>
-														<th class="font-xxs" width="5%">Avail Qty</th>
-														<th class="font-xxs" width="5%">Composite Qty</th>
-														<th class="font-xxs" width="5%">Total Qty</th>
-														<th class="font-xxs" width="5%">Unit Cost</th>
-														<th class="font-xxs" width="5%">Currency</th>
-														<th class="font-xxs" width="5%">Total Cost</th>
-														<th class="font-xxs" width="5%">UOM</th>
-														<th class="font-xxs" width="5%">Color</th>
-														<th class="font-xxs" width="5%">Size</th>
-														<th class="font-xxs" width="10%">Item Status</th>
-														<th class="font-xxs p-1 font-xxs" align="center" width="1%">
+														<th class="text-sm px-2 py-1 sticky left-0 bg-white" width="15%">Supplier</th>
+														<th class="text-sm px-2 py-1" width="8%">Catalog No</th>
+														<th class="text-sm px-2 py-1" width="8%">PN No</th>
+														<th class="text-sm px-2 py-1" width="7%">Brand</th>
+														<th class="text-sm px-2 py-1" width="5%">Serial No</th>
+														
+														<th class="text-sm px-2 py-1" width="4%">Avail Qty</th>
+														<th class="text-sm px-2 py-1" width="4%">Compos Qty</th>
+														<th class="text-sm px-2 py-1" width="4%">Total Qty</th>
+														<th class="text-sm px-2 py-1" width="4%">Unit Cost</th>
+														<th class="text-sm px-2 py-1" width="4%">Total Cost</th>
+														<th class="text-sm px-2 py-1" width="5%">Currency</th>
+														<th class="text-sm px-2 py-1" width="5%">UOM</th>
+														<th class="text-sm px-2 py-1" width="6%">Color</th>
+														<th class="text-sm px-2 py-1" width="6%">Size</th>
+														<th class="text-sm px-2 py-1" width="8%">Other Desc</th>
+														<!-- <th class="text-sm px-2 py-1" width="5%">Selling Price</th> -->
+														<th class="text-sm px-2 py-1" width="6%">Item Status</th>
+														<th class="text-sm px-2 py-1" width="5%">Expiration</th>
+														<th class="text-sm px-2 py-1" width="5%">Barcode</th>
+														<th class="text-sm px-2 py-1 text-sm sticky right-0 bg-white border-l" align="center" width="1%">
 															<div class="space-x-1 flex justify-center">
-																<a href='#' @click="addRowVariant" class="btn btn-xs btn-primary btn-rounded">
+																<a href="#" @click="addRowVariant" class="btn btn-sm btn-primary ">
 																	<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></PlusIcon>
 																</a>
 															</div>
@@ -1169,60 +1183,65 @@ const checkMaxqty = async (index) => {
 													</tr>
 												</thead>
 												<tbody>
-													<tr v-for="(variant,index) in variant_list">
-														<td class="p-0 text-xs">
+													<tr v-for="(variant,index) in variant_list" class="hover:bg-yellow-50">
+														<td class="p-0 sticky left-0 bg-white shadow-lg">
 															<input type="hidden" v-model="variant.id">
-															<select name="supplier" id="supplier" class="form-control border-none !text-xs py-1" v-model="variant.supplier_id">
+															<select name="supplier" id="supplier" class="form-control !bg-transparent border-none  py-1 supplier" v-model="variant.supplier_id">
 																<option :value="sup.id" v-for="sup in listsupplier" :key="sup.id">{{ sup.supplier_name }}</option>
 															</select>
 														</td>
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="variant.catalog_no"></textarea></td>
-														<td class="p-0 text-xs">
-															<!-- <textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="variant.brand"></textarea> -->
-															<input type="text" rows="2" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestBrand(index)" v-model="variant.brand" list="brand_list">
+														<td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block" v-model="variant.catalog_no"></textarea></td>
+														<td class="p-0"><input type="text" name="" id="" class="p-1  !text-sm px-2  m-0 w-full leading-none block"></td>
+														<td class="p-0">
+															<!-- <textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="variant.brand"></textarea> -->
+															<input type="text" rows="1" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestBrand(index)" v-model="variant.brand" list="brand_list">
 															<datalist id="brand_list">
 																<option :value="b.brand" v-for="b in brand" :key="b.brand"></option>
 															</datalist>
 														</td>
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="variant.serial_no"></textarea></td>
-														<td class="p-0 text-xs"><input type="date" class="p-1 m-0 w-full leading-none block " v-model="variant.expiration" /></td>
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="variant.barcode"></textarea></td>
-														<td class="p-0 text-xs"><textarea type="number" rows="2" class="p-1 m-0 w-full leading-none block " v-model="variant.quantity"></textarea></td>
-														<td class="p-0 text-xs"><textarea type="number" rows="2" class="p-1 m-0 w-full leading-none block " v-model="variant.composite_quantity" readonly></textarea></td>
-														<td class="p-0 text-xs"><textarea type="number" rows="2" class="p-1 m-0 w-full leading-none block " :value="variant.quantity+variant.composite_quantity" readonly></textarea></td>
-														<td class="p-0 text-xs"><textarea type="number" v-model="variant.unit_cost" rows="2" class="p-1 m-0 w-full leading-none block " ></textarea></td>
-														<td class="p-0 text-xs">
-															<select class="p-1 m-0 leading-none w-36 block text-xs whitespace-nowrap" v-model="variant.currency">
+														<td class="p-0"><textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " v-model="variant.serial_no"></textarea></td>
+														
+														<td class="p-0"><textarea type="number" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " v-model="variant.quantity"></textarea></td>
+														<td class="p-0"><textarea type="number" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " v-model="variant.composite_quantity" readonly></textarea></td>
+														<td class="p-0"><textarea type="number" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " :value="variant.quantity+variant.composite_quantity" readonly></textarea></td>
+														<td class="p-0"><textarea type="number" v-model="variant.unit_cost" rows="1" class="p-1 m-0 w-full leading-none block " ></textarea></td>
+														<td class="p-0"><textarea type="number" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " :value="variant.quantity*variant.unit_cost" readonly></textarea></td>
+														<td class="p-0">
+															<select class="p-1 !text-sm px-2 m-0 leading-none text-sm w-36 block whitespace-nowrap w-full" v-model="variant.currency">
 																<option value="" disabled selected>Select Currency</option>
 																<option v-for="cur in currency" v-bind:key="cur" v-bind:value="cur">{{  cur }}</option>
 															</select>	
 														</td>
-														<td class="p-0 text-xs"><textarea type="number" rows="2" class="p-1 m-0 w-full leading-none block " :value="variant.quantity*variant.unit_cost" readonly></textarea></td>
-														<td class="p-0 text-xs">
-															<!-- <textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="variant.uom"></textarea> -->
-															<input type="text" rows="2" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestUom(index)" v-model="variant.uom" list="uom_list">
+														<td class="p-0">
+															<!-- <textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="variant.uom"></textarea> -->
+															<input type="text" rows="1" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestUom(index)" v-model="variant.uom" list="uom_list">
 															<datalist id="uom_list">
 																<option :value="u.uom" v-for="u in uom" :key="u.uom"></option>
 															</datalist>
 														</td>
-														<td class="p-0 text-xs">
-															<input type="text" rows="2" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestColor(index)" v-model="variant.color" list="colors_list">
+														<td class="p-0">
+															<input type="text" rows="1" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestColor(index)" v-model="variant.color" list="colors_list">
 															<datalist id="colors_list">
 																<option :value="c.color" v-for="c in colors" :key="c.color"></option>
 															</datalist>
 														</td>
-														<td class="p-0 text-xs">
-															<input type="text" rows="2" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestSize(index)" v-model="variant.size" list="sizes_list">
+														<td class="p-0">
+															<input type="text" rows="1" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestSize(index)" v-model="variant.size" list="sizes_list">
 															<datalist id="sizes_list">
 																<option :value="s.size" v-for="s in sizes" :key="s.size"></option>
 															</datalist>
 														</td>
-														<td class="p-0 text-xs">
-															<select name="item_status" id="item_status" class="form-control border-none !text-xs py-1" v-model="variant.item_status_id">
+														<td class="p-0">
+															<input type="text" name="" id="" class="p-1  !text-sm px-2  m-0 w-full leading-none block">
+														</td>
+														<td class="p-0">
+															<select name="item_status" id="item_status" class="form-control border-none bg-transparent py-1" v-model="variant.item_status_id">
 																<option :value="itemstatus.id" v-for="itemstatus in liststatus" :key="itemstatus.id">{{ itemstatus.status }}</option>
 															</select>
 														</td>
-														<td class="p-1  font-bold">
+														<td class="p-0"><input type="date" class="p-1 m-0 w-full leading-none block " v-model="variant.expiration" /></td>
+														<td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="variant.barcode"></textarea></td>
+														<td class="p-1 font-bold sticky right-0 bg-white shadow">
 															<div class="p-0 space-x-1 flex justify-center">
 																<a href='#' @click="removeVariant(index)" class="text-white btn btn-xs btn-danger btn-rounded">
 																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
@@ -1233,6 +1252,112 @@ const checkMaxqty = async (index) => {
 												</tbody>
 											</table>
 										</div>
+										<br>
+										<br>
+										<br>
+										<table v-for="(variant,index) in variant_list" class="table-bordered !border !border-gray-200 text-sm mb-0 w-full mb-2">
+											<tr>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Supplier</td>
+												<td class="" colspan="9">
+													<!-- <select class="px-2 py-1 w-full" name="" id="">
+														<option value="">Select</option>
+													</select> -->
+													<v-select  v-model="variant.supplier_id" :options="listsupplier" :reduce="listsupplier => listsupplier.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
+														<template #selected-option="{ supplier_name }">
+															{{ supplier_name }}
+														</template>
+														<template #option="{ supplier_name }">
+															{{ supplier_name }}
+														</template>
+													</v-select>
+												</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">PN No</td>
+												<td class="" colspan="2">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+											</tr>
+											<tr>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Brand</td>
+												<td class="" colspan="7">
+													<select class="px-2 py-1 w-full" name="" id="">
+														<option value="">Select</option>
+													</select>
+												</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Cat No</td>
+												<td class="" width="10%">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Serial No</td>
+												<td class=""  colspan="2" width="10%">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+											</tr>
+											<tr>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Other Desc</td>
+												<td class="" colspan="7">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Color</td>
+												<td class="" width="10%">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Size</td>
+												<td class=""  colspan="2" width="10%">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+											</tr>
+											<tr>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" >Item Status</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Avail Qty</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Compo Qty</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Qty</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Unit Cost</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Cost</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="3%">Currency</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="4%" >UOM</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" colspan="2">Expiration</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" colspan="2">Barcode</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" width="3%" rowspan="2">
+													<div class="flex justify-center space-x-1">
+														<button class="py-2 px-2 btn-danger btn-rounded">
+															<TrashIcon class="size-4"></TrashIcon>
+														</button>
+														<button class="py-2 px-2 btn-warning text-white btn-rounded">
+															<EyeIcon class="size-4"></EyeIcon>
+														</button>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="text-center">
+													<select class="px-2 py-1 w-full text-center" name="" id="">
+														<option value="">Select</option>
+													</select>
+												</td>
+												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
+												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
+												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
+												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
+												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
+												<td class="text-center">
+													<select class="px-2 py-1 w-full text-center" name="" id="">
+														<option value="">Select</option>
+													</select>
+												</td>
+												<td class="text-center">
+													<select class="px-2 py-1 w-full text-center" name="" id="">
+														<option value="">Select</option>
+													</select>
+												</td>
+												<td class="text-left" colspan="2">
+													<input typ="date" class="px-2 py-1 w-full" name="" id="">
+												</td>
+												<td class="text-left" colspan="2">
+													<input typ="date" class="px-2 py-1 w-full" name="" id="">
+												</td>
+											</tr>
+										</table>
+										
 									</div>
 								</div>
 							</div>
@@ -1268,7 +1393,7 @@ const checkMaxqty = async (index) => {
 												</thead>
 												<tbody>
 													<tr v-for="(novar, index) in variant_list">
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="novar.unit_cost"></textarea></td>
+														<td class="p-0 text-xs"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="novar.unit_cost"></textarea></td>
 														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="novar.selling_price"></textarea></td>
 														<td class="p-0 text-xs"><input type="date" rows="2" class="p-1 m-0 w-full leading-none block " v-model="novar.expiration"/></td>
 														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="novar.bar_code"></textarea></td>

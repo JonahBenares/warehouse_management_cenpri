@@ -960,7 +960,7 @@ const stockcardRedirect= (variant_id,item_id,supplier_id,catalog_no,brand) => {
 										</select>
 									</div>										
 								</div>
-								<div class="col-lg-6 px-1">
+								<div class="col-lg-3 px-1">
 									<div class="form-group">
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Category</span>
@@ -969,14 +969,14 @@ const stockcardRedirect= (variant_id,item_id,supplier_id,catalog_no,brand) => {
 										<input type="hidden" id="category_id" v-model="form.item_category_id" class="form-control border" placeholder="Category">
 									</div>										
 								</div>
-								<!-- <div class="col-lg-3 px-1">
+								<div class="col-lg-3 px-1">
 									<div class="form-group">
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">PN No.</span>
 										</div>
 										<input type="text" id="pn_no" v-model="form.pn_no" class="form-control border my-1" placeholder="PN No.">
 									</div>										
-								</div> -->
+								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-6 px-1">
@@ -1160,33 +1160,30 @@ const stockcardRedirect= (variant_id,item_id,supplier_id,catalog_no,brand) => {
 								</div>
 								<div class="row">
 									<div class="col-lg-12 px-1">
-										<div class="overflow-x-auto border border-gray-300 rounded shadow-sm">
-											<table class="table-bordered mb-0 text-sm"  width="150%">
+										<div class="border-gray-400 border-t-2">
+											<table class="table table-bordered mb-0">
 												<thead>
 													<tr>
-														<th class="text-sm px-2 py-1 sticky left-0 bg-white" width="15%">Supplier</th>
-														<th class="text-sm px-2 py-1" width="5%">Catalog No</th>
-														<th class="text-sm px-2 py-1" width="5%">PN No</th>
-														<th class="text-sm px-2 py-1" width="7%">Brand</th>
-														<th class="text-sm px-2 py-1" width="5%">Serial No</th>
-														
-														<th class="text-sm px-2 py-1" width="3%">Avail Qty</th>
-														<th class="text-sm px-2 py-1" width="4%">Compos Qty</th>
-														<th class="text-sm px-2 py-1" width="3%">Total Qty</th>
-														<th class="text-sm px-2 py-1" width="3%">Unit Cost</th>
-														<th class="text-sm px-2 py-1" width="3%">Total Cost</th>
-														<th class="text-sm px-2 py-1" width="3%">Currency</th>
-														<th class="text-sm px-2 py-1" width="3%">UOM</th>
-														<th class="text-sm px-2 py-1" width="5%">Color</th>
-														<th class="text-sm px-2 py-1" width="5%">Size</th>
-														<th class="text-sm px-2 py-1" width="8%">Other Desc</th>
-														<!-- <th class="text-sm px-2 py-1" width="5%">Selling Price</th> -->
-														<th class="text-sm px-2 py-1" width="4%">Item Status</th>
-														<th class="text-sm px-2 py-1" width="5%">Expiration</th>
-														<th class="text-sm px-2 py-1" width="5%">Barcode</th>
-														<th class="text-sm px-2 py-1 text-sm sticky right-0 bg-white border-l" align="center" width="1%">
+														<th class="font-xxs" width="20%">Supplier</th>
+														<th class="font-xxs">Catalog No</th>
+														<th class="font-xxs">Brand</th>
+														<th class="font-xxs">Serial No</th>
+														<th class="font-xxs" width="5%">Expiration</th>
+														<th class="font-xxs">Barcode</th>
+														<th class="font-xxs" width="5%">Avail Qty</th>
+														<th class="font-xxs" width="5%">Composite Qty</th>
+														<th class="font-xxs" width="5%">Total Qty</th>
+														<th class="font-xxs" width="5%">Unit Cost</th>
+														<th class="font-xxs" width="5%">Currency</th>
+														<th class="font-xxs" width="5%">Total Cost</th>
+														<th class="font-xxs" width="5%">UOM</th>
+														<th class="font-xxs" width="5%">Color</th>
+														<th class="font-xxs" width="5%">Size</th>
+														<!-- <th class="font-xxs" width="5%">Selling Price</th> -->
+														<th class="font-xxs" width="10%">Item Status</th>
+														<th class="font-xxs p-1 font-xxs" align="center" width="1%">
 															<div class="space-x-1 flex justify-center">
-																<a href="#" @click="addRowVariant" class="btn btn-sm btn-primary ">
+																<a href="#" @click="addRowVariant" class="btn btn-xs btn-primary btn-rounded">
 																	<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></PlusIcon>
 																</a>
 															</div>
@@ -1194,81 +1191,74 @@ const stockcardRedirect= (variant_id,item_id,supplier_id,catalog_no,brand) => {
 													</tr>
 												</thead>
 												<tbody>
-													<tr v-for="(v,index) in variant_list" class="hover:bg-yellow-50">
-														<td class="p-0 sticky left-0 bg-white shadow-lg">
-															<select name="supplier" id="supplier_id{{index}}" class="form-control !bg-transparent border-none  py-1 supplier" v-model="v.supplier_id" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
+													<tr v-for="(v,index) in variant_list">
+														<td class="p-0 text-xs">
+															<select name="supplier" id="supplier_id{{index}}" class="form-control border-none !text-xs py-1 supplier" v-model="v.supplier_id" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
 																<option :value="sup.id" v-for="sup in listsupplier" :key="sup.id">{{ sup.supplier_name }}</option>
 															</select>
 														</td>
-														<td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block catalog_no" v-model="v.catalog_no" id="catalog_no" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
-														<td class="p-0"><input type="text" name="" id="" class="p-1  !text-sm px-2  m-0 w-full leading-none block"></td>
-														<td class="p-0">
-															<!-- <textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="v.brand" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea> -->
-															<input type="text" rows="1" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestBrand(index)" v-model="v.brand" list="brand_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
+														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block catalog_no" v-model="v.catalog_no" id="catalog_no" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
+														<td class="p-0 text-xs">
+															<!-- <textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="v.brand" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea> -->
+															<input type="text" rows="2" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestBrand(index)" v-model="v.brand" list="brand_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
 															<datalist id="brand_list">
 																<option :value="b.brand" v-for="b in brand" :key="b.brand"></option>
 															</datalist>
 														</td>
-														<td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block" v-model="v.serial_no" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
-														
-
-														<td class="p-0"><textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " @blur="checkQty(index)" v-model="v.quantity" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
-														<td class="p-0">
+														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="v.serial_no" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
+														<td class="p-0 text-xs"><input type="date" rows="2" class="p-1 m-0 w-full leading-none block " v-model="v.expiration" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1" /></td>
+														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="v.barcode" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
+														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " @blur="checkQty(index)" v-model="v.quantity" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
+														<td class="p-0 text-xs">
 															<!-- <span hidden>{{ compositeQty(index,v.id,form.id) }}</span> -->
-															<textarea type="number" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " v-model="composite_qty[index]" readonly v-if="v.id!=0"></textarea>
-															<textarea type="number" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " value="0" readonly v-else></textarea>
+															<textarea type="number" rows="2" class="p-1 m-0 w-full leading-none block " v-model="composite_qty[index]" readonly v-if="v.id!=0"></textarea>
+															<textarea type="number" rows="2" class="p-1 m-0 w-full leading-none block " value="0" readonly v-else></textarea>
 														</td>
-														<td class="p-0">
-															<textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " readonly v-if="v.id!=0">{{ v.quantity + composite_qty[index] }}</textarea>
-															<textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " readonly v-else>{{ v.quantity }}</textarea>
+														<td class="p-0 text-xs">
+															<textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " readonly v-if="v.id!=0">{{ v.quantity + composite_qty[index] }}</textarea>
+															<textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " readonly v-else>{{ v.quantity }}</textarea>
 														</td>
-														<!-- <td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="totalcompqty[index]" readonly></textarea></td> -->
-														<td class="p-0" v-if="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"><textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block "  :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">{{ v.unit_cost + v.shipping_cost }}</textarea></td>
-														<td class="p-0" v-else><textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block "  v-model="v.average_cost" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
-														
-														<td class="p-0">
-															<textarea v-if="v.receive_flag!=1 || v.composite_flag==1 || checker[index]==1" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block "  :value="v.quantity * v.average_cost" readonly></textarea>
-															<textarea v-else rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block "  :value="v.quantity * (v.unit_cost + v.shipping_cost)" readonly></textarea>
-														</td>
-														<td class="p-0">
-															<select class="p-1 !text-sm px-2 m-0 leading-none text-sm w-36 block whitespace-nowrap w-full" v-model="v.currency">
+														<!-- <td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="totalcompqty[index]" readonly></textarea></td> -->
+														<td class="p-0 text-xs" v-if="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block "  :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">{{ v.unit_cost + v.shipping_cost }}</textarea></td>
+														<td class="p-0 text-xs" v-else><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block "  v-model="v.average_cost" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
+														<td class="p-0 text-xs">
+															<select class="p-1 m-0 leading-none w-36 block text-xs whitespace-nowrap" v-model="v.currency">
 																<option value="" disabled selected>Select Currency</option>
 																<option v-for="cur in currency" v-bind:key="cur" v-bind:value="cur">{{  cur }}</option>
 															</select>	
 														</td>
-														<td class="p-0">
-															<!-- <textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="variant.uom"></textarea> -->
-															<input type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " @keyup="autosuggestUom(index)" v-model="v.uom" list="uom_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
+														<td class="p-0 text-xs">
+															<textarea v-if="v.receive_flag!=1 || v.composite_flag==1 || checker[index]==1" rows="2" class="p-1 m-0 w-full leading-none block "  :value="v.quantity * v.average_cost" readonly></textarea>
+															<textarea v-else rows="2" class="p-1 m-0 w-full leading-none block "  :value="v.quantity * (v.unit_cost + v.shipping_cost)" readonly></textarea>
+														</td>
+														<td class="p-0 text-xs">
+															<!-- <textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="variant.uom"></textarea> -->
+															<input type="text" rows="2" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestUom(index)" v-model="v.uom" list="uom_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
 															<datalist id="uom_list">
 																<option :value="u.uom" v-for="u in uom" :key="u.uom"></option>
 															</datalist>
 														</td>
-														<td class="p-0">
-															<input type="text" rows="1" class="p-1 text-sm px-2 m-0 w-full leading-none block" @keyup="autosuggestColor(index)" v-model="v.color" list="colors_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
+														<td class="p-0 text-xs">
+															<input type="text" rows="2" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestColor(index)" v-model="v.color" list="colors_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
 															<datalist id="colors_list">
 																<option :value="c.color" v-for="c in colors" :key="c.color"></option>
 															</datalist>
 														</td>
-														<td class="p-0">
-															<input type="text" rows="1" class="p-1 text-sm px-2 m-0 w-full leading-none block" @keyup="autosuggestSize(index)" v-model="v.size" list="sizes_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
+														<td class="p-0 text-xs">
+															<input type="text" rows="2" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestSize(index)" v-model="v.size" list="sizes_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
 															<datalist id="sizes_list">
 																<option :value="s.size" v-for="s in sizes" :key="s.size"></option>
 															</datalist>
 														</td>
-														<td class="p-0">
-															<input type="text" name="" id="" class="p-1  !text-sm px-2  m-0 w-full leading-none block">
-														</td>
-														<!-- <td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="v.uom" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td> -->
-														<!-- <td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="v.selling_price"></textarea></td> -->
-														<td class="p-0">
-															<select name="item_status" id="item_status" class="form-control border-none bg-transparent py-1" v-model="v.item_status_id" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
+														<!-- <td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="v.uom" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td> -->
+														<!-- <td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="v.selling_price"></textarea></td> -->
+														<td class="p-0 text-xs">
+															<select name="item_status" id="item_status" class="form-control border-none !text-xs py-1" v-model="v.item_status_id" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
 																<option :value="itemstatus.id" v-for="itemstatus in liststatus" :key="itemstatus.id">{{ itemstatus.status }}</option>
 															</select>
 														</td>
-														<td class="p-0"><input type="date" rows="1" class="p-1 text-sm px-2 m-0 w-full leading-none block " v-model="v.expiration" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1" /></td>
-														<td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="v.barcode" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
-														<td class="p-1 font-bold sticky right-0 bg-white shadow">
-															<div class="p-0 space-x-1 flex justify-center ">
+														<td class="p-1  font-bold">
+															<div class="p-0 space-x-1 flex justify-center">
 																<button v-if="v.id" @click="deleteVariant(v.id,variant_list.length,v.item_id,v.quantity)" class="text-white btn btn-xs btn-danger btn-rounded" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
 																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
 																</button>
