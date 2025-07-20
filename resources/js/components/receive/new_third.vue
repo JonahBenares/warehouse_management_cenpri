@@ -152,35 +152,9 @@
 		updatepr.value = !hideModal.value
 	}
 
-const onPrint= (id) => {
-	router.push('/receive/print/'+id)
-}
-
-// const updatePR = ref(false)
-// const openModalPr = () => {
-// 	updatePR.value = !updatePR.value
-// }
-// const closeModalPr = () => {
-// 	updatePR.value = !hideModal.value
-// }
-
-// const addItem = ref(false)
-// const openModalAddItem = () => {
-// 	addItem.value = !addItem.value
-// }
-// const closeModalAddItem = () => {
-// 	addItem.value = !hideModal.value
-// }
-
-// const updateItem = ref(false)
-// const openModalUpdateItem = () => {
-// 	updateItem.value = !updateItem.value
-// }
-// const closeModalUpdateItem = () => {
-// 	updateItem.value = !hideModal.value
-// }
-
-
+	const onPrint= (id) => {
+		router.push('/receive/print/'+id)
+	}
 
 
 </script>
@@ -348,101 +322,116 @@ const onPrint= (id) => {
 				<div v-for="det in details" class="border-2 border-blue-400 mb-3 rounded ">
 					<div class="row">
 						<div class="col-lg-12">
-							<table class="w-full table-borsdered">
+							<div class="rounded">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="p-1 rounded-t-md bg-gray-200"></div>
+									</div>
+								</div>
+								<table width="100%" class="table-bordered !text-[13px]">
+									<tr class="">
+										<td class="bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="13%" >PR/JO/WH Stocks</td>
+										<td class="px-2 font-bold" colspan="2" width="40%">{{ det.pr_no }}</td>
+										<td class="bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >Inspected by</td>
+										<td class="px-2" width="41%"> {{det.inspected_id }}</td>
+									</tr>
+									<tr>
+										<td class="bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >Department</td>
+										<td class="px-2"colspan="2">{{ det.department_id }}</td>
+										<td class="bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >End-Use</td>
+										<td class="px-2">{{ det.enduse_id }}</td>
+									</tr>
+									<tr>
+										<td class="bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >Purpose</td>
+										<td class="px-2" colspan="5">{{ det.purpose_id }}</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<table class="table-bordered text-[13px] mb-0 w-full" v-for="it in det.receive_items.items">
 								<tr>
-									<td width="2%" rowspan="4" class="align-top p-0 bg-blue-400"> 
-										<div class="pt-2 p-1  px-2 text-md text-center bg-blue-400  font-bold pb-5 text-white">{{ det.detail_no.padStart(2, "0") }}</div>
+									<td class="px-0 py-0 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">
+										<span class="ml- px-2.5 py-1 bg-blue-500 mr-1 text-white font-bolder">{{ it.item_no }}</span>Supplier
 									</td>
-									<td class="pt-2 pl-2 form-label" width="8%">PR Number</td>
-									<td class="pt-2 px-1 text-sm border-b font-bold">{{ det.pr_no }}</td>
-									<td class="pt-2 px-1 text-sm" width="3%"></td>
-									<td class="pt-2 form-label" width="9%">Inspected by</td>
-									<td class="pt-2 px-1 text-sm border-b">{{ det.inspected_id }}</td>
+									<td class="px-2" colspan="9">{{ it.supplier_name }}</td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">PN No</td>
+									<td class="px-2" colspan="2" width="12%">{{ it.pn_no }}</td>
 								</tr>
 								<tr>
-									<td class="pl-2 form-label" >Department</td>
-									<td class="px-1 text-sm border-b">{{ det.department_id }}</td>
-									<td class="px-1 text-sm" width="3%"></td>
-									<td class="form-label">Enduse</td>
-									<td class="px-1 text-sm border-b" colspan="2">{{ det.enduse_id }}</td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Item Desc</td>
+									<td class="px-2 !text-base font-bold" colspan="9">{{ it.item_description}}</td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Cat No</td>
+									<td class="px-2" colspan="2">{{ it.catalog_no }}</td>
 								</tr>
 								<tr>
-									<td class="pl-2 form-label">Purpose</td>
-									<td class="px-1 text-sm " colspan="5">{{ det.purpose_id }}</td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Brand</td>
+									<td class="px-2" colspan="9"> {{ it.brand }} </td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Serial No</td>
+									<td class="px-2"  colspan="2" width="10%"> {{ it.serial_no }} </td>
 								</tr>
 								<tr>
-									<td class="p-1" colspan="5"></td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Other Desc</td>
+									<td class="px-2" colspan="7"></td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Color</td>
+									<td class="px-2" width="10%">{{ it.color }}</td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Size</td>
+									<td class="px-2"  colspan="2" width="10%">{{ it.size }}</td>
+								</tr>
+								<tr>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold" >Item Status</td>
+									<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">S/U + Others</td>
+									<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Unit Cost</td>
+									<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Exp Qty</td>
+									<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Recv Cost</td>
+									<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Cost</td>
+									<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="3%">Currency</td>
+									<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="4%" >UOM</td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left">Barcode</td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left">Expiration</td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" width="5%"> Location</td>
+									<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left">Replenish</td>
+								</tr>
+								<tr>
+									<td class="px-2 py-1">{{ it.item_status }}</td>
+									<td class="px-2 py-1 text-center">{{ it.shipping_cost }}</td>
+									<td class="px-2 py-1 text-center">{{ it.unit_cost }}</td>
+									<td class="px-2 py-1 text-center">{{ it.exp_quantity }}</td>
+									<td class="px-2 py-1 text-center">{{ it.rec_quantity }}</td>
+									<td class="px-2 py-1 text-center" >{{ parseFloat((it.unit_cost + it.shipping_cost) * it.rec_quantity).toFixed(2)}}</td>
+									<td class="px-2 py-1 text-center">{{ it.currency }}</td>
+									<td class="px-2 py-1 text-center">{{ it.uom }}</td>
+									<td class="px-2 py-1 text-left"></td>
+									<td class="px-2 py-1 text-left">{{ it.expiry_date }}</td>
+									<td class="px-2 py-1 ">
+										<div class="flex justify-center space-x-1"  v-if="it.location == 'local'" >
+											<span>Local:</span>
+											<CheckCircleIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-emerald-500"></CheckCircleIcon>
+										</div>
+										<div class="flex justify-center space-x-1" v-if="it.location == 'manila'" >
+											<span>Manila:</span>
+											<CheckCircleIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-emerald-500"></CheckCircleIcon>
+										</div>
+										<div v-else></div>
+									</td>
+									<td class="px-2 py-1">
+										<span class="italic" v-if="it.pr_replenish == 1">Replenish: Yes</span> 
+											<span class="italic" v-else>Replenish: No</span> 
+									</td>
+								</tr>
+								<tr>
+									<td class="px-2 py-1 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Remarks</td>
+									<td class="px-2 py-1" colspan="11">{{ it.remarks }}</td>
 								</tr>
 							</table>
 						</div>
-					</div>	
+					</div>
 					<div class="row">
 						<div class="col-lg-12">
-							<table class="table table-actions table-bordered table-hodver mb-0 border-t-2">
-								<tbody  v-for="it in det.receive_items.items">
-									<tr class="bg-gray-100">
-										<td class="p-1 text-center font-bold" rowspan="5">{{ it.item_no }}</td>
-										<td class="font-xxs uppercase font-bold" width="20%">Supplier</td>
-										<td class="font-xxs uppercase font-bold" width="30%" colspan="2">Description</td>
-										<td class="font-xxs uppercase font-bold" width="10%">Item status</td>
-										<td class="font-xxs uppercase font-bold" width="15%">Shipping/U & Other Cost</td>
-										<td class="font-xxs uppercase font-bold" width="7%">Unit Cost</td>
-										<td class="font-xxs uppercase font-bold" width="7%">Currency</td>
-										<td class="font-xxs uppercase font-bold" width="7%">Exp Qty</td>
-										<td class="font-xxs uppercase font-bold" width="7%">Recv Qty</td>
-										<td class="font-xxs uppercase font-bold" width="7%">Total Cost</td>
-									</tr>
-									<tr>
-										<td class="p-1 font-xxss">{{ it.supplier_name }}</td>
-										<td class="p-1 font-xxss" colspan="2">{{ it.item_description + ' - ' + it.pn_no}}</td>
-										<td class="p-1 font-xxss text-left">{{ it.item_status }}</td>
-										<td class="p-1 font-xxss">{{ it.shipping_cost }}</td>
-										<td class="p-1 font-xxss">{{ it.unit_cost }}</td>
-										<td class="p-1 font-xxss">{{ it.currency }}</td>
-										<td class="p-1 font-xxss">{{ it.exp_quantity }}</td>
-										<td class="p-1 font-xxss">{{ it.rec_quantity }}</td>
-										<td class="p-1 font-xxss">{{ parseFloat((it.unit_cost + it.shipping_cost) * it.rec_quantity).toFixed(2)}}</td>
-									</tr>
-									<tr class="bg-gray-100">
-										<td class="font-xxs uppercase font-bold" width="15%">Brand</td>
-										<td class="font-xxs uppercase font-bold" width="15%">Cat No.</td>
-										<td class="font-xxs uppercase font-bold" width="15%">Serial No.</td>
-										<td class="font-xxs uppercase font-bold" width="1%">UOM</td>
-										<td class="font-xxs uppercase font-bold" width="5%">Color</td>
-										<td class="font-xxs uppercase font-bold" width="5%" colspan="2">Size</td>
-										<td class="font-xxs uppercase font-bold text-left" width="5%" colspan="3">Expiry Date</td>
-									</tr>
-									<tr>
-										<td class="p-1 font-xxss">{{ it.brand }}</td>
-										<td class="p-1 font-xxss">{{ it.catalog_no }}</td>
-										<td class="p-1 font-xxss">{{ it.serial_no }}</td>
-										<td class="p-1 font-xxss">{{ it.uom }}</td>
-										<td class="p-1 font-xxss">{{ it.color }}</td>
-										<td class="p-1 font-xxss" colspan="2">{{ it.size }}</td>
-										<td class="p-1 font-xxss text-left" colspan="3">{{ it.expiry_date }} </td>
-										
-									</tr>
-									<tr>
-										<td class="p-1 font-xxss text-left" colspan="4"><span class="italic">Remarks:</span> {{ it.remarks }}</td>
-										<td class="p-1 font-xxss ">
-											<div class="flex justify-center space-x-4">
-												<div class="flex justify-center space-x-1">
-													<span>Local:</span>
-													<CheckCircleIcon v-if="it.location == 'local'" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-emerald-500"></CheckCircleIcon>
-												</div>
-												<div class="flex justify-center space-x-1">
-													<span>Manila:</span>
-													<CheckCircleIcon v-if="it.location == 'manila'" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-emerald-500"></CheckCircleIcon>
-												</div>
-											</div>
-										</td>
-										<td class="p-1 font-xxss text-left" colspan="4">
-											<span class="italic" v-if="it.pr_replenish == 1">Replenish: Yes</span> 
-											<span class="italic" v-else>Replenish: No</span> 
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							<div class="p-2 bg-gray-200">
+							</div>
 						</div>
 					</div>
 				</div>

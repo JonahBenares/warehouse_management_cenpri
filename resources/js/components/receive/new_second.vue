@@ -620,7 +620,7 @@ const autosuggestSize = async (index) => {
 													<input type="text" disabled v-model="details.detail_no" class=" bg-blue-400 text-lg text-center font-bold text-white rounded w-full">
 													<input type="hidden"  v-model="details.receive_head_id">
 												</td> -->
-												<td class="px-0 py-0 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >PR/JO/WH Stocks</td>
+												<td class="px-0 py-0 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="13%" >PR/JO/WH Stocks</td>
 												<td class="px-2 py-1"  width="14%">
 													<div class="flex justify-start" v-if="details.pr_no == 'WH Stocks'">
 														<input type="checkbox" class="" id="wh_stocks" @change="checkWH()" checked>

@@ -64,7 +64,7 @@
 										</div>
 									</a>
 								</div>
-								<table id="main_table" class="display" width="100%">  
+								<table id="main_table" class="display text-sm" width="100%">  
 									<thead>
 										<tr>
 											<th scope="col" width="15%" class="text-sm !text-gray-600">Orignal PN</th>

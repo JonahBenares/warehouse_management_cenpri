@@ -1284,11 +1284,11 @@ const checkMaxqty = async (index) => {
 													</select>
 												</td>
 												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Cat No</td>
-												<td class="" width="10%">
+												<td class="" width="11%">
 													<input class="px-2 py-1 w-full" name="" id="">
 												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Serial No</td>
-												<td class=""  colspan="2" width="10%">
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="6%">Serial No</td>
+												<td class=""  colspan="2" width="11%">
 													<input class="px-2 py-1 w-full" name="" id="">
 												</td>
 											</tr>
@@ -1309,7 +1309,7 @@ const checkMaxqty = async (index) => {
 											<tr>
 												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" >Item Status</td>
 												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Avail Qty</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Compo Qty</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="6%">Compo Qty</td>
 												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Qty</td>
 												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Unit Cost</td>
 												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Cost</td>
@@ -1322,15 +1322,15 @@ const checkMaxqty = async (index) => {
 														<button class="py-2 px-2 btn-danger btn-rounded">
 															<TrashIcon class="size-4"></TrashIcon>
 														</button>
-														<button class="py-2 px-2 btn-warning text-white btn-rounded">
+														<!-- <button class="py-2 px-2 btn-warning text-white btn-rounded">
 															<EyeIcon class="size-4"></EyeIcon>
-														</button>
+														</button> -->
 													</div>
 												</td>
 											</tr>
 											<tr>
-												<td class="text-center">
-													<select class="px-2 py-1 w-full text-center" name="" id="">
+												<td class="text-left">
+													<select class="px-2 py-1 w-full text-left" name="" id="">
 														<option value="">Select</option>
 													</select>
 												</td>
