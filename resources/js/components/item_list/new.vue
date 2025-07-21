@@ -1255,14 +1255,14 @@ const checkMaxqty = async (index) => {
 										<br>
 										<br>
 										<br>
-										<table v-for="(variant,index) in variant_list" class="table-bordered !border !border-gray-200 text-sm mb-0 w-full mb-2">
+										<table v-for="(variant,index) in variant_list" class="table-bordered !border !border-gray-200 text-sm mb-0 w-full">
 											<tr>
 												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Supplier</td>
 												<td class="" colspan="9">
 													<!-- <select class="px-2 py-1 w-full" name="" id="">
 														<option value="">Select</option>
 													</select> -->
-													<v-select  v-model="variant.supplier_id" :options="listsupplier" :reduce="listsupplier => listsupplier.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
+													<v-select  v-model="variant.supplier_id" :options="listsupplier" :reduce="listsupplier => listsupplier.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
 														<template #selected-option="{ supplier_name }">
 															{{ supplier_name }}
 														</template>
@@ -1307,7 +1307,7 @@ const checkMaxqty = async (index) => {
 												</td>
 											</tr>
 											<tr>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" >Item Status</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" >Item Status</td>
 												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Avail Qty</td>
 												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="6%">Compo Qty</td>
 												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Qty</td>

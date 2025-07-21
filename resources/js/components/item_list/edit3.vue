@@ -1164,7 +1164,7 @@ const stockcardRedirect= (variant_id,item_id,supplier_id,catalog_no,brand) => {
 											<table class="table table-bordered mb-0">
 												<thead>
 													<tr>
-														<th class="font-xxs" width="20%">Supplier</th>
+														<th class="font-xxs" width="21%">Supplier</th>
 														<th class="font-xxs">Catalog No</th>
 														<th class="font-xxs">Brand</th>
 														<th class="font-xxs">Serial No</th>
