@@ -1153,11 +1153,22 @@ const stockcardRedirect= (variant_id,item_id,supplier_id,catalog_no,brand) => {
 
 							<div v-else-if="choice === 'variant' || variant_list.length!=0">
 								<p class="text-danger" v-for="erritm in error_items" v-if="error_items.length > 0">{{ erritm }}</p>
-								<div class="flex justify-start space-x-1 mt-2">
-									<button :disabled="form.variant_flag==1 || variant_list.length!=0" id='composite' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-									<button id='variant' class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-									<!-- <button :disabled="form.variant_flag==1 || variant_list.length!=0" id='novariant' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'novariant'">No Variant</button> -->
+								<div class="flex justify-between">
+									<div class="flex justify-start space-x-1 mt-2">
+										<button :disabled="form.variant_flag==1 || variant_list.length!=0" id='composite' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
+										<button id='variant' class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
+										<!-- <button :disabled="form.variant_flag==1 || variant_list.length!=0" id='novariant' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'novariant'">No Variant</button> -->
+									</div>
+									<div class="mt-2">
+										<button @click="addRowVariant" class="btn-primary btn-sm btn p-1">
+											<div class="flex">
+												<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mt-.5"></PlusIcon>
+												<span>Add Variant</span>
+											</div>
+										</button>
+									</div>
 								</div>
+								
 								<div class="row">
 									<div class="col-lg-12 px-1">
 										<div class="overflow-x-auto border border-gray-300 rounded shadow-sm">
@@ -1284,7 +1295,114 @@ const stockcardRedirect= (variant_id,item_id,supplier_id,catalog_no,brand) => {
 													</tr>
 												</tbody>
 											</table>
+											
 										</div>
+										<br>
+										<br>
+										<br>
+										<table v-for="(variant,index) in variant_list" class="table-bordered !border !border-gray-200 text-sm mb-0 w-full">
+											<tr>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Supplier</td>
+												<td class="" colspan="9">
+													<!-- <select class="px-2 py-1 w-full" name="" id="">
+														<option value="">Select</option>
+													</select> -->
+													<v-select  v-model="variant.supplier_id" :options="listsupplier" :reduce="listsupplier => listsupplier.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
+														<template #selected-option="{ supplier_name }">
+															{{ supplier_name }}
+														</template>
+														<template #option="{ supplier_name }">
+															{{ supplier_name }}
+														</template>
+													</v-select>
+												</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">PN No</td>
+												<td class="" colspan="2">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+											</tr>
+											<tr>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Brand</td>
+												<td class="" colspan="7">
+													<select class="px-2 py-1 w-full" name="" id="">
+														<option value="">Select</option>
+													</select>
+												</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Cat No</td>
+												<td class="" width="11%">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="6%">Serial No</td>
+												<td class=""  colspan="2" width="11%">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+											</tr>
+											<tr>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Other Desc</td>
+												<td class="" colspan="7">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Color</td>
+												<td class="" width="10%">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Size</td>
+												<td class=""  colspan="2" width="10%">
+													<input class="px-2 py-1 w-full" name="" id="">
+												</td>
+											</tr>
+											<tr>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" >Item Status</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Avail Qty</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="6%">Compo Qty</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Qty</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Unit Cost</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Cost</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="3%">Currency</td>
+												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="4%" >UOM</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" colspan="2">Expiration</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" colspan="2">Barcode</td>
+												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" width="3%" rowspan="2">
+													<div class="flex justify-center space-x-1">
+														<button class="py-2 px-2 btn-danger btn-rounded">
+															<TrashIcon class="size-4"></TrashIcon>
+														</button>
+														
+														<button class="py-2 px-2 btn-warning text-white btn-rounded"  @click="stockcardRedirect(v.id,v.item_id,v.supplier_id,v.catalog_no,v.brand,'0')">
+															<EyeIcon class="size-4"></EyeIcon>
+														</button>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td class="text-left">
+													<select class="px-2 py-1 w-full text-left" name="" id="">
+														<option value="">Select</option>
+													</select>
+												</td>
+												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
+												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
+												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
+												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
+												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
+												<td class="text-center">
+													<select class="px-2 py-1 w-full text-center" name="" id="">
+														<option value="">Select</option>
+													</select>
+												</td>
+												<td class="text-center">
+													<select class="px-2 py-1 w-full text-center" name="" id="">
+														<option value="">Select</option>
+													</select>
+												</td>
+												<td class="text-left" colspan="2">
+													<input typ="date" class="px-2 py-1 w-full" name="" id="">
+												</td>
+												<td class="text-left" colspan="2">
+													<input typ="date" class="px-2 py-1 w-full" name="" id="">
+												</td>
+											</tr>
+										</table>
 									</div>
 								</div>
 							</div>
