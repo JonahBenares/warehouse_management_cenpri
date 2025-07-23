@@ -76,8 +76,8 @@
 					<div class="card">
 						<div class="table-responsive-md">
 							<div class="flex justify-start pb-2 my-2 space-x-2">
-								<div class="w-64">
-									<v-select v-model="form.item_name" :options="items" :reduce="items => items.id" class="form-control" :get-option-label="option => `${option.item_description}`" placeholder="Select Item">
+								<div class="w-72">
+									<v-select v-model="form.item_name" :options="items" :reduce="items => items.id" class="border rounded" :get-option-label="option => `${option.item_description}`" placeholder="Select Item">
 										<template #selected-option="{ item_description }">
 											{{ item_description }}
 										</template>
@@ -86,8 +86,8 @@
 										</template>
 									</v-select>
 								</div>
-                                <div class="w-64">
-									<v-select v-model="form.pr_no" :options="pr" :reduce="pr => pr.pr_no" class="form-control" :get-option-label="option => `${option.pr_no}`" placeholder="Select PR">
+                                <div class="w-72">
+									<v-select v-model="form.pr_no" :options="pr" :reduce="pr => pr.pr_no" class="border rounded" :get-option-label="option => `${option.pr_no}`" placeholder="Select PR">
 										<template #selected-option="{ pr_no }">
 											{{ pr_no }}
 										</template>
@@ -95,6 +95,16 @@
 											{{ pr_no }}
 										</template>
 									</v-select>
+								</div>
+								<div class="w-72">
+									<select name="" class="border form-control py-1 !text-base" id="">
+										<option value="">Select EndUse</option>
+									</select>
+								</div>
+								<div class="w-72">
+									<select name="" class="border form-control py-1 !text-base" id="">
+										<option value="">Select Purpose</option>
+									</select>
 								</div>
 								<button class="btn btn-sm btn-success" @click="filter()">
 									<div class="flex justify-between space-x-2" >
@@ -106,7 +116,7 @@
 							<hr class="border-dashed">
                             <div class="row" style="display: none;" id="showExport">
                                 <div class="col-lg-12 px-1">
-                                    <div class="flex justify-end mb-3">
+                                    <div class="flex justify-end mb-3 mx-3">
                                         <a :href="'/export-proverall/'+((form.item_name!='') ? form.item_name : '0')+'/'+((form.pr_no!='') ? form.pr_no : 'null')" class="btn btn-sm btn-success">
                                             <div class="flex justify-between space-x-2" >
                                                 <span>Export to Excel</span>

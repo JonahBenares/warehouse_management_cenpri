@@ -191,7 +191,7 @@
 						<div class="table-responsive-md">
 							<div class="flex justify-between pb-2 my-2 space-x-2">
 								<div class="w-full">
-									<v-select v-model="form.item_name" :options="items" :reduce="items => items.id" class="form-control border" :get-option-label="option => `${option.item_description}`" placeholder="Select Item">
+									<v-select v-model="form.item_name" :options="items" :reduce="items => items.id" class="rounded border" :get-option-label="option => `${option.item_description}`" placeholder="Select Item">
 										<template #selected-option="{ item_description }">
 											{{ item_description }}
 										</template>
@@ -201,7 +201,7 @@
 									</v-select>
 								</div>
 								<div class="w-full">
-									<v-select v-model="form.suppliername" :options="supplier" :reduce="supplier => supplier.id" class="form-control border" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
+									<v-select v-model="form.suppliername" :options="supplier" :reduce="supplier => supplier.id" class="rounded border" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
 										<template #selected-option="{ supplier_name }">
 											{{ supplier_name }}
 										</template>
@@ -210,10 +210,8 @@
 										</template>
 									</v-select>
 								</div>
-							</div>
-							<div class="flex justify-between pb-2 space-x-2">
 								<div class="w-full">
-									<v-select v-model="form.department" :options="department" :reduce="department => department.id" class="form-control border" :get-option-label="option => `${option.department_name}`" placeholder="Select Department">
+									<v-select v-model="form.department" :options="department" :reduce="department => department.id" class="rounded border" :get-option-label="option => `${option.department_name}`" placeholder="Select Department">
 										<template #selected-option="{ department_name }">
 											{{ department_name }}
 										</template>
@@ -223,7 +221,7 @@
 									</v-select>
 								</div>
 								<div class="w-full">
-									<v-select v-model="form.catalog" :options="catalog_list" :reduce="catalog_list => catalog_list.catalog_no" class="form-control border" :get-option-label="option => `${option.catalog_no}`" placeholder="Select Catalog No">
+									<v-select v-model="form.catalog" :options="catalog_list" :reduce="catalog_list => catalog_list.catalog_no" class="rounded border" :get-option-label="option => `${option.catalog_no}`" placeholder="Select Catalog No">
 										<template #selected-option="{ catalog_no }">
 											{{ catalog_no }}
 										</template>
@@ -232,14 +230,24 @@
 										</template>
 									</v-select>
 								</div>
+							</div>
+							<div class="flex justify-between pb-2 space-x-2">
 								<div class="w-full">
-									<v-select v-model="form.brand" :options="brand_list" :reduce="brand_list => brand_list.brand" class="form-control border" :get-option-label="option => `${option.brand}`" placeholder="Select Brand">
+									<v-select v-model="form.brand" :options="brand_list" :reduce="brand_list => brand_list.brand" class="rounded border" :get-option-label="option => `${option.brand}`" placeholder="Select Brand">
 										<template #selected-option="{ brand }">
 											{{ brand }}
 										</template>
 										<template #option="{ brand }">
 											{{ brand }}
 										</template>
+									</v-select>
+								</div>
+								<div class="w-full">
+									<v-select v-model="form.enduse" :options="enduse_list" :reduce="enduse_list => enduse_list.enduse" class="rounded border" :get-option-label="option => `${option.brand}`" placeholder="Select EndUse">
+									</v-select>
+								</div>
+								<div class="w-full">
+									<v-select v-model="form.purpose" :options="purpose_list" :reduce="purpose_list => purpose_list.purpose" class="rounded border" :get-option-label="option => `${option.brand}`" placeholder="Select Purpose">
 									</v-select>
 								</div>
 								<button class="btn btn-sm btn-success" @click="filter()">
@@ -255,10 +263,9 @@
 								<span class="font-bold text-xl text-blue-700">{{ itemname }}</span>
 								<span class="bg-blue-600 rounded text-white px-4 py-1">Running Balance: <b>{{ overall_qty }}</b></span>
 							</div>
-							<hr class="border-dashed">
                             <div class="row" style="display: none;" id="showExport" v-if="(props.variant_id!=0 || props.item_id!=0 || props.supplier_id!=0 || props.catalog_no!='null' || props.brand!='null' || props.department_id!=0)">
                                 <div class="col-lg-12 px-1">
-                                    <div class="flex justify-end mb-3">
+                                    <div class="flex justify-end mb-3 mr-3">
 										<a :href="'/export-stockcarditems/'+((props.variant_id!='0') ? props.variant_id : '0')+'/'+((props.item_id!='0') ? props.item_id : '0')+'/'+((props.supplier_id!='0') ? props.supplier_id : '0')+'/'+((props.catalog_no!='') ? props.catalog_no : 'null')+'/'+((props.brand!='') ? props.brand : 'null')+'/'+((props.department_id!='0') ? props.department_id : '0'+'/'+((overall_qty!='0') ? overall_qty : '0'))" class="btn btn-sm btn-success">
                                             <div class="flex justify-between space-x-2" >
                                                 <span>Export to Excel</span>
@@ -269,7 +276,7 @@
                             </div>
 							<div class="row" style="display: none;" id="showExport" v-else>
                                 <div class="col-lg-12 px-1">
-                                    <div class="flex justify-end mb-3">
+                                    <div class="flex justify-end mb-3 mr-3">
                                         <a :href="'/export-stockcard/'+((form.item_name!='') ? form.item_name : '0')+'/'+((form.supplier_name!='') ? form.supplier_name : '0')+'/'+((form.department!='') ? form.department : '0')+'/'+((form.catalog!='') ? form.catalog : 'null')+'/'+((form.brand!='') ? form.brand : 'null'+'/'+((overall_qty!='0') ? overall_qty : '0'))" class="btn btn-sm btn-success">
                                             <div class="flex justify-between space-x-2" >
                                                 <span>Export to Excel</span>

@@ -5,6 +5,7 @@
 	import { Cog8ToothIcon} from '@heroicons/vue/24/solid'
 	const router = useRouter();
 	const masterfileDrop = ref(false);
+	const itemlistDrop = ref(false);
 	const receiveDrop = ref(false);
 	const uatDrop = ref(false);
 	const requestDrop = ref(false);
@@ -148,6 +149,46 @@
 
 						</span>
 					</a>
+				</li>
+				<li class="sidebar-nav-item">
+					<a href="#" class="sidebar-nav-link" @click="itemlistDrop = !itemlistDrop"  aria-expanded="false">
+						<span class="sidebar-nav-icon">
+							<RectangleGroupIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" />
+						</span>
+						<span class="sidebar-nav-name">
+							Item List
+						</span>
+						<span class="sidebar-nav-end">
+							<ChevronRightIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" />
+						</span>
+					</a>
+					<Transition
+						enter-active-class="transition ease-out duration-250"
+						enter-from-class="opacity-0 h-1/2"
+						enter-to-class="opacity-100 h-full"
+						leave-active-class="transition ease-in duration-100"
+						leave-from-class="opacity-100 h-full"
+						leave-to-class="opacity-0 h-1/2"
+					>
+						<ul class="sidebar-sub-nav" v-show="itemlistDrop">
+							<li class="sidebar-nav-item">
+								<a href="/receive/new" class="sidebar-nav-link">
+									<span class="sidebar-nav-abbr text-gray-300">VI</span>
+									<span class="sidebar-nav-name">
+										Variant
+									</span>
+								</a>
+							</li>
+							<li class="sidebar-nav-item">
+								<a href="/receive" class="sidebar-nav-link">
+									<span class="sidebar-nav-abbr text-gray-300">CI</span>
+									<span class="sidebar-nav-name">
+										Composite
+									</span>
+								</a>
+							</li>
+						</ul>
+					</Transition>
 				</li>
 				<li class="sidebar-nav-item">
 					<a class="sidebar-nav-link collapsed" @click="masterfileDrop = !masterfileDrop" href="#"  aria-expanded="false" >

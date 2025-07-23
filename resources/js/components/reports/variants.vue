@@ -72,8 +72,8 @@
 					<div class="card">
 						<div class="table-responsive-md">
 							<div class="flex justify-start pb-2 my-2 space-x-2">
-								<div class="w-64">
-									<v-select v-model="form.item_name" :options="items" :reduce="items => items.id" class="form-control border" :get-option-label="option => `${option.item_description}`" placeholder="Select Item">
+								<div class="w-72">
+									<v-select v-model="form.item_name" :options="items" :reduce="items => items.id" class="border rounded" :get-option-label="option => `${option.item_description}`" placeholder="Select Item">
 										<template #selected-option="{ item_description }">
 											{{ item_description }}
 										</template>

@@ -75,8 +75,8 @@
 					<div class="card">
 						<div class="table-responsive-md">
 							<div class="flex justify-start pb-2 my-2 space-x-2">
-								<div class="w-64">
-									<v-select v-model="form.item_name" :options="items" :reduce="items => items.id" class="form-control border" :get-option-label="option => `${option.item_description}`" placeholder="Select Item">
+								<div class="w-72">
+									<v-select v-model="form.item_name" :options="items" :reduce="items => items.id" class="rounded border" :get-option-label="option => `${option.item_description}`" placeholder="Select Item">
 										<template #selected-option="{ item_description }">
 											{{ item_description }}
 										</template>
@@ -85,8 +85,8 @@
 										</template>
 									</v-select>
 								</div>
-                                <div class="w-64">
-									<v-select v-model="form.pr_no" :options="pr" :reduce="pr => pr.pr_no" class="form-control border" :get-option-label="option => `${option.pr_no}`" placeholder="Select PR">
+                                <div class="w-72">
+									<v-select v-model="form.pr_no" :options="pr" :reduce="pr => pr.pr_no" class="rounded border" :get-option-label="option => `${option.pr_no}`" placeholder="Select PR">
 										<template #selected-option="{ pr_no }">
 											{{ pr_no }}
 										</template>
@@ -94,6 +94,16 @@
 											{{ pr_no }}
 										</template>
 									</v-select>
+								</div>
+								<div class="w-72">
+									<select name="" class="border form-control py-1 !text-base" id="">
+										<option value="">Select EndUse</option>
+									</select>
+								</div>
+								<div class="w-72">
+									<select name="" class="border form-control py-1 !text-base" id="">
+										<option value="">Select Purpose</option>
+									</select>
 								</div>
 								<button class="btn btn-sm btn-success" @click="filter()">
 									<div class="flex justify-between space-x-2" >

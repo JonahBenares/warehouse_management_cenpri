@@ -12,6 +12,10 @@ import item_listIndex from '../components/item_list/index.vue'
 import item_listNew from '../components/item_list/new.vue'
 import item_listEdit from '../components/item_list/edit.vue'
 
+import composite_Index from '../components/composite/index.vue'
+import composite_New from '../components/composite/new.vue'
+import composite_Edit from '../components/composite/edit.vue'
+
 import categoryIndex from '../components/category/index.vue'
 import categoryNew from '../components/category/new.vue'
 import categoryEdit from '../components/category/edit.vue'
