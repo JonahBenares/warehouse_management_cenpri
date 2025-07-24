@@ -24,6 +24,7 @@ import subCategoryEdit from '../components/sub_category/edit.vue'
 
 import groupIndex from '../components/group/index.vue'
 import groupNew from '../components/group/new.vue'
+
 import groupEdit from '../components/group/edit.vue'
 
 import warehouseIndex from '../components/warehouse/index.vue'
@@ -213,6 +214,30 @@ const routes = [
             requiresAuth:true
         }
     },
+
+    {
+        path:'/item_list/composite',
+        component: composite_Index,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    {
+        path:'/item_list/composite/new',
+        component: composite_New,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    {
+        path:'/item_list/composite/edit/:id',
+        component: composite_Edit,
+        props:true,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    
     {
         path:'/category',
         component: categoryIndex,

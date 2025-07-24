@@ -172,7 +172,7 @@
 					>
 						<ul class="sidebar-sub-nav" v-show="itemlistDrop">
 							<li class="sidebar-nav-item">
-								<a href="/receive/new" class="sidebar-nav-link">
+								<a href="/item_list" class="sidebar-nav-link">
 									<span class="sidebar-nav-abbr text-gray-300">VI</span>
 									<span class="sidebar-nav-name">
 										Variant
@@ -180,7 +180,7 @@
 								</a>
 							</li>
 							<li class="sidebar-nav-item">
-								<a href="/receive" class="sidebar-nav-link">
+								<a href="/item_list/composite" class="sidebar-nav-link">
 									<span class="sidebar-nav-abbr text-gray-300">CI</span>
 									<span class="sidebar-nav-name">
 										Composite
