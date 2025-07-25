@@ -1068,15 +1068,15 @@ const checkMaxqty = async (index) => {
 								
 								<div class="row ">
 									<div class="col-lg-12 px-1">
-										<div class="border-gray-400  shadow-sm">
+										<div class="border-gray-400">
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <p>Compositasdasdase</p>
+                                                    <p class="mb-1 mt-9">Composite Items</p>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div  style="display: none;" id="makecopies">
                                                         <div class="row">
-                                                            <div class="col-lg-6 px-1">
+                                                            <div class="col-lg-6 pl-1">
                                                                 <div class="form-group">
                                                                     <div class="flex justify-start ">
                                                                         <span class="text-xs text-gray-500 leading-none uppercase">Make Copies</span>
@@ -1084,7 +1084,7 @@ const checkMaxqty = async (index) => {
                                                                     <input type="text" class="form-control border my-1" v-model="copies" placeholder="Make Copies">
                                                                 </div>										
                                                             </div>
-                                                            <div class="col-lg-6 px-1">
+                                                            <div class="col-lg-6 pl-1">
                                                                 <div class="form-group">
                                                                     <div class="flex justify-start ">
                                                                         <span class="text-xs text-gray-500 leading-none uppercase">Composite Cost</span>
