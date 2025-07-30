@@ -141,7 +141,7 @@ const getItemstatus = async () => {
 }
 
 const chooseSubcat = async () => {
-	var subcat = document.getElementById("subcategory").value;
+	var subcat =  form.value.item_sub_cat_id ?? ''
 	let response = await axios.get("/api/choose_subcat/"+subcat);
 	category.value=response.data.category_name
 	form.value.item_category_id=response.data.category_id
@@ -325,7 +325,7 @@ const onSave = () => {
 	// 		error_items.value.push('Item Status row '+inc+' must not be empty.')
 	// 	}
 	// }
-	formData.append('item_sub_category_id',form.value.item_sub_category_id ?? '')
+	formData.append('item_sub_category_id',form.value.item_sub_cat_id ?? '')
 	formData.append('item_category_id',form.value.item_category_id ?? '')
 	formData.append('item_description',form.value.item_description)
 	formData.append('pn_no',form.value.pn_no)
@@ -493,8 +493,8 @@ const onSaveDraft = () => {
 	// 		error_items.value.push('Selling Price row '+inc+' must not be empty.')
 	// 	}
 	// }
-	if(form.value.item_sub_category_id!=undefined){
-		formData.append('item_sub_category_id',form.value.item_sub_category_id)
+	if(form.value.item_sub_cat_id!=undefined){
+		formData.append('item_sub_category_id',form.value.item_sub_cat_id)
 	}else{
 		formData.append('item_sub_category_id','0')
 	}
@@ -934,9 +934,14 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Sub Category</span>
 										</div>
-										<select name="subcategory" id="subcategory" class="form-control border my-1" v-model="form.item_sub_category_id" @change="chooseSubcat()">
-											<option :value="subcategory.id" v-for="subcategory in listsubcategory" :key="subcategory.id">{{ subcategory.subcat_name }}</option>
-										</select>
+										<v-select v-model="form.item_sub_cat_id" :options="listsubcategory" :reduce="items => items.id" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.subcat_name}`" placeholder="Select Sub Category" @update:modelValue="chooseSubcat">
+											<template #selected-option="{ subcat_name }">
+												{{ subcat_name }}
+											</template>
+											<template #option="{ subcat_name }">
+												{{ subcat_name }}
+											</template>
+										</v-select>
 									</div>										
 								</div>
 								<div class="col-lg-3 px-1">
@@ -971,11 +976,16 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Location</span>
 										</div>
-										<select name="location" id="location" class="form-control border my-1" v-model="location">
-											<option :value="loc" v-for="loc in listlocation" :key="loc.id">{{ loc.location_name }}</option>
-										</select>
-										<input type="hidden" id="location_id" :value="location.id">
-										<input type="hidden" id="location_name" :value="location.location_name">
+										<v-select v-model="location" :options="listlocation" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.location_name}`" placeholder="Select Location">
+											<template #selected-option="{ location_name }">
+												{{ location_name }}
+											</template>
+											<template #option="{ location_name }">
+												{{ location_name }}
+											</template>
+										</v-select>
+										<input type="hidden" id="location_id" :value="location?.id || ''">
+										<input type="hidden" id="location_name" :value="location?.location_name || ''">
 									</div>										
 								</div>
 								<div class="col-lg-3 px-1">
@@ -983,11 +993,16 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Warehouse</span>
 										</div>
-										<select name="warehouse" id="warehouse" class="form-control border my-1" v-model="warehouse">
-											<option :value="wareh" v-for="wareh in listwarehouse" :key="wareh.id">{{ wareh.warehouse_name }}</option>
-										</select>
-										<input type="hidden" id="warehouse_id" :value="warehouse.id">
-										<input type="hidden" id="warehouse_name" :value="warehouse.warehouse_name">
+										<v-select v-model="warehouse" :options="listwarehouse" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.warehouse_name}`" placeholder="Select Warehouse">
+											<template #selected-option="{ warehouse_name }">
+												{{ warehouse_name }}
+											</template>
+											<template #option="{ warehouse_name }">
+												{{ warehouse_name }}
+											</template>
+										</v-select>
+										<input type="hidden" id="warehouse_id" :value="warehouse?.id || ''">
+										<input type="hidden" id="warehouse_name" :value="warehouse?.warehouse_name || ''">
 									</div>										
 								</div>
 							</div>
@@ -997,11 +1012,16 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Rack</span>
 										</div>
-										<select name="rack" id="rack" class="form-control border my-1" v-model="rack">
-											<option :value="rck" v-for="rck in listrack" :key="rck.id">{{ rck.rack_name }}</option>
-										</select>
-										<input type="hidden" id="rack_id" :value="rack.id">
-										<input type="hidden" id="rack_name" :value="rack.rack_name">
+										<v-select v-model="rack" :options="listrack" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.rack_name}`" placeholder="Select Rack">
+											<template #selected-option="{ rack_name }">
+												{{ rack_name }}
+											</template>
+											<template #option="{ rack_name }">
+												{{ rack_name }}
+											</template>
+										</v-select>
+										<input type="hidden" id="rack_id" :value="rack?.id || ''">
+										<input type="hidden" id="rack_name" :value="rack?.rack_name || ''">
 									</div>										
 								</div>
 								<div class="col-lg-3 px-1">
@@ -1009,11 +1029,16 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Group</span>
 										</div>
-										<select name="group" id="group" class="form-control border my-1" v-model="group">
-											<option :value="grp" v-for="grp in listgroup" :key="grp.id">{{ grp.group_name }}</option>
-										</select>
-										<input type="hidden" id="group_id" :value="group.id">
-										<input type="hidden" id="group_name" :value="group.group_name">
+										<v-select v-model="group" :options="listgroup" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.group_name}`" placeholder="Select Group">
+											<template #selected-option="{ group_name }">
+												{{ group_name }}
+											</template>
+											<template #option="{ group_name }">
+												{{ group_name }}
+											</template>
+										</v-select>
+										<input type="hidden" id="group_id" :value="group?.id || ''">
+										<input type="hidden" id="group_name" :value="group?.group_name || ''">
 									</div>										
 								</div>
 								<div class="col-lg-3 px-1">

@@ -337,7 +337,7 @@
 									</tr>
 									<tr>
 										<td class="bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >Department</td>
-										<td class="px-2"colspan="2">{{ det.department_id }}</td>
+										<td class="px-2" colspan="2">{{ det.department_id }}</td>
 										<td class="bg-gray-100 text-gray-600 font-bold border-gray-200 border-r px-2 py-1" width="10%" >End-Use</td>
 										<td class="px-2">{{ det.enduse_id }}</td>
 									</tr>
