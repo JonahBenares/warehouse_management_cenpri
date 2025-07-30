@@ -24,6 +24,11 @@
 	const onEdit= (id) => {
 		router.push('/item_list/edit/'+id)
 	}
+	const showDiv = ref(false);
+
+function toggleDiv() {
+  showDiv.value = !showDiv.value;
+}
 </script>
 <template>
     <navigation>
@@ -81,14 +86,31 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td></td>
-											<td>Item name</td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
+										<tr class=" hover:bg-gray-50 ">
+											<td class="align-top"></td>
+											<td class="p-0 align-top">
+												<button
+													@click="toggleDiv"
+													class="w-full text-left px-3 py-2 text-sm "
+												>
+													Toggle
+												</button>
+
+												<div v-if="showDiv" class="px-3 py-2 text-sm">
+													<span class="block font-semibold text-gray-700 mb-1">Composite Items</span>
+													<ul class="list-disc list-inside text-gray-600 m-0">
+														<li>Item composite 1</li>
+														<li>Item composite 1</li>
+														<li>Item composite 1</li>
+														<li>Item composite 1</li>
+													</ul>
+												</div>
+											</td>
+											<td class="align-top"></td>
+											<td class="align-top"></td>
+											<td class="align-top"></td>
+											<td class="align-top"></td>
+											<td class="align-top"></td>
 										</tr>
 									</tbody>
 									<!-- <template #column-1="props">

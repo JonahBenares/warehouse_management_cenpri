@@ -29,6 +29,7 @@ use App\Http\Controllers\ImportItemsController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\reminderController;
 use App\Http\Controllers\GatepassController;
+use App\Http\Controllers\ExpiringItemsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,6 +46,8 @@ Route::get('/constants', function () {
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// Route::get('/items-expiring-soon', [ItemController::class, 'expiringSoon']);
+Route::get('/items-expiring-soon', [ExpiringItemsController::class, 'expiringSoon']);
 Route::get('/login_form', [AuthController::class,'login_form']);
 Route::post('/login_process', [AuthController::class,'login_process']);
 Route::get('/dashboard', [AuthController::class,'dashboard']);

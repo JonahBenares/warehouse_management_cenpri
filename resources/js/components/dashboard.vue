@@ -199,6 +199,22 @@
 		let response = await axios.get(`/api/moq_display_dashboard?page=${page}&filter=${searchItems.value}`);
 		moqitems.value=response.data.items
 	}
+
+	let expiringItems = ref([]); // reactive list for items with expiring variants
+
+	// Fetch items with variants expiring in the next 7 days
+	const loadExpiringItems = async () => {
+		try {
+			const response = await axios.get('/api/items-expiring-soon');
+			expiringItems.value = response.data;
+		} catch (error) {
+			console.error('Failed to fetch expiring items:', error);
+		}
+	};
+
+	onMounted(() => {
+		loadExpiringItems();
+	});
 </script>
 <template>
 		<div>
@@ -269,12 +285,37 @@
 					</div>
 				</div>
 			</div>
-		
+			<div>
+				<h2 class="text-lg font-semibold mb-2">Items Expiring in 7 Days</h2>
+				<ul v-if="expiringItems.length">
+					<li v-for="item in expiringItems" :key="item.id" class="mb-3">
+						<div class="font-bold">{{ item.item_description }}</div>
+						<ul class="ml-4 text-sm">
+							<li v-for="variant in item.variants" :key="variant.id">
+								Variant: {{ variant.identifier || variant.catalog_no }} — Exp: {{ variant.expiration }}
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<p v-else class="text-gray-500 text-sm">No items expiring soon.</p>
+			</div>
 
-
+			
 			<div class="row">
+				<div class="col-lg-12">
+					<div class="card">
+						<table class="">
+							<tr>
+								<td>Item Name</td>
+								<td>Expiration</td>
+								<td>Days Left</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="row">
 				<div class="col-lg-8 pr-2">
-					
 					<div class="card p-0 mb-3">
 						<div class="card-header border-0 !bg-blue-500 rounded-t-lg ">
 							<div class="flex justify-between">
@@ -453,9 +494,8 @@
 						</div>
 						<div class="card-body px-0 py-2" id="card1">
 							<div class="h-96 hover:overflow-y-scroll overflow-y-hidden px-4">
-								<div class="menu-rem" v-for="(rl, i) in reminder_list.data"><!--  loop here -->
+								<div class="menu-rem" v-for="(rl, i) in reminder_list.data">
 									<div class="cursor-pointer" @click="OpenNotes(i)">
-									<!-- <div class="cursor-pointer" @click="remNote = !remNote"> -->
 										<div  class="flex justify-between">
 											<span class="text-base w-15 font-bold">{{ rl.reminder_date }}</span>
 											<div id="menu-rem" class="space-x-1">
@@ -473,10 +513,6 @@
 										leave-from-class="opacity-100 h-full"
 										leave-to-class="opacity-0 h-1/2"
 									>
-										<!-- <div class="border-t border-dashed py-1 mt-1" v-show="remNote">
-											<div class="text-sm leading-tight">Notes: {{ rl.notes }}</div>
-											<div class="text-sm leading-tight">Person to Remind: {{ rl.person_to_notify_name }}</div>
-										</div> -->
 										<div class="border-t border-dashed py-1 mt-1" style="display: none;" :id="'notes_disp_'+i">
 											<div class="text-sm leading-tight">Notes: {{ rl.notes }}</div>
 											<div class="text-sm leading-tight">Person to Remind: {{ rl.person_to_notify_name }}</div>
@@ -497,7 +533,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div class="modal p-0" :class="{ show:showAddModal }">
 			<div @click="closeAddModal" class="w-full h-full fixed"></div>
