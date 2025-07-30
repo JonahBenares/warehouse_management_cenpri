@@ -142,7 +142,7 @@ class DropdownController extends Controller
     }
 
     public function all_subcategory(){
-        $subcategory=ItemSubCategory::where('subcat_name','!=','')->orderBy('subcat_name','ASC')->get()->unique('subcat_name');
+        $subcategory=ItemSubCategory::where('subcat_name','!=','')->orderBy('subcat_name','ASC')->get()->unique('subcat_name')->values(); // Reindex after unique();
         return response()->json([
             'subcategory'=>$subcategory
         ],200);
