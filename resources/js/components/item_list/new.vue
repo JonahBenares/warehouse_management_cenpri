@@ -1095,94 +1095,17 @@ const checkMaxqty = async (index) => {
 								</div>
 							</div>
 							
-							<div v-if="choice === 'composite'">
-								<div class="alert alert-warning2 my-2 show-animate border-0 shadow-sm" v-if="error_items.length > 0">
-									<div class="flex justify-stsart space-x-2">
-										<div class="text-yellow-600">
-											<ExclamationCircleIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"></ExclamationCircleIcon>
-										</div> 
-										<div>
-											<div class="text-yellow-600" v-for="erritm in error_items">{{ erritm }} </div>
-										</div>
-									</div>
-								</div>
-								<div class="flex justify-start space-x-1 mt-2">
-									<button id="composite" class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-									<button id="variant" class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-									<!-- <button id="novariant" class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'novariant'">No Variant</button> -->
-								</div>
-								<div class="row ">
-									<div class="col-lg-12 px-1">
-										<div class="border-gray-400 border-t-2 shadow-sm">
-											<table class="table table-bordered mb-0">
-												<thead>
-													<tr>
-														<th class="font-xxs">Item Description</th>
-														<th class="font-xxs">Variant</th>
-														<th class="font-xxs">Quantity</th>
-														<th class="p-1 font-xxs" align="center" width="1%">
-															<div class="space-x-1 flex justify-center">
-																<a href="#" @click="addRowComposite" class="btn btn-xs btn-primary btn-rounded">
-																	<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></PlusIcon>
-																</a>
-															</div>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr v-for="(comp, index) in composite_list">
-														<td class="p-0 text-xs">
-															<input type="hidden" v-model="comp.id">
-															<!-- <textarea type="text" v-model="comp.item_description" rows="2" class="p-1 m-0 w-full leading-none block "></textarea> -->
-															<select name="items" id="items" class="form-control border" v-model="comp.compose_item_id" @change="checkVariant(index)" :disabled="draft==1 && comp.id!=0">
-																<option :value="item.id" v-for="item in listitems" :key="item.id">{{ item.item_description }}</option>
-															</select>
-														</td>
-														<td class="p-0 text-xs">
-															<select name="variant_comp" id="variant_comp" class="form-control border" v-model="comp.variant_id" @change="checkVariantqty(index,comp.variant_id,comp.compose_item_id)" :disabled="draft==1 && comp.id!=0">
-																<option :value="v.id" v-for="v in variant[index]" :key="v.id">{{ v.supplier_name }}, {{ v.brand }}</option>
-															</select>
-															<input type="hidden" v-model="comp.pr_no">
-															<!-- <input type="text" rows="2" class="p-1 m-0 w-full leading-none block" v-model="comp.variant" list="variant_list">
-															<datalist id="variant_list">
-																<option :value="v.id" v-for="v in variant" :key="v.id"></option>
-															</datalist> -->
-														</td>
-														<td class="p-0 text-xs">
-															<textarea type="number" v-model="comp.quantity" rows="2" class="p-1 m-0 w-full leading-none block " placeholder="Quantity" :disabled="draft==1 && comp.id!=0" @blur="checkMaxqty(index)"></textarea>
-															<input type="hidden" v-model="comp.checker_qty">
-														</td>
-														<td class="p-1  font-bold">
-															<div class="p-0 space-x-1 flex justify-center" v-if="comp.id==0">
-																<a @click="removeComposite(index)" class="text-white btn btn-xs btn-danger btn-rounded">
-																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
-																</a>
-															</div>
-															<div class="p-0 space-x-1 flex justify-center" v-else>
-																<a @click="deleteComposite(comp.id,composite_list.length,comp.compose_item_id,comp.quantity,comp.variant_id,index,item_id)" class="text-white btn btn-xs btn-danger btn-rounded">
-																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
-																</a>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div v-else-if="choice === 'variant'">
+							
+							 
+							<div>
 								<p class="text-danger" v-for="erritm in error_items" v-if="error_items.length > 0">{{ erritm }}</p>
-								<div class="flex justify-between">
-									<div class="flex justify-start space-x-1 mt-2">
-										<button id="composite" class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-										<button id="variant" class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-										<!-- <button id="variant" class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">No Variant</button> -->
+								<div class="row">
+									<div class="col-lg-6">
+										<p class="mb-1 ">Variant Items</p>
 									</div>
-									<div class="mt-2">
+									<div class="col-lg-6">
 										<button @click="addRowVariant" class="btn-primary btn-sm btn p-1">
-											<div class="flex">
+											<div class="flex space-x-1 mx-2">
 												<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mt-.5"></PlusIcon>
 												<span>Add Variant</span>
 											</div>
@@ -1311,69 +1234,7 @@ const checkMaxqty = async (index) => {
 								</div>
 							</div>
 							
-							<!-- <div v-else-if="choice === 'variant'">
-								<p class="text-danger" v-for="erritm in error_items" v-if="error_items.length > 0">{{ erritm }}</p>
-								<div class="flex justify-start space-x-1 mt-2">
-									<button id="composite" class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-									<button id="variant" class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-									<button id="variant" class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">No Variant</button>
-								</div>
-								<div class="row">
-									<div class="col-lg-12 px-1">
-										<div class="border-gray-400 border-t-2">
-											<table class="table table-bordered mb-0">
-												<thead>
-													<tr>
-														<th class="font-xxs" width="5%">Unit Cost</th>
-														<th class="font-xxs" width="5%">Selling Price</th>
-														<th class="font-xxs" width="5%">Expiration</th>
-														<th class="font-xxs" width="10%">Barcode</th>
-														<th class="font-xxs" width="10%">Serial No</th> 
-														<th class="font-xxs" width="8%">Item Status</th>
-
-														<th class="font-xxs p-1 font-xxs" align="center" width="1%">
-															<div class="space-x-1 flex justify-center">
-																<a href="#" @click="addRowvariant" class="btn btn-xs btn-primary btn-rounded">
-																	<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></PlusIcon>
-																</a>
-															</div>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr v-for="(novar, index) in variant_list">
-														<td class="p-0 text-xs"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="novar.unit_cost"></textarea></td>
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="novar.selling_price"></textarea></td>
-														<td class="p-0 text-xs"><input type="date" rows="2" class="p-1 m-0 w-full leading-none block " v-model="novar.expiration"/></td>
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="novar.bar_code"></textarea></td>
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="novar.serial_no"></textarea></td>
-														<td class="p-0 text-xs">
-															<select name="item_status" id="item_status" class="form-control border" v-model="novar.item_status">
-																<option :value="itemstatus.id" v-for="itemstatus in liststatus" :key="itemstatus.id">{{ itemstatus.status }}</option>
-															</select>	
-														</td>
-														<td class="p-1  font-bold">
-															<div class="p-0 space-x-1 flex justify-center">
-																<a href="#" @click="removevariant(index)" class="text-white btn btn-xs btn-danger btn-rounded">
-																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
-																</a>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div> -->
-
-							<div v-else>
-								<div class="flex justify-start space-x-1 mt-2">
-									<button class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-									<button class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-									<!-- <button class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">No Variant</button> -->
-								</div>
-							</div>
+							
 
 							<div class="row mt-3">
 								<div class="col-lg-12 px-1">
