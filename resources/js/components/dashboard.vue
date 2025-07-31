@@ -297,10 +297,10 @@
 						</ul>
 					</li>
 				</ul>
-				<p v-else class="text-gray-500 text-sm">No items expiring soon.</p>
+				<!-- <p v-else class="text-gray-500 text-sm">No items expiring soon.</p> -->
 			</div>
 
-			
+
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card">
@@ -314,7 +314,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- <div class="row">
+			<div class="row">
 				<div class="col-lg-8 pr-2">
 					<div class="card p-0 mb-3">
 						<div class="card-header border-0 !bg-blue-500 rounded-t-lg ">
@@ -533,7 +533,7 @@
 						</div>
 					</div>
 				</div>
-			</div> -->
+			</div>
 		</div>
 		<div class="modal p-0" :class="{ show:showAddModal }">
 			<div @click="closeAddModal" class="w-full h-full fixed"></div>
