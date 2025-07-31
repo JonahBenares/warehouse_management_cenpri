@@ -2282,7 +2282,7 @@ class ItemController extends Controller
     public function search_brand(Request $request){
         $filter=$request->get('filter');
         if($filter!=null){
-            $items=Variants::select('brand')->where('brand','LIKE',"%$filter%")->orderBy('brand','ASC')->get()->unique('brand');
+            $items=Variants::select('brand')->where('brand','LIKE',"%$filter%")->orderBy('brand','ASC')->get()->unique('brand')->values();;
             return response()->json($items);
         }else{
             return response()->json([]);
