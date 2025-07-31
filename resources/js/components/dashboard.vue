@@ -1,6 +1,6 @@
 <script setup>
 	import navigation from '@/layouts/navigation.vue';
-	import { CheckCircleIcon, ExclamationCircleIcon, SparklesIcon, PlusIcon, XMarkIcon, MagnifyingGlassIcon, InboxArrowDownIcon, EyeIcon, Bars3Icon} from '@heroicons/vue/24/solid'
+	import { CheckCircleIcon, ExclamationCircleIcon, SparklesIcon, PlusIcon, XMarkIcon, MagnifyingGlassIcon, InboxArrowDownIcon, EyeIcon, Bars3Icon, EllipsisVerticalIcon} from '@heroicons/vue/24/solid'
 	import {onMounted, ref} from "vue";
 	import { useRouter } from "vue-router";
 	const router = useRouter()
@@ -267,7 +267,7 @@
     <navigation>
 		<div class="container-fluid">
 			<!-- BreadCrumb -->
-			<div class="card mb-3">	
+			<div class="px-1 mb-3">	
 				<div class="flex justify-between content-center">
 					<div class="flex justify-start space-x-3 ">
 						<!-- <div class="border-r"></div>	 -->
@@ -285,7 +285,7 @@
 					</div>
 				</div>
 			</div>
-			<div>
+			<!-- <div>
 				<h2 class="text-lg font-semibold mb-2">Items Expiring in 7 Days</h2>
 				<ul v-if="expiringItems.length">
 					<li v-for="item in expiringItems" :key="item.id" class="mb-3">
@@ -297,9 +297,88 @@
 						</ul>
 					</li>
 				</ul>
-				<!-- <p v-else class="text-gray-500 text-sm">No items expiring soon.</p> -->
-			</div>
+				<p v-else class="text-gray-500 text-sm">No items expiring soon.</p>
+			</div> -->
 
+			<div class="row h-screen overflow-hidden">
+				<!-- LEFT COLUMN -->
+				<div class="col-lg-8 h-full overflow-hidden flex flex-col space-y-3 pr-2">
+					<div class="row">
+						<!-- Top row split cards -->
+						<div class="col-lg-6 pr-0">
+							<div class="card">
+								<div class="py-2 px-2 flex justify-between border-b border-gray-20">
+									<div class="font-bold">Items Expired in 7 Days</div>
+									<div>
+										<button>
+											<EllipsisVerticalIcon class="size-5"></EllipsisVerticalIcon>
+										</button>
+									</div>
+								</div>
+								<div class="h-[250px] overflow-y-hidden hover:!overflow-y-scroll px-2">
+									<div class="p-2">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="card">
+								<div class="py-2 px-2 flex justify-between border-b border-gray-20">
+									<div class="font-bold">Reorder Point</div>
+									<div>
+										<button>
+											<EllipsisVerticalIcon class="size-5"></EllipsisVerticalIcon>
+										</button>
+									</div>
+								</div>
+								<div class="h-[250px] overflow-y-hidden hover:!overflow-y-scroll px-2">
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+									<div class="">asdasd</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Middle card (fixed height) -->
+					<div class="card flex-grow h-[300px] mt-4 overflow-y-auto">
+					<!-- Content C -->
+					</div>
+
+					<!-- Bottom card (fixed height) -->
+					<div class="card h-[250px] mt-4 overflow-y-auto">
+					<!-- Content D -->
+					</div>
+				</div>
+
+				<!-- RIGHT COLUMN -->
+				<div class="col-lg-4 h-full flex flex-col space-y-3 pl-2">
+					<div class="card flex-grow h-full overflow-y-auto">
+					<!-- Content E -->
+					</div>
+				</div>
+			</div>
 
 			<div class="row">
 				<div class="col-lg-12">
