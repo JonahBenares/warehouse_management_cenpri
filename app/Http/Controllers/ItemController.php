@@ -26,6 +26,16 @@ use Config;
 
 class ItemController extends Controller
 {
+
+    public function expiringSoon()
+{
+        $today = Carbon::today();
+        $nextWeek = Carbon::today()->addWeek();
+
+        $items = Item::whereBetween('expiration_date', [$today, $nextWeek])->get();
+
+        return response()->json($items);
+    }
     public function get_all_items(Request $request){
         $items_all = Items::with('composite_items')->orderBy('pn_no','ASC')->get();
         $x=0;
