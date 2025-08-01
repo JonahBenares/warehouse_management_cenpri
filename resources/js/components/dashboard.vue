@@ -200,18 +200,61 @@
 		moqitems.value=response.data.items
 	}
 
-	let expiringItems = ref([]); // reactive list for items with expiring variants
+	// let expiringItems = ref([]);
+
+	// const loadExpiringItems = async () => {
+	// 	try {
+	// 		const response = await axios.get('/api/items-expiring-soon');
+	// 		expiringItems.value = response.data;
+	// 	} catch (error) {
+	// 		console.error('Failed to fetch expiring items:', error);
+	// 	}
+	// };
+
+	
+
+	const expiringItems = ref([])
+	// Get today's date (reset to midnight for comparison)
+	const today = new Date()
+	today.setHours(0, 0, 0, 0)
 
 	// Fetch items with variants expiring in the next 7 days
 	const loadExpiringItems = async () => {
 		try {
-			const response = await axios.get('/api/items-expiring-soon');
-			expiringItems.value = response.data;
+			const response = await axios.get('/api/items-expiring-soon')
+			expiringItems.value = response.data
 		} catch (error) {
-			console.error('Failed to fetch expiring items:', error);
+			console.error('Failed to fetch expiring items:', error)
 		}
-	};
+	}
 
+	// Display text like "Today", "Tomorrow", "3 days left"
+	function getDaysLeft(dateStr) {
+		const expirationDate = new Date(dateStr)
+		expirationDate.setHours(0, 0, 0, 0)
+
+		const diffTime = expirationDate - today
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+		if (diffDays < 0) return 'Expired'
+		if (diffDays === 0) return 'Today'
+		if (diffDays === 1) return 'Tomorrow'
+		return `${diffDays} days left`
+	}
+
+	// Return a Tailwind class depending on urgency
+	function getDaysLeftClass(dateStr) {
+		const expirationDate = new Date(dateStr)
+		expirationDate.setHours(0, 0, 0, 0)
+
+		const diffDays = Math.ceil((expirationDate - today) / (1000 * 60 * 60 * 24))
+
+		if (diffDays < 0) return 'bg-gray-400'
+		if (diffDays === 0) return 'bg-red-600'
+		if (diffDays === 1) return 'bg-red-500'
+		if (diffDays <= 3) return 'bg-orange-500'
+		return 'bg-yellow-400'
+	}
 	onMounted(() => {
 		loadExpiringItems();
 	});
@@ -285,10 +328,10 @@
 					</div>
 				</div>
 			</div>
-			<!-- <div>
-				<h2 class="text-lg font-semibold mb-2">Items Expiring in 7 Days</h2>
+			<div>
+				<!-- <h2 class="text-lg font-semibold mb-2">Items Expiring in 7 Days</h2>
 				<ul v-if="expiringItems.length">
-					<li v-for="item in expiringItems" :key="item.id" class="mb-3">
+					<li  class="mb-3">
 						<div class="font-bold">{{ item.item_description }}</div>
 						<ul class="ml-4 text-sm">
 							<li v-for="variant in item.variants" :key="variant.id">
@@ -296,9 +339,9 @@
 							</li>
 						</ul>
 					</li>
-				</ul>
-				<p v-else class="text-gray-500 text-sm">No items expiring soon.</p>
-			</div> -->
+				</ul> -->
+				<!-- <p v-else class="text-gray-500 text-sm"></p> -->
+			</div>
 
 			<div class="row h-screen overflow-hidden">
 				<!-- LEFT COLUMN -->
@@ -315,20 +358,27 @@
 										</button>
 									</div>
 								</div>
-								<div class="h-[250px] overflow-y-hidden hover:!overflow-y-scroll px-2">
-									<div class="p-2">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
+								<div class="h-[250px] overflow-y-hidden hover:!overflow-y-scroll pt-2">
+									<div v-if="expiringItems.length">
+										<div v-for="item in expiringItems" :key="item.id">
+											<div class="p-2 py-1 capitalize text-sm font-bold text-gray-500">
+												{{ item.item_description }}
+											</div>
+											<div v-for="variant in item.variants" :key="variant.id" class="px-2 py-0 flex justify-between hover:bg-gray-50">
+												<span class="text-[13.5px]">
+													PN No
+													{{ variant.color }}
+													{{ variant.size }}
+												</span>
+												<span class="!text-[11px] text-center p-0 text-white rounded-xl p-0 my-1 px-2" :class="getDaysLeftClass(variant.expiration)">
+													{{ getDaysLeft(variant.expiration) }}
+												</span>
+											</div>
+										</div>
+									</div>
+									<div v-else class="p-2 py-1 capitalize text-base font-bold text-gray-500">
+										No items expiring soon.
+									</div>
 								</div>
 							</div>
 						</div>
@@ -342,20 +392,14 @@
 										</button>
 									</div>
 								</div>
-								<div class="h-[250px] overflow-y-hidden hover:!overflow-y-scroll px-2">
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
-									<div class="">asdasd</div>
+								<div class="h-[250px] overflow-y-hidden hover:!overflow-y-scroll">
+									<div v-for="m in moqitems" :key="m.id" :class="(m.running_balance == 0)  ? 'text-xs font-bold bg-red-300 border-y-2 border-red-400 p-2' : ' text-sm border-t-0 border p-2 rounded'">
+										<p :class="(m.running_balance == 0) ? '' : ''" class="m-0  capitalize text-sm font-bold text-gray-500">{{ m.item_desc }}</p>
+										<div class="text-[12px] flex justify-start space-x-2">
+											<span :class="['text-center', (m.running_balance == 0) ? 'px-1 py-1' : 'bg-red-500 px-2 rounded-xl text-white']">Reorder Point <b>{{ m.moq }}</b></span>
+											<span :class="['text-center', (m.running_balance == 0) ? 'px-1 py-1' : 'bg-blue-500 px-2 rounded-xl text-white']">Current Balance <b>{{ m.running_balance }}</b></span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -363,7 +407,15 @@
 
 					<!-- Middle card (fixed height) -->
 					<div class="card flex-grow h-[300px] mt-4 overflow-y-auto">
-					<!-- Content C -->
+						<div class="py-2 px-2 flex justify-between border-b border-gray-20">
+							<div class="font-bold">User Acceptance</div>
+							<div>
+								<button>
+									<EllipsisVerticalIcon class="size-5"></EllipsisVerticalIcon>
+								</button>
+							</div>
+						</div>
+						
 					</div>
 
 					<!-- Bottom card (fixed height) -->
@@ -374,25 +426,74 @@
 
 				<!-- RIGHT COLUMN -->
 				<div class="col-lg-4 h-full flex flex-col space-y-3 pl-2">
-					<div class="card flex-grow h-full overflow-y-auto">
-					<!-- Content E -->
+					<div class="card flex-grow h-full overflow-y-auto p-0">
+						<div class="py-2 px-4 border-0 !bg-blue-500  ">
+							<div class="flex justify-between">
+								<span class="text-white text-base">Reminder</span>
+								<button class="btn btn-sm text-white p-0" @click="openAddModal()">
+									<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"></PlusIcon>
+								</button>
+							</div>
+						</div>
+						<div class="px-3 py-2 border-b ">
+							<div class="flex justify-between space-x-2">
+								<span class="my-1 text-gray-500">
+									<MagnifyingGlassIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"></MagnifyingGlassIcon>
+								</span>
+								<input type="text" class="form-control !bg-gray-50" placeholder="Search" id="search" @keyup="getReminder()" v-model="searchReminder">
+							</div>
+						</div>
+						<div class="card-body px-0 py-2" id="card1">
+							<div class="h-96 hover:overflow-y-scroll overflow-y-hidden px-4">
+								<div class="menu-rem" v-for="(rl, i) in reminder_list.data">
+									<div class="cursor-pointer" @click="OpenNotes(i)">
+										<!-- <div  class="flex justify-between p-0">
+											<div class="text-sm w-15 font-bold leading-none">{{ rl.reminder_date }}</div>
+											<div id="menu-rem" class="space-x-1">
+												<button class="btn btn-xs btn-primary py-0 font-xxs" @click="openEditModal(rl.id)">Edit</button>
+												<button class="btn btn-xs btn-success py-0 font-xxs" @click="doneReminder(rl.id)">Done</button>
+											</div>
+										</div> -->
+										<div class="relative flex justify-between">
+											<div class="text-xs w-15 text-gray-700 leading-none pb-1">{{ rl.reminder_date }}</div>
+											<div id="menu-rem" class="absolute -top-2 space-x-1 right-0">
+												<button class="text-xs p-1.5 rounded-xl bg-blue-500" @click="openEditModal(rl.id)"></button>
+												<button class="text-xs p-1.5 rounded-xl bg-green-600" @click="doneReminder(rl.id)"></button>
+											</div>
+										</div>
+										<p class="leading-tight text-base text-gray-500 m-0 pt-0 font-bold">{{ rl.title }}</p>
+									</div>
+									<Transition
+										enter-active-class="transition ease-out duration-250"
+										enter-from-class="opacity-0 h-1/2"
+										enter-to-class="opacity-100 h-full"
+										leave-active-class="transition ease-in duration-100"
+										leave-from-class="opacity-100 h-full"
+										leave-to-class="opacity-0 h-1/2"
+									>
+										<div class="pb-1 mt-0" style="display: none;" :id="'notes_disp_'+i">
+											<div class="text-sm leading-tight mb-1">{{ rl.notes }}</div>
+											<div class="text-sm leading-tight">Person to Remind: {{ rl.person_to_notify_name }}</div>
+										</div>
+									</Transition>
+									<hr class="my-2">
+								</div>
+							</div>
+						</div>
+						<div class="flex justify-end p-2 border-t">
+							<nav aria-label="Page navigation example">
+								<TailwindPagination
+									:data="reminder_list"
+									:limit="1"
+									@pagination-change-page="getReminder"
+								/>
+							</nav>
+						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="card">
-						<table class="">
-							<tr>
-								<td>Item Name</td>
-								<td>Expiration</td>
-								<td>Days Left</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</div>
+			
 			<div class="row">
 				<div class="col-lg-8 pr-2">
 					<div class="card p-0 mb-3">

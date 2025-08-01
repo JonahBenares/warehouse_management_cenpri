@@ -7,17 +7,18 @@ use Illuminate\Http\Request;
 
 class ExpiringItemsController extends Controller
 {
-
     public function expiringSoon()
     {
         $today = Carbon::today();
-        $nextWeek = Carbon::today()->addWeek();
+        $sevenDaysFromNow = Carbon::today()->addDays(7);
 
-        // Items that have at least 1 variant expiring within 7 days
-        $items = Items::whereHas('variants', function ($query) use ($today, $nextWeek) {
-            $query->whereBetween('expiration', [$today, $nextWeek]);
-        })->with(['variants' => function ($query) use ($today, $nextWeek) {
-            $query->whereBetween('expiration', [$today, $nextWeek]);
+        // Get items that have at least 1 variant with a non-null expiration date within the next 7 days (including today)
+        $items = Items::whereHas('variants', function ($query) use ($today, $sevenDaysFromNow) {
+            $query->whereNotNull('expiration')
+                  ->whereBetween('expiration', [$today, $sevenDaysFromNow]);
+        })->with(['variants' => function ($query) use ($today, $sevenDaysFromNow) {
+            $query->whereNotNull('expiration')
+                  ->whereBetween('expiration', [$today, $sevenDaysFromNow]);
         }])->get();
 
         return response()->json($items);
