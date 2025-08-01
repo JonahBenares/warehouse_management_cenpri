@@ -934,7 +934,7 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Sub Category</span>
 										</div>
-										<v-select v-model="form.item_sub_cat_id" :options="listsubcategory" :reduce="items => items.id" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.subcat_name}`" placeholder="Select Sub Category" @update:modelValue="chooseSubcat">
+										<v-select v-model="form.item_sub_cat_id" :options="listsubcategory" :reduce="items => items.id" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.subcat_name}`" placeholder="Select Sub Category" @update:modelValue="chooseSubcat">
 											<template #selected-option="{ subcat_name }">
 												{{ subcat_name }}
 											</template>
@@ -976,7 +976,7 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Location</span>
 										</div>
-										<v-select v-model="location" :options="listlocation" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.location_name}`" placeholder="Select Location">
+										<v-select v-model="location" :options="listlocation" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.location_name}`" placeholder="Select Location">
 											<template #selected-option="{ location_name }">
 												{{ location_name }}
 											</template>
@@ -993,7 +993,7 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Warehouse</span>
 										</div>
-										<v-select v-model="warehouse" :options="listwarehouse" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.warehouse_name}`" placeholder="Select Warehouse">
+										<v-select v-model="warehouse" :options="listwarehouse" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.warehouse_name}`" placeholder="Select Warehouse">
 											<template #selected-option="{ warehouse_name }">
 												{{ warehouse_name }}
 											</template>
@@ -1012,7 +1012,7 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Rack</span>
 										</div>
-										<v-select v-model="rack" :options="listrack" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.rack_name}`" placeholder="Select Rack">
+										<v-select v-model="rack" :options="listrack" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.rack_name}`" placeholder="Select Rack">
 											<template #selected-option="{ rack_name }">
 												{{ rack_name }}
 											</template>
@@ -1029,7 +1029,7 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Group</span>
 										</div>
-										<v-select v-model="group" :options="listgroup" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.group_name}`" placeholder="Select Group">
+										<v-select v-model="group" :options="listgroup" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.group_name}`" placeholder="Select Group">
 											<template #selected-option="{ group_name }">
 												{{ group_name }}
 											</template>
@@ -1096,7 +1096,7 @@ const checkMaxqty = async (index) => {
 										<div class="border-gray-400">
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <p class="mb-1 mt-9">Composite Items</p>
+                                                    <p class="mb-1 mt-9 font-bold">Composite Items</p>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div  style="display: none;" id="makecopies">

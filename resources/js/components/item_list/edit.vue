@@ -969,14 +969,6 @@ const stockcardRedirect= (variant_id,item_id,supplier_id,catalog_no,brand) => {
 										<input type="hidden" id="category_id" v-model="form.item_category_id" class="form-control border" placeholder="Category">
 									</div>										
 								</div>
-								<!-- <div class="col-lg-3 px-1">
-									<div class="form-group">
-										<div class="flex justify-start ">
-											<span class="text-xs text-gray-500 leading-none uppercase">PN No.</span>
-										</div>
-										<input type="text" id="pn_no" v-model="form.pn_no" class="form-control border my-1" placeholder="PN No.">
-									</div>										
-								</div> -->
 							</div>
 							<div class="row">
 								<div class="col-lg-6 px-1">
@@ -1050,434 +1042,153 @@ const stockcardRedirect= (variant_id,item_id,supplier_id,catalog_no,brand) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Beginning Balance</span>
 										</div>
-										<!-- <input type="text" class="form-control border my-1" id="beggining_balance" v-model="form.begbal" placeholder="Beginning Balance" :disabled="begbal_checker!=0" v-if="form.draft==0">
-										<input type="text" :disabled="composite_list.length!=0" class="form-control border my-1" id="beggining_balance" v-model="form.begbal" placeholder="Beginning Balance"  v-else> -->
 										<input type="text" class="form-control border my-1" id="beggining_balance" v-model="begbal" placeholder="Beginning Balance" :disabled="begbal_checker!=0" v-if="form.draft==0">
 										<input type="text" :disabled="composite_list.length!=0" class="form-control border my-1" id="beggining_balance" v-model="begbal" placeholder="Beginning Balance"  v-else>
-										<!-- <input type="text" class="form-control border" v-model="form.begbal" placeholder="Beginning Balance" v-if="form.begbal==0">
-										<input type="text" class="form-control border" v-model="form.begbal" placeholder="Beginning Balance" v-else readonly> -->
 									</div>										
-								</div>
-								<!-- <div class="col-lg-2 px-1">
-									<div class="form-group">
-										<div class="flex justify-start ">
-											<span class="text-xs text-gray-500 leading-none uppercase font-bold">Running Balance</span>
-										</div>
-										<input type="text" class="form-control border my-1 !bg-blue-500 text-white font-bold" value="999" disabled >
-									</div>										
-								</div> -->
-							</div>
-							<div class="row" id="makecopies" v-if="form.draft==1 && composite_list.length!=0">
-								<div class="col-lg-3 px-1">
-									<div class="form-group">
-										<div class="flex justify-start ">
-											<span class="text-xs text-gray-500 leading-none uppercase">Make Copies</span>
-										</div>
-										<input type="text" class="form-control border my-1" v-model="form.copy_qty" placeholder="Make Copies">
-									</div>										
-								</div>
-							</div>
-							<div id="makecopies" v-else-if="form.draft==0 && composite_list.length!=0">
-								<div class="row">
-									<div class="col-lg-3 px-1">
-										<div class="form-group">
-											<div class="flex justify-start ">
-												<span class="text-xs text-gray-500 leading-none uppercase">Composite Cost</span>
-											</div>
-											<input type="text" class="form-control border my-1" v-model="form.composite_cost" placeholder="Composite Cost">
-										</div>										
-									</div>
-								</div>
-							</div>
-							<div style="display: none;" id="makecopies" v-else></div>
-							<div v-if="choice === 'composite' || composite_list.length!=0">
-								<p class="text-danger" v-for="erritm in error_items" v-if="error_items.length > 0">{{ erritm }}</p>
-								<div class="flex justify-start space-x-1 mt-2">
-									<button id='composite' class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-									<button  :disabled="form.composite_flag==1 || composite_list.length!=0" id='variant' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-									<!-- <button  :disabled="form.composite_flag==1 || composite_list.length!=0" id='novariant' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'novariant'">No Variant</button> -->
-								</div>
-								<div class="row ">
-									<div class="col-lg-12 px-1">
-										<div class="border-gray-400 border-t-2">
-											<table class="table table-bordered mb-0">
-												<thead>
-													<tr>
-														<th class="font-xxs">Item Description</th>
-														<th class="font-xxs">Variant</th>
-														<th class="font-xxs">Quantity</th>
-														<th class="p-1 font-xxs" align="center" width="1%">
-															<div class="space-x-1 flex justify-center">
-																<a href="#" @click="addRowComposite" class="btn btn-xs btn-primary btn-rounded">
-																	<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></PlusIcon>
-																</a>
-															</div>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr v-for="(c,index) in composite_list">
-														<td class="p-0 text-xs">
-															<select name="items" id="items" class="form-control border" v-model="c.compose_item_id" @change="checkVariant(index)" :disabled="c.id!=0">
-																<option :value="item.id" v-for="item in listitems" :key="item.id">{{ item.item_description }}</option>
-															</select>
-														</td>
-														<td class="p-0 text-xs">
-															<select name="variant_comp" id="variant_comp" class="form-control border" v-model="c.variant_id" @change="checkVariantqty(index,c.variant_id,c.compose_item_id)" :disabled="c.id!=0">
-																<option :value="v.id" v-for="v in variant[index]" :key="v.id">{{ v.supplier_name }}, {{ v.brand }}</option>
-															</select>
-															<input type="hidden" v-model="c.pr_no">
-														</td>
-														<td class="p-0 text-xs">
-															<textarea type="text" rows="2" v-model="c.quantity" class="p-1 m-0 w-full leading-none block " :disabled="c.id!=0" @blur="checkMaxqty(index)"></textarea>
-															<input type="hidden" v-model="c.checker_qty">
-														</td>
-														<td class="p-1  font-bold">
-															<div class="p-0 space-x-1 flex justify-center">
-																<button v-if="c.id" href="#" @click="deleteComposite(c.id,composite_list.length,c.compose_item_id,c.quantity,c.variant_id,index,c.item_id)" class="text-white btn btn-xs btn-danger btn-rounded" :disabled="c.quantity==0 || checker[index]==1">
-																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
-																</button>
-																<button v-else href="#" @click="removeComposite(index)" class="text-white btn btn-xs btn-danger btn-rounded">
-																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
-																</button>
-																<input v-model="c.id" type="hidden"/>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div v-else-if="choice === 'variant' || variant_list.length!=0">
-								<p class="text-danger" v-for="erritm in error_items" v-if="error_items.length > 0">{{ erritm }}</p>
-								<div class="flex justify-between">
-									<div class="flex justify-start space-x-1 mt-2">
-										<button :disabled="form.variant_flag==1 || variant_list.length!=0" id='composite' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-										<button id='variant' class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-										<!-- <button :disabled="form.variant_flag==1 || variant_list.length!=0" id='novariant' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'novariant'">No Variant</button> -->
-									</div>
-									<div class="mt-2">
-										<button @click="addRowVariant" class="btn-primary btn-sm btn p-1">
-											<div class="flex">
-												<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mt-.5"></PlusIcon>
-												<span>Add Variant</span>
-											</div>
-										</button>
-									</div>
-								</div>
-								
-								<div class="row">
-									<div class="col-lg-12 px-1">
-										<div class="overflow-x-auto border border-gray-300 rounded shadow-sm">
-											<table class="table-bordered mb-0 text-sm"  width="150%">
-												<thead>
-													<tr>
-														<th class="text-sm px-2 py-1 sticky left-0 bg-white" width="14%">Supplier</th>
-														<th class="text-sm px-2 py-1" width="5%">Catalog No</th>
-														<th class="text-sm px-2 py-1" width="5%">PN No</th>
-														<th class="text-sm px-2 py-1" width="7%">Brand</th>
-														<th class="text-sm px-2 py-1" width="5%">Serial No</th>
-														
-														<th class="text-sm px-2 py-1" width="3%">Avail Qty</th>
-														<th class="text-sm px-2 py-1" width="4%">Compos Qty</th>
-														<th class="text-sm px-2 py-1" width="3%">Total Qty</th>
-														<th class="text-sm px-2 py-1" width="3%">Unit Cost</th>
-														<th class="text-sm px-2 py-1" width="3%">Total Cost</th>
-														<th class="text-sm px-2 py-1" width="3%">Currency</th>
-														<th class="text-sm px-2 py-1" width="3%">UOM</th>
-														<th class="text-sm px-2 py-1" width="5%">Color</th>
-														<th class="text-sm px-2 py-1" width="5%">Size</th>
-														<th class="text-sm px-2 py-1" width="8%">Other Desc</th>
-														<!-- <th class="text-sm px-2 py-1" width="5%">Selling Price</th> -->
-														<th class="text-sm px-2 py-1" width="4%">Item Status</th>
-														<th class="text-sm px-2 py-1" width="5%">Expiration</th>
-														<th class="text-sm px-2 py-1" width="5%">Barcode</th>
-														<th class="text-sm px-2 py-1 text-sm sticky right-0 bg-white border-l" align="center" width="1%">
-															<div class="space-x-1 flex justify-center">
-																<a href="#" @click="addRowVariant" class="btn btn-sm btn-primary ">
-																	<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></PlusIcon>
-																</a>
-															</div>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr v-for="(v,index) in variant_list" class="hover:bg-yellow-50">
-														<td class="p-0 sticky left-0 bg-white shadow-lg">
-															<select name="supplier" id="supplier_id{{index}}" class="form-control !bg-transparent border-none  py-1 supplier" v-model="v.supplier_id" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
-																<option :value="sup.id" v-for="sup in listsupplier" :key="sup.id">{{ sup.supplier_name }}</option>
-															</select>
-														</td>
-														<td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block catalog_no" v-model="v.catalog_no" id="catalog_no" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
-														<td class="p-0"><input type="text" name="" id="" class="p-1  !text-sm px-2  m-0 w-full leading-none block"></td>
-														<td class="p-0">
-															<!-- <textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="v.brand" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea> -->
-															<input type="text" rows="1" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestBrand(index)" v-model="v.brand" list="brand_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
-															<datalist id="brand_list">
-																<option :value="b.brand" v-for="b in brand" :key="b.brand"></option>
-															</datalist>
-														</td>
-														<td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block" v-model="v.serial_no" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
-														
-
-														<td class="p-0"><textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " @blur="checkQty(index)" v-model="v.quantity" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
-														<td class="p-0">
-															<!-- <span hidden>{{ compositeQty(index,v.id,form.id) }}</span> -->
-															<textarea type="number" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " v-model="composite_qty[index]" readonly v-if="v.id!=0"></textarea>
-															<textarea type="number" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " value="0" readonly v-else></textarea>
-														</td>
-														<td class="p-0">
-															<textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " readonly v-if="v.id!=0">{{ v.quantity + composite_qty[index] }}</textarea>
-															<textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " readonly v-else>{{ v.quantity }}</textarea>
-														</td>
-														<!-- <td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="totalcompqty[index]" readonly></textarea></td> -->
-														<td class="p-0" v-if="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"><textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block "  :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">{{ v.unit_cost + v.shipping_cost }}</textarea></td>
-														<td class="p-0" v-else><textarea type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block "  v-model="v.average_cost" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
-														
-														<td class="p-0">
-															<textarea v-if="v.receive_flag!=1 || v.composite_flag==1 || checker[index]==1" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block "  :value="v.quantity * v.average_cost" readonly></textarea>
-															<textarea v-else rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block "  :value="v.quantity * (v.unit_cost + v.shipping_cost)" readonly></textarea>
-														</td>
-														<td class="p-0">
-															<select class="p-1 !text-sm px-2 m-0 leading-none text-sm w-36 block whitespace-nowrap w-full" v-model="v.currency">
-																<option value="" disabled selected>Select Currency</option>
-																<option v-for="cur in currency" v-bind:key="cur" v-bind:value="cur">{{  cur }}</option>
-															</select>	
-														</td>
-														<td class="p-0">
-															<!-- <textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="variant.uom"></textarea> -->
-															<input type="text" rows="1" class="p-1 !text-sm px-2 m-0 w-full leading-none block " @keyup="autosuggestUom(index)" v-model="v.uom" list="uom_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
-															<datalist id="uom_list">
-																<option :value="u.uom" v-for="u in uom" :key="u.uom"></option>
-															</datalist>
-														</td>
-														<td class="p-0">
-															<input type="text" rows="1" class="p-1 text-sm px-2 m-0 w-full leading-none block" @keyup="autosuggestColor(index)" v-model="v.color" list="colors_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
-															<datalist id="colors_list">
-																<option :value="c.color" v-for="c in colors" :key="c.color"></option>
-															</datalist>
-														</td>
-														<td class="p-0">
-															<input type="text" rows="1" class="p-1 text-sm px-2 m-0 w-full leading-none block" @keyup="autosuggestSize(index)" v-model="v.size" list="sizes_list" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
-															<datalist id="sizes_list">
-																<option :value="s.size" v-for="s in sizes" :key="s.size"></option>
-															</datalist>
-														</td>
-														<td class="p-0">
-															<input type="text" name="" id="" class="p-1  !text-sm px-2  m-0 w-full leading-none block">
-														</td>
-														<!-- <td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="v.uom" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td> -->
-														<!-- <td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="v.selling_price"></textarea></td> -->
-														<td class="p-0">
-															<select name="item_status" id="item_status" class="form-control border-none bg-transparent py-1" v-model="v.item_status_id" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
-																<option :value="itemstatus.id" v-for="itemstatus in liststatus" :key="itemstatus.id">{{ itemstatus.status }}</option>
-															</select>
-														</td>
-														<td class="p-0"><input type="date" rows="1" class="p-1 text-sm px-2 m-0 w-full leading-none block " v-model="v.expiration" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1" /></td>
-														<td class="p-0"><textarea type="text" rows="1" class="p-1 m-0 w-full leading-none block " v-model="v.barcode" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1"></textarea></td>
-														<td class="p-1 font-bold sticky right-0 bg-white shadow">
-															<div class="p-0 space-x-1 flex justify-center ">
-																<button v-if="v.id" @click="deleteVariant(v.id,variant_list.length,v.item_id,v.quantity)" class="text-white btn btn-xs btn-danger btn-rounded" :disabled="v.receive_flag==1 || v.composite_flag==1 || checker[index]==1">
-																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
-																</button>
-																<a v-else href="#" @click="removeVariant(index)" class="text-white btn btn-xs btn-danger btn-rounded">
-																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
-																</a>
-																<button @click="stockcardRedirect(v.id,v.item_id,v.supplier_id,v.catalog_no,v.brand,'0')" class="text-white btn btn-xs btn-warning btn-rounded">
-																	<EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></EyeIcon>
-																</button>
-																<input v-model="v.id" type="hidden"/>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-											
-										</div>
-										<br>
-										<br>
-										<br>
-										<table v-for="(variant,index) in variant_list" class="table-bordered !border !border-gray-200 text-sm mb-0 w-full">
-											<tr>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Supplier</td>
-												<td class="" colspan="9">
-													<!-- <select class="px-2 py-1 w-full" name="" id="">
-														<option value="">Select</option>
-													</select> -->
-													<v-select  v-model="variant.supplier_id" :options="listsupplier" :reduce="listsupplier => listsupplier.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
-														<template #selected-option="{ supplier_name }">
-															{{ supplier_name }}
-														</template>
-														<template #option="{ supplier_name }">
-															{{ supplier_name }}
-														</template>
-													</v-select>
-												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">PN No</td>
-												<td class="" colspan="2">
-													<input class="px-2 py-1 w-full" name="" id="">
-												</td>
-											</tr>
-											<tr>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Brand</td>
-												<td class="" colspan="7">
-													<select class="px-2 py-1 w-full" name="" id="">
-														<option value="">Select</option>
-													</select>
-												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Cat No</td>
-												<td class="" width="11%">
-													<input class="px-2 py-1 w-full" name="" id="">
-												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="6%">Serial No</td>
-												<td class=""  colspan="2" width="11%">
-													<input class="px-2 py-1 w-full" name="" id="">
-												</td>
-											</tr>
-											<tr>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Other Desc</td>
-												<td class="" colspan="7">
-													<input class="px-2 py-1 w-full" name="" id="">
-												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Color</td>
-												<td class="" width="10%">
-													<input class="px-2 py-1 w-full" name="" id="">
-												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Size</td>
-												<td class=""  colspan="2" width="10%">
-													<input class="px-2 py-1 w-full" name="" id="">
-												</td>
-											</tr>
-											<tr>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" >Item Status</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Avail Qty</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="6%">Compo Qty</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Qty</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Unit Cost</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Cost</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="3%">Currency</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="4%" >UOM</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" colspan="2">Expiration</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" colspan="2">Barcode</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" width="3%" rowspan="2">
-													<div class="flex justify-center space-x-1">
-														<button class="py-2 px-2 btn-danger btn-rounded">
-															<TrashIcon class="size-4"></TrashIcon>
-														</button>
-														
-														<button class="py-2 px-2 btn-warning text-white btn-rounded"  @click="stockcardRedirect(v.id,v.item_id,v.supplier_id,v.catalog_no,v.brand,'0')">
-															<EyeIcon class="size-4"></EyeIcon>
-														</button>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td class="text-left">
-													<select class="px-2 py-1 w-full text-left" name="" id="">
-														<option value="">Select</option>
-													</select>
-												</td>
-												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
-												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
-												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
-												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
-												<td><input class="px-2 py-1 w-full text-center" name="" id=""></td>
-												<td class="text-center">
-													<select class="px-2 py-1 w-full text-center" name="" id="">
-														<option value="">Select</option>
-													</select>
-												</td>
-												<td class="text-center">
-													<select class="px-2 py-1 w-full text-center" name="" id="">
-														<option value="">Select</option>
-													</select>
-												</td>
-												<td class="text-left" colspan="2">
-													<input typ="date" class="px-2 py-1 w-full" name="" id="">
-												</td>
-												<td class="text-left" colspan="2">
-													<input typ="date" class="px-2 py-1 w-full" name="" id="">
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
-							</div>
-
-							<!-- <div v-else-if="choice === 'novariant' || novariant_list.length!=0">
-								<p class="text-danger" v-for="erritm in error_items" v-if="error_items.length > 0">{{ erritm }}</p>
-								<div class="flex justify-start space-x-1 mt-2">
-									<button :disabled="form.novariant_flag==1 || novariant_list.length!=0" id='composite' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-									<button :disabled="form.novariant_flag==1 || novariant_list.length!=0" id='variant' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-									<button id='novariant' class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'novariant'">No Variant</button>
-								</div>
-								<div class="row">
-									<div class="col-lg-12 px-1">
-										<div class="border-gray-400 border-t-2">
-											<table class="table table-bordered mb-0">
-												<thead>
-													<tr>
-														<th class="font-xxs" width="5%">Unit Cost</th>
-														<th class="font-xxs" width="5%">Selling Price</th>
-														<th class="font-xxs" width="5%">Expiration</th>
-														<th class="font-xxs" width="10%">Barcode</th>
-														<th class="font-xxs" width="10%">Serial No</th> 
-														<th class="font-xxs" width="10%">Item Status</th>
-														<th class="font-xxs p-1 font-xxs" align="center" width="1%">
-															<div class="space-x-1 flex justify-center">
-																<a href="#" @click="addRowNovariant" class="btn btn-xs btn-primary btn-rounded">
-																	<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></PlusIcon>
-																</a>
-															</div>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr v-for="(nv,index) in novariant_list">
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="nv.unit_cost"></textarea></td>
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="nv.selling_price"></textarea></td>
-														<td class="p-0 text-xs"><input type="date" rows="2" class="p-1 m-0 w-full leading-none block " v-model="nv.expiration" /></td>
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="nv.barcode"></textarea></td>
-														<td class="p-0 text-xs"><textarea type="text" rows="2" class="p-1 m-0 w-full leading-none block " v-model="nv.serial_no"></textarea></td>
-														<td class="p-0 text-xs">
-															<select name="item_status" id="item_status" class="form-control border" v-model="nv.item_status_id">
-																<option :value="itemstatus.id" v-for="itemstatus in liststatus" :key="itemstatus.id">{{ itemstatus.status }}</option>
-															</select>
-														</td>
-														<td class="p-1  font-bold">
-															<div class="p-0 space-x-1 flex justify-center">
-																<a v-if="nv.id" href="#" @click="deleteNoVariant(nv.id)" class="text-white btn btn-xs btn-danger btn-rounded">
-																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
-																</a>
-																<a v-else href="#" @click="removeNovariant(index)" class="text-white btn btn-xs btn-danger btn-rounded">
-																	<TrashIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></TrashIcon>
-																</a>
-																<input v-model="nv.id" type="hidden"/>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div> -->
-
-							<div v-else>
-								<div class="flex justify-start space-x-1 mt-2">
-									<!-- <button class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-									<button class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-									<button class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'novariant'">No Variant</button> -->
-									<button id='composite' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'composite'">Composite</button>
-									<button id='variant' class="bg-gray-300 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'variant'">Variant</button>
-									<!-- <button id='novariant' class="bg-gray-400 text-white btn-sm w-32 rounded-t-lg focus:outline-none" v-on:click="choice = 'novariant'">No Variant</button> -->
 								</div>
 							</div>
 							
-							<div class="row  mt-3">
+							<div>
+								<p class="text-danger" v-for="erritm in error_items" v-if="error_items.length > 0">{{ erritm }}</p>
+								
+								<div class="row">
+									<div class="col-lg-12 px-1">
+										<div class="row mt-9">
+											<div class="col-lg-6">
+												<p class="mb-1 font-bold">Variant Items</p>
+											</div>
+											<div class="col-lg-6">
+												<div class="flex justify-end">
+													<button @click="addRowVariant" class="btn-primary btn-sm btn p-1">
+														<div class="flex space-x-1 mx-2">
+															<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mt-.5"></PlusIcon>
+															<span>Add Variant</span>
+														</div>
+													</button>
+												</div>
+											</div>
+										</div>
+										<hr class="mb-0">
+										<div v-for="(variant,index) in variant_list" class="pt-2 border-b border-gray-500">
+											<table  class="table-bordered !border !border-gray-200 text-sm mb-0 w-full">
+												<tr>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] border-gray-200 border-r" width="7%">Supplier</td>
+													<td class="" colspan="9">
+														<!-- <select class="px-2 py-1 w-full" name="" id="">
+															<option value="">Select</option>
+														</select> -->
+														<v-select  v-model="variant.supplier_id" :options="listsupplier" :reduce="listsupplier => listsupplier.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
+															<template #selected-option="{ supplier_name }">
+																{{ supplier_name }}
+															</template>
+															<template #option="{ supplier_name }">
+																{{ supplier_name }}
+															</template>
+														</v-select>
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] border-gray-200 border-r" width="4%">PN No</td>
+													<td class="" colspan="2">
+														<input class="px-2 py-1 w-full" name="" id="">
+													</td>
+												</tr>
+												<tr>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] border-gray-200 border-r" width="5%">Brand</td>
+													<td class="" colspan="7">
+														<input type="text" rows="1" class="px-2 p-1 m-0 w-full leading-none block" @keyup="autosuggestBrand(index)" v-model="variant.brand" list="brand_list">
+														<datalist id="brand_list">
+															<option :value="b.brand" v-for="b in brand" :key="b.brand"></option>
+														</datalist>
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] border-gray-200 border-r" width="4%">Cat No</td>
+													<td class="" width="11%">
+														<input class="px-2 py-1 w-full" name="" id="" v-model="variant.catalog_no">
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] border-gray-200 border-r" width="6%">Serial No</td>
+													<td class=""  colspan="2" width="11%">
+														<input class="px-2 py-1 w-full" name="" id="" v-model="variant.serial_no">
+													</td>
+												</tr>
+												<tr>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left" >Item Status</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="5%">Avail Qty</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="6%">Compo Qty</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="5%">Total Qty</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="5%">Unit Cost</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="5%">Total Cost</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="3%">Currency</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="4%" >UOM</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left">Color</td>
+													<td class="" width="10%">
+														<input type="text" rows="1" class="px-2  p-1 m-0 w-full leading-none block" @keyup="autosuggestColor(index)" v-model="variant.color" list="colors_list">
+														<datalist id="colors_list">
+															<option :value="c.color" v-for="c in colors" :key="c.color"></option>
+														</datalist>
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left" width="4%">Size</td>
+													<td class=""   width="10%">
+														<input type="text" rows="1" class="px-2  p-1 m-0 w-full leading-none block" @keyup="autosuggestSize(index)" v-model="variant.size" list="sizes_list">
+														<datalist id="sizes_list">
+															<option :value="s.size" v-for="s in sizes" :key="s.size"></option>
+														</datalist>
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left" width="3%" rowspan="2">
+														<div class="flex justify-center space-x-1">
+															<button class="py-2 px-2 btn-danger btn-rounded"  @click="removeVariant(index)">
+																<TrashIcon class="size-4"></TrashIcon>
+															</button>
+															<!-- <button class="py-2 px-2 btn-warning text-white btn-rounded">
+																<EyeIcon class="size-4"></EyeIcon>
+															</button> -->
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td class="text-left">
+														<v-select  v-model="variant.item_status_id" :options="liststatus" :reduce="liststatus => liststatus.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.status}`" placeholder="Select Status">
+															<template #selected-option="{ status }">
+																{{ status }}
+															</template>
+															<template #option="{ status }">
+																{{ status }}
+															</template>
+														</v-select>
+													</td>
+													<td><input class="px-2 py-1 w-full text-center" name="" id="" v-model="variant.quantity"></td>
+													<td><input class="px-2 py-1 w-full text-center" name="" id="" v-model="variant.composite_quantity" readonly></td>
+													<td><input class="px-2 py-1 w-full text-center" name="" id="" :value="variant.quantity+variant.composite_quantity" readonly></td>
+													<td><input class="px-2 py-1 w-full text-center" name="" id="" type="number" v-model="variant.unit_cost"></td>
+													<td><input class="px-2 py-1 w-full text-center" name="" id="" type="number" :value="variant.quantity*variant.unit_cost" readonly></td>
+													<td class="text-center">
+														<select class="px-2 py-1 w-full text-center" name="" id="">
+															<option value="">Select</option>
+														</select>
+													</td>
+													<td class="text-center">
+														<input type="text" rows="1" class="p-1 m-0 w-full leading-none block text-center" @keyup="autosuggestUom(index)" v-model="variant.uom" list="uom_list">
+														<datalist id="uom_list">
+															<option :value="u.uom" v-for="u in uom" :key="u.uom"></option>
+														</datalist>
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left" width="4%">Expiration</td>
+													<td class="text-left" >
+														<input type="date" class="px-2 py-1 w-full" name="" id="" v-model="variant.expiration">
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left" >Barcode</td>
+													<td class="text-left" >
+														<input class="px-2 py-1 w-full" name="" id="" v-model="variant.barcode">
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							
+
+							
+							
+							<div class="row  mt-9">
 								<div class="col-lg-12 px-1">
 									<div class="mt-2 mb-2  border-b">
 										<div class="flex justify-start space-x-2">

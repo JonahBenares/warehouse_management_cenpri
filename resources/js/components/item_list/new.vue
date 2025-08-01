@@ -935,10 +935,7 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Sub Category</span>
 										</div>
-										<!-- <select name="subcategory" id="subcategory" class="form-control border my-1" v-model="form.item_sub_category_id" @change="chooseSubcat()">
-											<option :value="subcategory.id" v-for="subcategory in listsubcategory" :key="subcategory.id">{{ subcategory.subcat_name }}</option>
-										</select> -->
-										<v-select v-model="form.item_sub_cat_id" :options="listsubcategory" :reduce="items => items.id" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.subcat_name}`" placeholder="Select Sub Category" @update:modelValue="chooseSubcat">
+										<v-select v-model="form.item_sub_cat_id" :options="listsubcategory" :reduce="items => items.id" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.subcat_name}`" placeholder="Select Sub Category" @update:modelValue="chooseSubcat">
 											<template #selected-option="{ subcat_name }">
 												{{ subcat_name }}
 											</template>
@@ -957,14 +954,6 @@ const checkMaxqty = async (index) => {
 										<input type="hidden" id="category_id" v-model="form.item_category_id" class="form-control border" placeholder="Category">
 									</div>										
 								</div>
-								<!-- <div class="col-lg-3 px-1">
-									<div class="form-group">
-										<div class="flex justify-start ">
-											<span class="text-xs text-gray-500 leading-none uppercase">PN No.</span>
-										</div>
-										<input type="text" id="pn_no" v-model="form.pn_no" class="form-control border my-1" placeholder="PN No.">
-									</div>										
-								</div> -->
 							</div>
 							<div class="row">
 								<div class="col-lg-6 px-1">
@@ -980,10 +969,7 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Location</span>
 										</div>
-										<!-- <select name="location" id="location" class="form-control border my-1" v-model="location">
-											<option :value="loc" v-for="loc in listlocation" :key="loc.id">{{ loc.location_name }}</option>
-										</select> -->
-										<v-select v-model="location" :options="listlocation" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.location_name}`" placeholder="Select Location">
+										<v-select v-model="location" :options="listlocation" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.location_name}`" placeholder="Select Location">
 											<template #selected-option="{ location_name }">
 												{{ location_name }}
 											</template>
@@ -1000,10 +986,7 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Warehouse</span>
 										</div>
-										<!-- <select name="warehouse" id="warehouse" class="form-control border my-1" v-model="warehouse">
-											<option :value="wareh" v-for="wareh in listwarehouse" :key="wareh.id">{{ wareh.warehouse_name }}</option>
-										</select> -->
-										<v-select v-model="warehouse" :options="listwarehouse" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.warehouse_name}`" placeholder="Select Warehouse">
+										<v-select v-model="warehouse" :options="listwarehouse" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.warehouse_name}`" placeholder="Select Warehouse">
 											<template #selected-option="{ warehouse_name }">
 												{{ warehouse_name }}
 											</template>
@@ -1022,10 +1005,7 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Rack</span>
 										</div>
-										<!-- <select name="rack" id="rack" class="form-control border my-1" v-model="rack">
-											<option :value="rck" v-for="rck in listrack" :key="rck.id">{{ rck.rack_name }}</option>
-										</select> -->
-										<v-select v-model="rack" :options="listrack" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.rack_name}`" placeholder="Select Rack">
+										<v-select v-model="rack" :options="listrack" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.rack_name}`" placeholder="Select Rack">
 											<template #selected-option="{ rack_name }">
 												{{ rack_name }}
 											</template>
@@ -1042,10 +1022,7 @@ const checkMaxqty = async (index) => {
 										<div class="flex justify-start ">
 											<span class="text-xs text-gray-500 leading-none uppercase">Group</span>
 										</div>
-										<!-- <select name="group" id="group" class="form-control border my-1" v-model="group">
-											<option :value="grp" v-for="grp in listgroup" :key="grp.id">{{ grp.group_name }}</option>
-										</select> -->
-										<v-select v-model="group" :options="listgroup" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.group_name}`" placeholder="Select Group">
+										<v-select v-model="group" :options="listgroup" class="form-control px-0 py-0 w-full !text-sm border my-1 shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.group_name}`" placeholder="Select Group">
 											<template #selected-option="{ group_name }">
 												{{ group_name }}
 											</template>
@@ -1099,144 +1076,143 @@ const checkMaxqty = async (index) => {
 							 
 							<div>
 								<p class="text-danger" v-for="erritm in error_items" v-if="error_items.length > 0">{{ erritm }}</p>
-								<div class="row">
-									<div class="col-lg-6">
-										<p class="mb-1 ">Variant Items</p>
-									</div>
-									<div class="col-lg-6">
-										<button @click="addRowVariant" class="btn-primary btn-sm btn p-1">
-											<div class="flex space-x-1 mx-2">
-												<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mt-.5"></PlusIcon>
-												<span>Add Variant</span>
-											</div>
-										</button>
-									</div>
-								</div>
+								
 								<div class="row">
 									<div class="col-lg-12 px-1">
-										
-										<table v-for="(variant,index) in variant_list" class="table-bordered !border !border-gray-200 text-sm mb-0 w-full">
-											<tr>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Supplier</td>
-												<td class="" colspan="9">
-													<!-- <select class="px-2 py-1 w-full" name="" id="">
-														<option value="">Select</option>
-													</select> -->
-													<v-select  v-model="variant.supplier_id" :options="listsupplier" :reduce="listsupplier => listsupplier.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
-														<template #selected-option="{ supplier_name }">
-															{{ supplier_name }}
-														</template>
-														<template #option="{ supplier_name }">
-															{{ supplier_name }}
-														</template>
-													</v-select>
-												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">PN No</td>
-												<td class="" colspan="2">
-													<input class="px-2 py-1 w-full" name="" id="">
-												</td>
-											</tr>
-											<tr>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Brand</td>
-												<td class="" colspan="7">
-													<input type="text" rows="1" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestBrand(index)" v-model="variant.brand" list="brand_list">
-													<datalist id="brand_list">
-														<option :value="b.brand" v-for="b in brand" :key="b.brand"></option>
-													</datalist>
-												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Cat No</td>
-												<td class="" width="11%">
-													<input class="px-2 py-1 w-full" name="" id="" v-model="variant.catalog_no">
-												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="6%">Serial No</td>
-												<td class=""  colspan="2" width="11%">
-													<input class="px-2 py-1 w-full" name="" id="" v-model="variant.serial_no">
-												</td>
-											</tr>
-											<tr>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="5%">Other Desc</td>
-												<td class="" colspan="7">
-													<input class="px-2 py-1 w-full" name="" id="">
-												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Color</td>
-												<td class="" width="10%">
-													<input type="text" rows="1" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestColor(index)" v-model="variant.color" list="colors_list">
+										<div class="row mt-9">
+											<div class="col-lg-6">
+												<p class="mb-1 font-bold">Variant Items</p>
+											</div>
+											<div class="col-lg-6">
+												<div class="flex justify-end">
+													<button @click="addRowVariant" class="btn-primary btn-sm btn p-1">
+														<div class="flex space-x-1 mx-2">
+															<PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mt-.5"></PlusIcon>
+															<span>Add Variant</span>
+														</div>
+													</button>
+												</div>
+											</div>
+										</div>
+										<hr class="mb-0">
+										<div v-for="(variant,index) in variant_list" class="pt-2 border-b border-gray-500">
+											<table  class="table-bordered !border !border-gray-200 text-sm mb-0 w-full">
+												<tr>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] border-gray-200 border-r" width="7%">Supplier</td>
+													<td class="" colspan="9">
+														<!-- <select class="px-2 py-1 w-full" name="" id="">
+															<option value="">Select</option>
+														</select> -->
+														<v-select  v-model="variant.supplier_id" :options="listsupplier" :reduce="listsupplier => listsupplier.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.supplier_name}`" placeholder="Select Supplier">
+															<template #selected-option="{ supplier_name }">
+																{{ supplier_name }}
+															</template>
+															<template #option="{ supplier_name }">
+																{{ supplier_name }}
+															</template>
+														</v-select>
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] border-gray-200 border-r" width="4%">PN No</td>
+													<td class="" colspan="2">
+														<input class="px-2 py-1 w-full" name="" id="">
+													</td>
+												</tr>
+												<tr>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] border-gray-200 border-r" width="5%">Brand</td>
+													<td class="" colspan="7">
+														<input type="text" rows="1" class="px-2 p-1 m-0 w-full leading-none block" @keyup="autosuggestBrand(index)" v-model="variant.brand" list="brand_list">
+														<datalist id="brand_list">
+															<option :value="b.brand" v-for="b in brand" :key="b.brand"></option>
+														</datalist>
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] border-gray-200 border-r" width="4%">Cat No</td>
+													<td class="" width="11%">
+														<input class="px-2 py-1 w-full" name="" id="" v-model="variant.catalog_no">
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] border-gray-200 border-r" width="6%">Serial No</td>
+													<td class=""  colspan="2" width="11%">
+														<input class="px-2 py-1 w-full" name="" id="" v-model="variant.serial_no">
+													</td>
+												</tr>
+												<tr>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left" >Item Status</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="5%">Avail Qty</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="6%">Compo Qty</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="5%">Total Qty</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="5%">Unit Cost</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="5%">Total Cost</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="3%">Currency</td>
+													<td class="px-1 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-center" width="4%" >UOM</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left">Color</td>
+													<td class="" width="10%">
+														<input type="text" rows="1" class="px-2  p-1 m-0 w-full leading-none block" @keyup="autosuggestColor(index)" v-model="variant.color" list="colors_list">
 														<datalist id="colors_list">
 															<option :value="c.color" v-for="c in colors" :key="c.color"></option>
 														</datalist>
-												</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold border-gray-200 border-r" width="4%">Size</td>
-												<td class=""  colspan="2" width="10%">
-													<input type="text" rows="1" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestSize(index)" v-model="variant.size" list="sizes_list">
-													<datalist id="sizes_list">
-														<option :value="s.size" v-for="s in sizes" :key="s.size"></option>
-													</datalist>
-												</td>
-											</tr>
-											<tr>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" >Item Status</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Avail Qty</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="6%">Compo Qty</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Qty</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Unit Cost</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="5%">Total Cost</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="3%">Currency</td>
-												<td class="px-1 py-1 bg-gray-100 text-gray-600 font-bold text-center" width="4%" >UOM</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" colspan="2">Expiration</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" colspan="2">Barcode</td>
-												<td class="px-2 py-1 bg-gray-100 text-gray-600 font-bold text-left" width="3%" rowspan="2">
-													<div class="flex justify-center space-x-1">
-														<button class="py-2 px-2 btn-danger btn-rounded"  @click="removeVariant(index)">
-															<TrashIcon class="size-4"></TrashIcon>
-														</button>
-														<!-- <button class="py-2 px-2 btn-warning text-white btn-rounded">
-															<EyeIcon class="size-4"></EyeIcon>
-														</button> -->
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td class="text-left">
-													<v-select  v-model="variant.item_status_id" :options="liststatus" :reduce="liststatus => liststatus.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0 font-bold" :get-option-label="option => `${option.status}`" placeholder="Select Status">
-														<template #selected-option="{ status }">
-															{{ status }}
-														</template>
-														<template #option="{ status }">
-															{{ status }}
-														</template>
-													</v-select>
-												</td>
-												<td><input class="px-2 py-1 w-full text-center" name="" id="" v-model="variant.quantity"></td>
-												<td><input class="px-2 py-1 w-full text-center" name="" id="" v-model="variant.composite_quantity" readonly></td>
-												<td><input class="px-2 py-1 w-full text-center" name="" id="" :value="variant.quantity+variant.composite_quantity" readonly></td>
-												<td><input class="px-2 py-1 w-full text-center" name="" id="" type="number" v-model="variant.unit_cost"></td>
-												<td><input class="px-2 py-1 w-full text-center" name="" id="" type="number" :value="variant.quantity*variant.unit_cost" readonly></td>
-												<td class="text-center">
-													<select class="px-2 py-1 w-full text-center" name="" id="">
-														<option value="">Select</option>
-													</select>
-												</td>
-												<td class="text-center">
-													<input type="text" rows="1" class="p-1 m-0 w-full leading-none block" @keyup="autosuggestUom(index)" v-model="variant.uom" list="uom_list">
-													<datalist id="uom_list">
-														<option :value="u.uom" v-for="u in uom" :key="u.uom"></option>
-													</datalist>
-												</td>
-												<td class="text-left" colspan="2">
-													<input typ="date" class="px-2 py-1 w-full" name="" id="" v-model="variant.expiration">
-												</td>
-												<td class="text-left" colspan="2">
-													<input typ="date" class="px-2 py-1 w-full" name="" id="" v-model="variant.barcode">
-												</td>
-											</tr>
-										</table>
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left" width="4%">Size</td>
+													<td class=""   width="10%">
+														<input type="text" rows="1" class="px-2  p-1 m-0 w-full leading-none block" @keyup="autosuggestSize(index)" v-model="variant.size" list="sizes_list">
+														<datalist id="sizes_list">
+															<option :value="s.size" v-for="s in sizes" :key="s.size"></option>
+														</datalist>
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left" width="3%" rowspan="2">
+														<div class="flex justify-center space-x-1">
+															<button class="py-2 px-2 btn-danger btn-rounded"  @click="removeVariant(index)">
+																<TrashIcon class="size-4"></TrashIcon>
+															</button>
+															<!-- <button class="py-2 px-2 btn-warning text-white btn-rounded">
+																<EyeIcon class="size-4"></EyeIcon>
+															</button> -->
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td class="text-left">
+														<v-select  v-model="variant.item_status_id" :options="liststatus" :reduce="liststatus => liststatus.id" class="px-0 py-0 w-full !text-sm border-none shadow-none focus:ring-0 focus:border-0" :get-option-label="option => `${option.status}`" placeholder="Select Status">
+															<template #selected-option="{ status }">
+																{{ status }}
+															</template>
+															<template #option="{ status }">
+																{{ status }}
+															</template>
+														</v-select>
+													</td>
+													<td><input class="px-2 py-1 w-full text-center" name="" id="" v-model="variant.quantity"></td>
+													<td><input class="px-2 py-1 w-full text-center" name="" id="" v-model="variant.composite_quantity" readonly></td>
+													<td><input class="px-2 py-1 w-full text-center" name="" id="" :value="variant.quantity+variant.composite_quantity" readonly></td>
+													<td><input class="px-2 py-1 w-full text-center" name="" id="" type="number" v-model="variant.unit_cost"></td>
+													<td><input class="px-2 py-1 w-full text-center" name="" id="" type="number" :value="variant.quantity*variant.unit_cost" readonly></td>
+													<td class="text-center">
+														<select class="px-2 py-1 w-full text-center" name="" id="">
+															<option value="">Select</option>
+														</select>
+													</td>
+													<td class="text-center">
+														<input type="text" rows="1" class="p-1 m-0 w-full leading-none block text-center" @keyup="autosuggestUom(index)" v-model="variant.uom" list="uom_list">
+														<datalist id="uom_list">
+															<option :value="u.uom" v-for="u in uom" :key="u.uom"></option>
+														</datalist>
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left" width="4%">Expiration</td>
+													<td class="text-left" >
+														<input type="date" class="px-2 py-1 w-full" name="" id="" v-model="variant.expiration">
+													</td>
+													<td class="px-2 py-1 bg-gray-100 text-gray-500 font-bold !text-[13px] text-left" >Barcode</td>
+													<td class="text-left" >
+														<input class="px-2 py-1 w-full" name="" id="" v-model="variant.barcode">
+													</td>
+												</tr>
+											</table>
+										</div>
 									</div>
 								</div>
 							</div>
 							
 							
 
-							<div class="row mt-3">
+							<div class="row mt-9">
 								<div class="col-lg-12 px-1">
 									<div class="mt-2 mb-2  border-b">
 										<div class="flex justify-start space-x-2">

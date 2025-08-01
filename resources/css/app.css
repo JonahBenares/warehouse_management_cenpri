@@ -11196,12 +11196,16 @@ div.menu-rem:hover > div > div > div#menu-rem {
     }
 
     .v-select,
-.vs__dropdown-toggle {
-  border: none !important;
-  box-shadow: none !important;
-}
+    .vs__dropdown-toggle {
+    border: none !important;
+    box-shadow: none !important;
+    }
 
-.vs__dropdown-toggle:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
+    .vs__dropdown-toggle:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    }
+
+    .vs__search, .vs__search:focus{
+        font-size: .9rem!important;
+    }
