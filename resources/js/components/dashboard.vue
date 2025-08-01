@@ -361,7 +361,7 @@
 								<div class="h-[250px] overflow-y-hidden hover:!overflow-y-scroll pt-2">
 									<div v-if="expiringItems.length">
 										<div v-for="item in expiringItems" :key="item.id">
-											<div class="p-2 py-1 capitalize text-sm font-bold text-gray-500">
+											<div class="px-2 pt-1 capitalize text-base font-bold text-gray-500">
 												{{ item.item_description }}
 											</div>
 											<div v-for="variant in item.variants" :key="variant.id" class="px-2 py-0 flex justify-between hover:bg-gray-50">
@@ -375,6 +375,7 @@
 												</span>
 											</div>
 										</div>
+										
 									</div>
 									<div v-else class="p-2 py-1 capitalize text-base font-bold text-gray-500">
 										No items expiring soon.
