@@ -416,12 +416,91 @@
 								</button>
 							</div>
 						</div>
-						
+						<table class="table table-bordereds">
+							<tr class="text-xs uppercase font-bold bg-gray-100">
+								<td scope="col" width="15%">From</td>
+								<td scope="col" width="15%">MrecF No.</td>
+								<td scope="col" width="14%">Receive Date</td>
+								<td scope="col" width="12%">DR No.</td>
+								<td scope="col" width="12%">PO No.</td>
+								<td scope="col" width="12%">SI No.</td>
+								<td scope="col" width="12%">Waybill No.</td>
+								<td scope="col" width="5%" class="text-center">Pending Items</td>
+								<td scope="col" width="20%">PR No/s</td>
+								<td scope="col" width="1%" align="center" class="pr-2">
+									<div class="flex justify-center">
+										<Bars3Icon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"></Bars3Icon>
+									</div>
+								</td>
+							</tr>
+							<tbody>
+								<tr v-for="a in acceptance">
+									<td>{{ a.from }}</td>
+									<td>{{ a.mrecf_no }}</td>
+									<td>{{ a.receive_date }}</td>
+									<td>{{ a.dr_no }}</td>
+									<td>{{ a.po_no }}</td>
+									<td>{{ a.si_no }}</td>
+									<td>{{ a.waybill_no }}</td>
+									<td align="center">
+										<span class="badge badge-pill badge-danger">{{ a.pending_items }}</span>
+									</td>
+									<td align="center">
+										<span class="text-white btn btn-xs py-0 !text-xs bg-gray-400 rounded mr-1" v-for="pr in a.receive_details ">{{ pr.pr_no + ' ' }}</span>
+									</td>
+									<td class="pl-2 pr-2 font-bold">
+										<div class="space-x-1 flex justify-center">
+											<a @click="showTransactionUseraccept(a.id)" class="text-white btn btn-xs bg-yellow-500 btn-rounded" v-if="a.from=='Receive'">
+												<EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></EyeIcon>
+											</a>
+											<a @click="showTransactionUseracceptBack(a.id)" class="text-white btn btn-xs bg-yellow-500 btn-rounded" v-else-if="a.from=='Backorder'">
+												<EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3"></EyeIcon>
+											</a>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 
 					<!-- Bottom card (fixed height) -->
 					<div class="card h-[250px] mt-4 overflow-y-auto">
-					<!-- Content D -->
+						<div class="py-2 px-2 flex justify-between border-b border-gray-20">
+							<div class="font-bold">Back Order</div>
+							<div>
+								<button>
+									<EllipsisVerticalIcon class="size-5"></EllipsisVerticalIcon>
+								</button>
+							</div>
+						</div>
+						<table class="table table-bordereds">
+							<tr class="text-xs uppercase font-bold bg-gray-100">
+								<td width="23%">PO No.</td>
+								<td width="23%">PR No.</td>
+								<td>Item</td>
+								<td class="text-center" width="10%">Exp Qty</td>
+								<td class="text-center" width="10%">Rcv'd Qty</td>
+								<td class="text-center" width="10%">BO Qty</td>
+								<td class="text-center" width="1%">
+									<span>
+										<Bars3Icon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"></Bars3Icon>
+									</span>
+								</td>
+							</tr>										
+							<tr v-for="bl in bo_list">
+								<td>{{ bl.po_no }}</td>
+								<td>{{ bl.pr_no }}</td>
+								<td>{{ bl.item_desc }}</td>
+								<td class="text-center">{{ bl.exp_qty }}</td>
+								<td class="text-center">{{ bl.rec_qty }}</td>
+								<td class="text-center">{{ bl.bo_qty }}</td>
+								<td>
+									<a @click="showTransaction(bl.headid)" class="btn btn-success text-white btn-xs" title="Receive">
+										<InboxArrowDownIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3" />
+									</a>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 
