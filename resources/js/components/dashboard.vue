@@ -214,50 +214,63 @@
 	
 
 	const expiringItems = ref([])
+
 	// Get today's date (reset to midnight for comparison)
 	const today = new Date()
 	today.setHours(0, 0, 0, 0)
 
-	// Fetch items with variants expiring in the next 7 days
+	// Fetch items with variants expiring in the next 30 days
 	const loadExpiringItems = async () => {
-		try {
-			const response = await axios.get('/api/items-expiring-soon')
-			expiringItems.value = response.data
-		} catch (error) {
-			console.error('Failed to fetch expiring items:', error)
-		}
+	try {
+		const response = await axios.get('/api/items-expiring-soon')
+		// Filter variants to only include those expiring within 30 days
+		expiringItems.value = response.data.map(item => ({
+		...item,
+		variants: item.variants.filter(variant => {
+			const expirationDate = new Date(variant.expiration)
+			expirationDate.setHours(0, 0, 0, 0)
+
+			const diffDays = Math.ceil((expirationDate - today) / (1000 * 60 * 60 * 24))
+			return diffDays >= 0 && diffDays <= 30 // between today and 30 days
+		})
+		})).filter(item => item.variants.length > 0) // remove items with no valid variants
+	} catch (error) {
+		console.error('Failed to fetch expiring items:', error)
+	}
 	}
 
 	// Display text like "Today", "Tomorrow", "3 days left"
 	function getDaysLeft(dateStr) {
-		const expirationDate = new Date(dateStr)
-		expirationDate.setHours(0, 0, 0, 0)
+	const expirationDate = new Date(dateStr)
+	expirationDate.setHours(0, 0, 0, 0)
 
-		const diffTime = expirationDate - today
-		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+	const diffTime = expirationDate - today
+	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
-		if (diffDays < 0) return 'Expired'
-		if (diffDays === 0) return 'Today'
-		if (diffDays === 1) return 'Tomorrow'
-		return `${diffDays} days left`
+	if (diffDays < 0) return 'Expired'
+	if (diffDays === 0) return 'Today'
+	if (diffDays === 1) return 'Tomorrow'
+	return `${diffDays} days left`
 	}
 
 	// Return a Tailwind class depending on urgency
 	function getDaysLeftClass(dateStr) {
-		const expirationDate = new Date(dateStr)
-		expirationDate.setHours(0, 0, 0, 0)
+	const expirationDate = new Date(dateStr)
+	expirationDate.setHours(0, 0, 0, 0)
 
-		const diffDays = Math.ceil((expirationDate - today) / (1000 * 60 * 60 * 24))
+	const diffDays = Math.ceil((expirationDate - today) / (1000 * 60 * 60 * 24))
 
-		if (diffDays < 0) return 'bg-gray-400'
-		if (diffDays === 0) return 'bg-red-600'
-		if (diffDays === 1) return 'bg-red-500'
-		if (diffDays <= 3) return 'bg-orange-500'
-		return 'bg-yellow-400'
+	if (diffDays < 0) return 'bg-gray-400'
+	if (diffDays === 0) return 'bg-red-600'
+	if (diffDays === 1) return 'bg-red-500'
+	if (diffDays <= 7) return 'bg-orange-500' // urgent if within 7 days
+	if (diffDays <= 30) return 'bg-yellow-400' // warning if within a month
+	return 'bg-green-400'
 	}
+
 	onMounted(() => {
-		loadExpiringItems();
-	});
+	loadExpiringItems()
+	})
 </script>
 <template>
 		<div>
@@ -350,35 +363,43 @@
 						<!-- Top row split cards -->
 						<div class="col-lg-6 pr-0">
 							<div class="card">
-								<div class="py-2 px-2 flex justify-between border-b border-gray-20">
-									<div class="font-bold">Items Expired in 7 Days</div>
+								<div class="py-2 px-2 flex justify-between border-b border-gray-200">
+									<div class="font-bold">Items Expiring in 30 Days</div>
 									<div>
 										<button>
-											<EllipsisVerticalIcon class="size-5"></EllipsisVerticalIcon>
+											<EllipsisVerticalIcon class="size-5" />
 										</button>
 									</div>
 								</div>
+
 								<div class="h-[250px] overflow-y-hidden hover:!overflow-y-scroll pt-2">
 									<div v-if="expiringItems.length">
 										<div v-for="item in expiringItems" :key="item.id">
 											<div class="px-2 pt-1 capitalize text-base font-bold text-gray-500">
 												{{ item.item_description }}
 											</div>
-											<div v-for="variant in item.variants" :key="variant.id" class="px-2 py-0 flex justify-between hover:bg-gray-50">
+											<div
+												v-for="variant in item.variants"
+												:key="variant.id"
+												class="px-2 py-0 flex justify-between hover:bg-gray-50"
+											>
 												<span class="text-[13.5px]">
-													PN No
-													{{ variant.color }}
-													{{ variant.size }}
+													PN No {{ variant.color }} {{ variant.size }}
 												</span>
-												<span class="!text-[11px] text-center p-0 text-white rounded-xl p-0 my-1 px-2" :class="getDaysLeftClass(variant.expiration)">
+												<span
+													class="!text-[11px] text-center text-white rounded-xl my-1 px-2"
+													:class="getDaysLeftClass(variant.expiration)"
+												>
 													{{ getDaysLeft(variant.expiration) }}
 												</span>
 											</div>
 										</div>
-										
 									</div>
-									<div v-else class="p-2 py-1 capitalize text-base font-bold text-gray-500">
-										No items expiring soon.
+									<div
+										v-else
+										class="p-2 py-1 capitalize text-base font-bold text-gray-500"
+									>
+										No items expiring within 30 days.
 									</div>
 								</div>
 							</div>
